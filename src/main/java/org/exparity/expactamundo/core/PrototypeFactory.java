@@ -1,0 +1,147 @@
+
+package org.exparity.expactamundo.core;
+
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.lang.reflect.TypeVariable;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import net.sf.cglib.proxy.Callback;
+import net.sf.cglib.proxy.Enhancer;
+import org.objenesis.Objenesis;
+import org.objenesis.ObjenesisStd;
+import org.objenesis.instantiator.ObjectInstantiator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import static java.lang.reflect.Modifier.isFinal;
+
+/**
+ * @author Stewart Bissett
+ */
+public class PrototypeFactory {
+
+	private static final Logger LOG = LoggerFactory.getLogger(PrototypeFactory.class);
+
+	public <T> T createPrototype(final Class<T> type) {
+		if (isFinal(type.getModifiers())) {
+			throw new IllegalArgumentException("Final classes cannot be prototyped");
+		}
+		PrototypeInterceptor interceptor = createInterceptor(type);
+		LOG.debug("Produce Interceptor [{}] for [{}]", interceptor.getClass().getSimpleName(), type.getName());
+		Class<T> proxyType = createProxy(new Prototype<T>(type, new HashMap<String, Class<?>>(), interceptor));
+		T proxy = createProxyInstance(proxyType);
+		LOG.debug("Produce Proxy [{}] for [{}]", proxy, type.getName());
+		return proxy;
+	}
+
+	@SuppressWarnings({
+			"rawtypes", "unchecked"
+	})
+	public Object createPrototype(final Type genericType) {
+		Class<?> type = getClassForPrototype(genericType);
+		if (isFinal(type.getModifiers())) {
+			throw new IllegalArgumentException("Final classes cannot be prototyped");
+		}
+		PrototypeInterceptor interceptor = createInterceptor(type);
+		LOG.debug("Produce Interceptor [{}] for [{}]", interceptor.getClass().getSimpleName(), type.getName());
+		Prototype prototype = new Prototype(type, getGenericTypeArguments(genericType), interceptor);
+		Class proxyType = createProxy(prototype);
+		Object proxy = createProxyInstance(proxyType);
+		LOG.debug("Produce Proxy [{}] for [{}]", proxy, type.getName());
+		return proxy;
+	}
+
+	@SuppressWarnings({
+			"rawtypes", "unchecked"
+	})
+	public Object createPrototype(final PrototypeProperty activeProperty, final Prototype<?> currentPrototype) {
+		Class<?> type = getClassForPrototype(activeProperty, currentPrototype);
+		if (isFinal(type.getModifiers())) {
+			throw new IllegalArgumentException("Final classes cannot be prototyped");
+		}
+		PrototypeInterceptor interceptor = createInterceptor(type);
+		LOG.debug("Produce Interceptor [{}] for [{}]", interceptor.getClass().getSimpleName(), type.getName());
+		Prototype prototype = new Prototype(activeProperty, type, activeProperty.getGenericTypeArguments(), interceptor);
+		Class proxyType = createProxy(prototype);
+		Object proxy = createProxyInstance(proxyType);
+		LOG.debug("Produce Proxy [{}] for [{}]", proxy, type.getName());
+		return proxy;
+	}
+
+	private Class<?> getClassForPrototype(final PrototypeProperty activeProperty, final Prototype<?> currentPrototype) {
+		final Type genericType = activeProperty.getGenericReturnType();
+		if (genericType instanceof Class) {
+			return (Class<?>) genericType;
+		} else if (genericType instanceof ParameterizedType) {
+			return (Class<?>) ((ParameterizedType) genericType).getRawType();
+		} else if (genericType instanceof TypeVariable<?>) {
+			return currentPrototype.getTypeParameters().get(((TypeVariable<?>) genericType).getName());
+		} else {
+			throw new RuntimeException("Failed to get protype class for '" + genericType + "'");
+		}
+	}
+
+	private Class<?> getClassForPrototype(final Type genericType) {
+		if (genericType instanceof Class) {
+			return (Class<?>) genericType;
+		} else if (genericType instanceof ParameterizedType) {
+			return (Class<?>) ((ParameterizedType) genericType).getRawType();
+		} else {
+			throw new RuntimeException("Failed to get protype class for '" + genericType + "'");
+		}
+	}
+
+	private <T> PrototypeInterceptor createInterceptor(final Class<T> type) {
+		if (List.class.isAssignableFrom(type)) {
+			return new PrototypeListInterceptor(this);
+		} else {
+			return new PrototypeBeanInterceptor(this);
+		}
+	}
+
+	private <T> T createProxyInstance(final Class<T> proxyType) {
+		Objenesis instantiatorFactory = new ObjenesisStd();
+		ObjectInstantiator<T> instanceFactory = instantiatorFactory.getInstantiatorOf(proxyType);
+		T instance = instanceFactory.newInstance();
+		LOG.debug("Produce Proxy Instance [{}] for [{}]", System.identityHashCode(instance), proxyType.getName());
+		return instance;
+	}
+
+	@SuppressWarnings("unchecked")
+	private <T> Class<T> createProxy(final Prototype<T> prototype) {
+		Enhancer classFactory = new Enhancer();
+		if (prototype.getRawType().isInterface()) {
+			classFactory.setInterfaces(new Class[] {
+					prototype.getRawType(),
+					Prototyped.class
+			});
+		} else {
+			classFactory.setSuperclass(prototype.getRawType());
+			classFactory.setInterfaces(new Class[] {
+					Prototyped.class
+			});
+		}
+		classFactory.setCallbackType(prototype.getClass());
+		Class<T> proxyType = classFactory.createClass();
+		Enhancer.registerCallbacks(proxyType, new Callback[] {
+				prototype
+		});
+		LOG.debug("Produce Proxy Type [{}] for [{}]", proxyType.getSimpleName(), prototype);
+		return proxyType;
+	}
+
+	public Map<String, Class<?>> getGenericTypeArguments(final Type genericType) {
+		Map<String, Class<?>> parameterizedTypes = new HashMap<String, Class<?>>();
+		if (genericType instanceof ParameterizedType) {
+			Type[] typeArguments = ((ParameterizedType) genericType).getActualTypeArguments();
+			TypeVariable<?>[] typeKeys = ((Class<?>) ((ParameterizedType) genericType).getRawType()).getTypeParameters();
+			for (int i = 0; i < typeKeys.length; ++i) {
+				parameterizedTypes.put(typeKeys[i].getName(), (Class<?>) typeArguments[i]);
+			}
+			return parameterizedTypes;
+		}
+		return parameterizedTypes;
+	}
+
+}

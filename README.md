@@ -7,19 +7,19 @@ Licensed under [BSD License][].
 
 Downloads
 ---------
-You can obtain the eXparity-bean jar from [maven central][]. To include your project in:
+You can obtain the expectamundo jar from [maven central][]. To include your project in:
 
 A maven project
 
     <dependency>
         <groupId>org.exparity</groupId>
         <artifactId>expectamundo</artifactId>
-        <version>0.9.0</version>
+        <version>0.9.1</version>
     </dependency>
 
 A project which uses ivy for dependency management
 
-    <dependency org="org.exparity" name="expectamundo" rev="0.9.0"/>
+    <dependency org="org.exparity" name="expectamundo" rev="0.9.1"/>
             
 Acknowledgements
 ----------------

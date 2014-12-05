@@ -4,7 +4,7 @@ package org.exparity.expectamundo;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import org.exparity.expactamundo.core.TypeReference;
+import org.exparity.expectamundo.core.TypeReference;
 import org.exparity.expectamundo.testutils.types.GraphType;
 import org.exparity.expectamundo.testutils.types.HashCodeType;
 import org.exparity.expectamundo.testutils.types.ListReturnType;
@@ -14,9 +14,9 @@ import org.exparity.expectamundo.testutils.types.ToStringType;
 import org.exparity.stub.random.RandomBuilder;
 import org.junit.Test;
 import static java.util.Collections.singletonMap;
-import static org.exparity.expactamundo.Expactamundo.expect;
-import static org.exparity.expactamundo.Expactamundo.prototype;
-import static org.exparity.expactamundo.Expactamundo.verify;
+import static org.exparity.expectamundo.Expactamundo.expect;
+import static org.exparity.expectamundo.Expactamundo.prototype;
+import static org.exparity.expectamundo.Expactamundo.verify;
 import static org.exparity.stub.random.RandomBuilder.aRandomString;
 
 /**

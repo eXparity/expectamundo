@@ -1,12 +1,12 @@
 
-package org.exparity.expactamundo;
+package org.exparity.expectamundo;
 
-import org.exparity.expactamundo.core.PrototypeExpectationBuilderImpl;
-import org.exparity.expactamundo.core.PrototypeFactory;
-import org.exparity.expactamundo.core.PrototypeVerifier;
-import org.exparity.expactamundo.core.TypeReference;
-import org.exparity.expactamundo.expectations.ObjectExpectations;
-import static org.exparity.expactamundo.core.PrototypeMatcherContext.currentPrototype;
+import org.exparity.expectamundo.core.PrototypeExpectationBuilderImpl;
+import org.exparity.expectamundo.core.PrototypeFactory;
+import org.exparity.expectamundo.core.PrototypeVerifier;
+import org.exparity.expectamundo.core.TypeReference;
+import org.exparity.expectamundo.expectations.ObjectExpectations;
+import static org.exparity.expectamundo.core.PrototypeMatcherContext.currentPrototype;
 
 /**
  * @author Stewart Bissett

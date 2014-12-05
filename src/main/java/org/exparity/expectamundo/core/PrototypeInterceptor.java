@@ -1,4 +1,4 @@
-package org.exparity.expactamundo.core;
+package org.exparity.expectamundo.core;
 
 import java.lang.reflect.Method;
 import net.sf.cglib.proxy.MethodProxy;

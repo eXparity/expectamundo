@@ -1,7 +1,7 @@
 
-package org.exparity.expactamundo.core;
+package org.exparity.expectamundo.core;
 
-import org.exparity.expactamundo.expectations.ObjectExpectations;
+import org.exparity.expectamundo.expectations.ObjectExpectations;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 

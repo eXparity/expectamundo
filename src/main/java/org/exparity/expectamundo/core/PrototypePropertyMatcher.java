@@ -1,5 +1,5 @@
 
-package org.exparity.expactamundo.core;
+package org.exparity.expectamundo.core;
 
 import org.hamcrest.Matcher;
 import org.hamcrest.StringDescription;

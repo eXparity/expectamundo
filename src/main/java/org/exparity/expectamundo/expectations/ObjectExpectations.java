@@ -1,4 +1,4 @@
-package org.exparity.expactamundo.expectations;
+package org.exparity.expectamundo.expectations;
 
 import org.hamcrest.Matcher;
 

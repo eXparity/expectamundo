@@ -1,9 +1,9 @@
 
-package org.exparity.expactamundo.hamcrest;
+package org.exparity.expectamundo.hamcrest;
 
 import java.util.List;
-import org.exparity.expactamundo.core.PrototypePropertyMatcher;
-import org.exparity.expactamundo.core.Prototyped;
+import org.exparity.expectamundo.core.PrototypePropertyMatcher;
+import org.exparity.expectamundo.core.Prototyped;
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
 

@@ -6,12 +6,12 @@ package org.exparity.expectamundo.core;
  * 
  * @author Stewart Bissett
  */
-public interface PropertyExpectation {
+public interface PropertyExpectation<T> {
 
 	/**
 	 * Check if this expectation is met
 	 */
-	public boolean matches(Object actual);
+	public boolean matches(final T actual);
 
 	/**
 	 * Return a description of expectation

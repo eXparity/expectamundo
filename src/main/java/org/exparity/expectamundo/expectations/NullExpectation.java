@@ -8,6 +8,7 @@ import org.exparity.expectamundo.core.PropertyExpectation;
  * 
  * @author Stewart Bissett
  */
+@SuppressWarnings("rawtypes")
 public class NullExpectation implements PropertyExpectation {
 
 	@Override

@@ -9,7 +9,7 @@ import org.exparity.expectamundo.core.PropertyExpectation;
  * 
  * @author Stewart Bissett
  */
-public class ContainsExpectation<E> implements PropertyExpectation {
+public class ContainsExpectation<E, T extends Collection<E>> implements PropertyExpectation<T> {
 
 	private E expected;
 
@@ -17,15 +17,12 @@ public class ContainsExpectation<E> implements PropertyExpectation {
 		this.expected = expected;
 	}
 
-	@SuppressWarnings("rawtypes")
 	@Override
-	public boolean matches(final Object actual) {
-		if (actual instanceof Collection) {
-			return ((Collection) actual).contains(expected);
-		} else if (actual == null) {
+	public boolean matches(final T actual) {
+		if (actual == null) {
 			return false;
 		} else {
-			throw new IllegalArgumentException("Expected an instance of '" + Collection.class.getName() + "', but was '" + actual.getClass() + "'");
+			return actual.contains(expected);
 		}
 	}
 

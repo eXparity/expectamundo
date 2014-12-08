@@ -35,13 +35,13 @@ public class Expactamundo {
 	/**
 	 * Setup an expecation for a property on a {@link Prototype}
 	 */
-	public static <E> PrototypeCollectionExpectation<E> expect(final Collection<E> property) {
+	public static <E, T extends Collection<E>> PrototypeCollectionExpectation<E, T> expect(final T property) {
 		if (currentPrototype() == null) {
 			throw new IllegalArgumentException("You can only set an expectation for a property create with Expactamundo.prototype()");
 		} else if (currentPrototype().getActiveProperty() == null) {
 			throw new IllegalArgumentException("You can only set an expectation for a property create with Expactamundo.prototype()");
 		} else {
-			return new PrototypeCollectionExpectation<E>(currentPrototype(), currentPrototype().getActiveProperty());
+			return new PrototypeCollectionExpectation<E, T>(currentPrototype(), currentPrototype().getActiveProperty());
 		}
 	}
 

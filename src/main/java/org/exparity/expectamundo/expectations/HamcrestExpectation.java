@@ -11,7 +11,7 @@ import org.hamcrest.StringDescription;
  * 
  * @author Stewart Bissett
  */
-public class HamcrestExpectation<T> implements PropertyExpectation {
+public class HamcrestExpectation<T> implements PropertyExpectation<T> {
 
 	private final Matcher<T> matcher;
 

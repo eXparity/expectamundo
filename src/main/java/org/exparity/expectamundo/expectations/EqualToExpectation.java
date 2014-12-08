@@ -8,16 +8,16 @@ import org.exparity.expectamundo.core.PropertyExpectation;
  * 
  * @author Stewart Bissett
  */
-public class EqualToExpectation implements PropertyExpectation {
+public class EqualToExpectation<T> implements PropertyExpectation<T> {
 
-	private final Object expected;
+	private final T expected;
 
-	public EqualToExpectation(final Object expected) {
+	public EqualToExpectation(final T expected) {
 		this.expected = expected;
 	}
 
 	@Override
-	public boolean matches(final Object actual) {
+	public boolean matches(final T actual) {
 		return expected.equals(actual);
 	}
 

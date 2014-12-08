@@ -25,7 +25,7 @@ public class PrototypeObjectExpectation {
 	}
 
 	public <T> void equalTo(final T expectedValue) {
-		setExpectation(new EqualToExpectation(expectedValue));
+		setExpectation(new EqualToExpectation<T>(expectedValue));
 	}
 
 	public void nullValue() {
@@ -36,7 +36,7 @@ public class PrototypeObjectExpectation {
 		setExpectation(new NotNullExpectation());
 	}
 
-	protected void setExpectation(final PropertyExpectation expectation) {
+	protected void setExpectation(final PropertyExpectation<?> expectation) {
 		prototype.addExpectation(new PrototypePropertyMatcher(property, expectation));
 		prototype.setActiveProperty(null);
 	}

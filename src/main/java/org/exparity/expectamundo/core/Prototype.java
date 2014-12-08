@@ -81,7 +81,6 @@ public class Prototype<T> implements Prototyped<T>, MethodInterceptor {
 
 	@Override
 	public Object intercept(final Object obj, final Method method, final Object[] args, final MethodProxy proxy) throws Throwable {
-		PrototypeMatcherContext.setCurrentPrototype(this);
 		if (method.getDeclaringClass().equals(Prototyped.class)) {
 			return getClass().getMethod(method.getName(), parameterTypes(args)).invoke(this);
 		} else {

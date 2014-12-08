@@ -1,8 +1,6 @@
 
 package org.exparity.expectamundo.core;
 
-import org.hamcrest.Matcher;
-import org.hamcrest.StringDescription;
 
 /**
  * @author Stewart Bissett
@@ -10,15 +8,15 @@ import org.hamcrest.StringDescription;
 public class PrototypePropertyMatcher {
 
 	private final PrototypeProperty property;
-	private final Matcher<?> matcher;
+	private final PropertyExpectation expectation;
 
-	public PrototypePropertyMatcher(final PrototypeProperty property, final Matcher<?> matcher) {
+	public PrototypePropertyMatcher(final PrototypeProperty property, final PropertyExpectation expectation) {
 		this.property = property;
-		this.matcher = matcher;
+		this.expectation = expectation;
 	}
 
 	public boolean matches(final Object actual) {
-		return matcher.matches(actual);
+		return expectation.matches(actual);
 	}
 
 	public String getPropertyPath() {
@@ -30,9 +28,7 @@ public class PrototypePropertyMatcher {
 	}
 
 	public String getExpectation() {
-		StringDescription desc = new StringDescription();
-		matcher.describeTo(desc);
-		return desc.toString();
+		return expectation.describe();
 	}
 
 	@Override

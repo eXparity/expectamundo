@@ -1,21 +1,22 @@
+
 package org.exparity.expectamundo.expectations;
 
 import org.hamcrest.Matcher;
 
 /**
- * Matching operations available to all property type
+ * Matching operations available to all property types
  */
-public interface ObjectExpectations<T> {
+public interface ObjectExpectation {
 
 	/**
 	 * Verify the property is equal to the expected value
 	 */
-	public void equalTo(final T expectedValue);
+	public <T> void equalTo(final T expectedValue);
 
 	/**
-	 * Verify the property matches the expected matcher
+	 * Verify the property matches the hamcrest {@link Matcher}
 	 */
-	public void matches(final Matcher<T> expected);
+	public <T> void matches(final Matcher<T> expected);
 
 	/**
 	 * Verify the property has a null value

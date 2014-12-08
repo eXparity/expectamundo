@@ -13,18 +13,25 @@ import org.slf4j.LoggerFactory;
 /**
  * @author Stewart Bissett
  */
-public class PrototypeBeanInterceptor implements PrototypeInterceptor {
+public class PrototypeInterceptorImpl implements PrototypeInterceptor {
 
-	private static final Logger LOG = LoggerFactory.getLogger(PrototypeBeanInterceptor.class);
+	private static final Logger LOG = LoggerFactory.getLogger(PrototypeInterceptorImpl.class);
 	private final PrototypeFactory factory;
 
-	public PrototypeBeanInterceptor(final PrototypeFactory factory) {
+	public PrototypeInterceptorImpl(final PrototypeFactory factory) {
 		this.factory = factory;
 	}
 
 	@Override
 	public Object intercept(final Object obj, final Method method, final Object[] args, final MethodProxy proxy, final Prototype<?> currentPrototype) throws Throwable {
+
 		PrototypeProperty activeProperty = new PrototypeProperty(currentPrototype.getParentProperty(), method, proxy, args);
+		if (isInvokedByLogger(activeProperty)) {
+			LOG.debug("Discard Method [{}] invoke via logger", method);
+			return proxy.invokeSuper(obj, args);
+		}
+
+		PrototypeMatcherContext.setCurrentPrototype(currentPrototype);
 		currentPrototype.setActiveProperty(activeProperty);
 		if (isProxiableMethod(method)) {
 			Class<?> returnType = getClassForPrototype(activeProperty, currentPrototype);
@@ -39,6 +46,18 @@ public class PrototypeBeanInterceptor implements PrototypeInterceptor {
 			LOG.debug("Discard Method [{}]", method);
 			return proxy.invokeSuper(obj, args);
 		}
+	}
+
+	private boolean isInvokedByLogger(final PrototypeProperty activeProperty) {
+		boolean logging = false;
+		for (StackTraceElement x : Thread.currentThread().getStackTrace()) {
+			// System.out.println(x.getClassName());
+			if (x.getClassName().startsWith("org.slf4j")) {
+				LOG.debug("Discard {} during Logging", activeProperty);
+				logging = true;
+			}
+		}
+		return logging;
 	}
 
 	private boolean isProxiableMethod(final Method method) {

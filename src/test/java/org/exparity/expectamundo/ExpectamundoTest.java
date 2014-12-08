@@ -132,5 +132,4 @@ public class ExpectamundoTest {
 		expect(expected.getValue().get(key)).equalTo(value);
 		verify(new MapReturnType(singletonMap(key, aDifferentValue))).matches(expected);
 	}
-
 }

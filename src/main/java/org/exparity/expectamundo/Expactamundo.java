@@ -1,11 +1,13 @@
 
 package org.exparity.expectamundo;
 
-import org.exparity.expectamundo.core.PrototypeExpectationBuilderImpl;
+import java.util.Collection;
+import org.exparity.expectamundo.core.PrototypeCollectionExpectation;
+import org.exparity.expectamundo.core.PrototypeComparableExpectation;
 import org.exparity.expectamundo.core.PrototypeFactory;
+import org.exparity.expectamundo.core.PrototypeObjectExpectation;
 import org.exparity.expectamundo.core.PrototypeVerifier;
 import org.exparity.expectamundo.core.TypeReference;
-import org.exparity.expectamundo.expectations.ObjectExpectations;
 import static org.exparity.expectamundo.core.PrototypeMatcherContext.currentPrototype;
 
 /**
@@ -33,13 +35,39 @@ public class Expactamundo {
 	/**
 	 * Setup an expecation for a property on a {@link Prototype}
 	 */
-	public static <T> ObjectExpectations<T> expect(final T property) {
+	public static <E> PrototypeCollectionExpectation<E> expect(final Collection<E> property) {
 		if (currentPrototype() == null) {
 			throw new IllegalArgumentException("You can only set an expectation for a property create with Expactamundo.prototype()");
 		} else if (currentPrototype().getActiveProperty() == null) {
 			throw new IllegalArgumentException("You can only set an expectation for a property create with Expactamundo.prototype()");
 		} else {
-			return new PrototypeExpectationBuilderImpl<T>(currentPrototype(), currentPrototype().getActiveProperty());
+			return new PrototypeCollectionExpectation<E>(currentPrototype(), currentPrototype().getActiveProperty());
+		}
+	}
+
+	/**
+	 * Setup an expecation for a property on a {@link Prototype}
+	 */
+	public static <T extends Comparable<T>> PrototypeComparableExpectation<T> expect(final T property) {
+		if (currentPrototype() == null) {
+			throw new IllegalArgumentException("You can only set an expectation for a property create with Expactamundo.prototype()");
+		} else if (currentPrototype().getActiveProperty() == null) {
+			throw new IllegalArgumentException("You can only set an expectation for a property create with Expactamundo.prototype()");
+		} else {
+			return new PrototypeComparableExpectation<T>(currentPrototype(), currentPrototype().getActiveProperty());
+		}
+	}
+
+	/**
+	 * Setup an expecation for a property on a {@link Prototype}
+	 */
+	public static PrototypeObjectExpectation expect(final Object property) {
+		if (currentPrototype() == null) {
+			throw new IllegalArgumentException("You can only set an expectation for a property create with Expactamundo.prototype()");
+		} else if (currentPrototype().getActiveProperty() == null) {
+			throw new IllegalArgumentException("You can only set an expectation for a property create with Expactamundo.prototype()");
+		} else {
+			return new PrototypeObjectExpectation(currentPrototype(), currentPrototype().getActiveProperty());
 		}
 	}
 

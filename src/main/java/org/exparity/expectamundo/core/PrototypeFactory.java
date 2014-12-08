@@ -5,7 +5,6 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import net.sf.cglib.proxy.Callback;
 import net.sf.cglib.proxy.Enhancer;
@@ -93,11 +92,7 @@ public class PrototypeFactory {
 	}
 
 	private <T> PrototypeInterceptor createInterceptor(final Class<T> type) {
-		if (List.class.isAssignableFrom(type)) {
-			return new PrototypeListInterceptor(this);
-		} else {
-			return new PrototypeBeanInterceptor(this);
-		}
+		return new PrototypeInterceptorImpl(this);
 	}
 
 	private <T> T createProxyInstance(final Class<T> proxyType) {

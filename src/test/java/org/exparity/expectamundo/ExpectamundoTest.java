@@ -15,9 +15,11 @@ import org.exparity.stub.random.RandomBuilder;
 import org.junit.Test;
 import static java.util.Collections.singletonMap;
 import static org.exparity.expectamundo.Expactamundo.expect;
+import static org.exparity.expectamundo.Expactamundo.matches;
 import static org.exparity.expectamundo.Expactamundo.prototype;
 import static org.exparity.expectamundo.Expactamundo.verify;
 import static org.exparity.stub.random.RandomBuilder.aRandomString;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * @author Stewart Bissett
@@ -156,5 +158,28 @@ public class ExpectamundoTest {
 		expect(expected.getValue()).equalTo(expectedValue);
 	}
 
+	@Test
+	public void canMatchUsingHamcrest() {
+		String expectedValue = aRandomString();
+		SimpleType expected = prototype(SimpleType.class);
+		expect(expected.getValue()).equalTo(expectedValue);
+		SimpleType actual = new SimpleType(expectedValue);
+		assertThat(actual, matches(expected));
+	}
+
+	@Test(expected = AssertionError.class)
+	public void canFailUsingHamcrest() {
+		String expectedValue = aRandomString(), differentValue = expectedValue + aRandomString();
+		SimpleType expected = prototype(SimpleType.class);
+		expect(expected.getValue()).equalTo(expectedValue);
+		SimpleType actual = new SimpleType(differentValue);
+		assertThat(actual, matches(expected));
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void canFailUsingHamcrestOnNormalInstance() {
+		SimpleType actual = new SimpleType(aRandomString());
+		assertThat(actual, matches(new SimpleType(aRandomString())));
+	}
 
 }

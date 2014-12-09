@@ -46,19 +46,10 @@ public class PrototypeProperty {
 
 	private String stripPrefix(final String name) {
 		return args.length == 0 ? name + "()" : name + "(...)";
-		// return name;// name.startsWith("is") ? name.substring(2) : name.substring(3);
-	}
-
-	public Class<?> getReturnType() {
-		return method.getReturnType();
 	}
 
 	public Type getGenericReturnType() {
 		return method.getGenericReturnType();
-	}
-
-	public boolean isGeneric() {
-		return !(method.getGenericReturnType() instanceof Class<?>);
 	}
 
 	public Map<String, Class<?>> getGenericTypeArguments() {

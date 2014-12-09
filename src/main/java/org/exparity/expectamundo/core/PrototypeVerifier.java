@@ -17,7 +17,7 @@ public class PrototypeVerifier<T> {
 	public void matches(final T expected) {
 
 		if (!Prototyped.class.isInstance(expected)) {
-			throw new IllegalArgumentException("Object does not implement ExceptionList. Please construct using PrototypeMatcher.expected");
+			throw new IllegalArgumentException("Object does not implement Prototyped. Please construct using PrototypeMatcher.expected");
 		}
 
 		StringBuffer mismatchDescription = new StringBuffer();

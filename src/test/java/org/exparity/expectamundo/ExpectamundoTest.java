@@ -41,6 +41,22 @@ public class ExpectamundoTest {
 	}
 
 	@Test
+	public void canMatchObjectProperty() {
+		final SimpleType expectedValue = new SimpleType(aRandomString());
+		GraphType expected = prototype(GraphType.class);
+		expect(expected.getChild()).equalTo(expectedValue);
+		verify(new GraphType(aRandomString(), expectedValue)).matches(expected);
+	}
+
+	@Test(expected = AssertionError.class)
+	public void canFailObjectProperty() {
+		final SimpleType expectedValue = new SimpleType(aRandomString()), differentValue = new SimpleType(aRandomString());
+		GraphType expected = prototype(GraphType.class);
+		expect(expected.getChild()).equalTo(expectedValue);
+		verify(new GraphType(aRandomString(), differentValue)).matches(expected);
+	}
+
+	@Test
 	public void canMatchToStringProperty() {
 		final String expectedValue = aRandomString();
 		ToStringType expected = prototype(ToStringType.class);
@@ -132,4 +148,13 @@ public class ExpectamundoTest {
 		expect(expected.getValue().get(key)).equalTo(value);
 		verify(new MapReturnType(singletonMap(key, aDifferentValue))).matches(expected);
 	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void canFailIfSettingExpectationOnNormalInstance() {
+		final String expectedValue = aRandomString();
+		SimpleType expected = new SimpleType(expectedValue);
+		expect(expected.getValue()).equalTo(expectedValue);
+	}
+
+
 }

@@ -26,6 +26,13 @@ public class ExpectamundoIsEmptyTest {
 		verify(new ListReturnType(expectedValue)).matches(expected);
 	}
 
+	@Test
+	public void canCheckForIsEmptyForNull() {
+		ListReturnType expected = prototype(ListReturnType.class);
+		expect(expected.getValue()).isEmpty();
+		verify(new ListReturnType(null)).matches(expected);
+	}
+
 	@Test(expected = AssertionError.class)
 	public void canCheckForIsNotEmpty() {
 		List<String> expectedValue = Arrays.asList(aRandomString());

@@ -19,11 +19,7 @@ public class ContainsExpectation<E, T extends Collection<E>> implements Property
 
 	@Override
 	public boolean matches(final T actual) {
-		if (actual == null) {
-			return false;
-		} else {
-			return actual.contains(expected);
-		}
+		return actual != null && actual.contains(expected);
 	}
 
 	@Override

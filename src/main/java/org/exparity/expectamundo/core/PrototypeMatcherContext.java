@@ -6,7 +6,7 @@ package org.exparity.expectamundo.core;
  * 
  * @author Stewart Bissett
  */
-public class PrototypeMatcherContext {
+public abstract class PrototypeMatcherContext {
 
 	private static ThreadLocal<Prototype<?>> CURRENT_STUB = new ThreadLocal<Prototype<?>>();
 

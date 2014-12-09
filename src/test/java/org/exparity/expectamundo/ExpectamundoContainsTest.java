@@ -31,4 +31,12 @@ public class ExpectamundoContainsTest {
 		expect(expected.getValue()).contains(expectedValue);
 		verify(new ListReturnType(Arrays.asList(differentValue))).matches(expected);
 	}
+
+	@Test(expected = AssertionError.class)
+	public void canCheckForNotContainsIfNull() {
+		ListReturnType expected = prototype(ListReturnType.class);
+		expect(expected.getValue()).contains(aRandomString());
+		verify(new ListReturnType(null)).matches(expected);
+	}
+
 }

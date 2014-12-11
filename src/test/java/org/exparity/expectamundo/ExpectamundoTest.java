@@ -152,10 +152,7 @@ public class ExpectamundoTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void canFailGenericPropertiesIfTypeNotPassed() {
 		final String expectedValue = aRandomString(), differentValue = expectedValue + aRandomString();
-		List<String> expected = prototype(new TypeReference() {});
-		expect(expected.get(0)).equalTo(expectedValue);
-		List<String> actual = Arrays.asList(differentValue);
-		verify(actual).matches(expected);
+		Object expected = prototype(new TypeReference() {});
 	}
 
 	@Test

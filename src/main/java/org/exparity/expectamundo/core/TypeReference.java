@@ -20,7 +20,7 @@ public abstract class TypeReference<T> {
 	protected TypeReference() {
 		Type superclass = getClass().getGenericSuperclass();
 		if (superclass instanceof Class) {
-			throw new RuntimeException("Missing type parameter.");
+			throw new IllegalArgumentException("TypeReference must be provided with generic type parameter e.g. TypeReference<List<String>>.");
 		}
 		this.type = ((ParameterizedType) superclass).getActualTypeArguments()[0];
 	}

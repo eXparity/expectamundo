@@ -21,10 +21,6 @@ public class Prototype<T> implements Prototyped<T>, MethodInterceptor {
 	private final Map<String, Class<?>> typeParameters;
 	private PrototypeProperty parentProperty = null, activeProperty = null;
 
-	public Prototype(final PrototypeProperty parentProperty, final Class<T> rawType, final PrototypeInterceptor proxier) {
-		this(parentProperty, rawType, new HashMap<String, Class<?>>(), proxier);
-	}
-
 	public Prototype(final PrototypeProperty parentProperty, final Class<T> rawType, final Map<String, Class<?>> typeParameters, final PrototypeInterceptor proxier) {
 		this.parentProperty = parentProperty;
 		this.rawType = rawType;

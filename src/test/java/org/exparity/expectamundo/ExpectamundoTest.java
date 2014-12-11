@@ -9,6 +9,8 @@ import org.exparity.expectamundo.testutils.types.GraphType;
 import org.exparity.expectamundo.testutils.types.HashCodeType;
 import org.exparity.expectamundo.testutils.types.ListReturnType;
 import org.exparity.expectamundo.testutils.types.MapReturnType;
+import org.exparity.expectamundo.testutils.types.PrimitiveArrayType;
+import org.exparity.expectamundo.testutils.types.PrimitiveType;
 import org.exparity.expectamundo.testutils.types.SimpleType;
 import org.exparity.expectamundo.testutils.types.ToStringType;
 import org.exparity.stub.random.RandomBuilder;
@@ -18,6 +20,8 @@ import static org.exparity.expectamundo.Expactamundo.expect;
 import static org.exparity.expectamundo.Expactamundo.matches;
 import static org.exparity.expectamundo.Expactamundo.prototype;
 import static org.exparity.expectamundo.Expactamundo.verify;
+import static org.exparity.stub.random.RandomBuilder.aRandomByteArray;
+import static org.exparity.stub.random.RandomBuilder.aRandomInteger;
 import static org.exparity.stub.random.RandomBuilder.aRandomString;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -40,6 +44,38 @@ public class ExpectamundoTest {
 		SimpleType expected = prototype(SimpleType.class);
 		expect(expected.getValue()).equalTo(expectedValue);
 		verify(new SimpleType(differentValue)).matches(expected);
+	}
+
+	@Test
+	public void canMatchPrimitiveProperty() {
+		final int expectedValue = aRandomInteger();
+		PrimitiveType expected = prototype(PrimitiveType.class);
+		expect(expected.getValue()).equalTo(expectedValue);
+		verify(new PrimitiveType(expectedValue)).matches(expected);
+	}
+
+	@Test(expected = AssertionError.class)
+	public void canFailPrimitiveProperty() {
+		final int expectedValue = aRandomInteger(), differentValue = expectedValue + aRandomInteger();
+		PrimitiveType expected = prototype(PrimitiveType.class);
+		expect(expected.getValue()).equalTo(expectedValue);
+		verify(new PrimitiveType(differentValue)).matches(expected);
+	}
+
+	@Test
+	public void canMatchPrimitiveArrayProperty() {
+		final byte[] expectedValue = aRandomByteArray();
+		PrimitiveArrayType expected = prototype(PrimitiveArrayType.class);
+		expect(expected.getValue()).equalTo(expectedValue);
+		verify(new PrimitiveArrayType(expectedValue)).matches(expected);
+	}
+
+	@Test(expected = AssertionError.class)
+	public void canFailPrimitiveArrayProperty() {
+		final byte[] expectedValue = aRandomByteArray(), differentValue = aRandomByteArray();
+		PrimitiveArrayType expected = prototype(PrimitiveArrayType.class);
+		expect(expected.getValue()).equalTo(expectedValue);
+		verify(new PrimitiveArrayType(differentValue)).matches(expected);
 	}
 
 	@Test
@@ -105,6 +141,16 @@ public class ExpectamundoTest {
 	public void canFailGenericProperties() {
 		final String expectedValue = aRandomString(), differentValue = expectedValue + aRandomString();
 		List<String> expected = prototype(new TypeReference<List<String>>() {});
+		expect(expected.get(0)).equalTo(expectedValue);
+		List<String> actual = Arrays.asList(differentValue);
+		verify(actual).matches(expected);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Test(expected = IllegalArgumentException.class)
+	public void canFailGenericPropertiesIfTypeNotPassed() {
+		final String expectedValue = aRandomString(), differentValue = expectedValue + aRandomString();
+		List<String> expected = prototype(new TypeReference() {});
 		expect(expected.get(0)).equalTo(expectedValue);
 		List<String> actual = Arrays.asList(differentValue);
 		verify(actual).matches(expected);
@@ -180,6 +226,12 @@ public class ExpectamundoTest {
 	public void canFailUsingHamcrestOnNormalInstance() {
 		SimpleType actual = new SimpleType(aRandomString());
 		assertThat(actual, matches(new SimpleType(aRandomString())));
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void canFailIfVerifyingExpectationOnNormalInstance() {
+		SimpleType expected = new SimpleType(aRandomString());
+		verify(expected).matches(expected);
 	}
 
 }

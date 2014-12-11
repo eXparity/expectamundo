@@ -23,12 +23,6 @@ public class PrototypeProperty {
 		this.proxy = proxy;
 	}
 
-	public PrototypeProperty(final Method method, final MethodProxy proxy, final Object[] args) {
-		this.method = method;
-		this.args = args;
-		this.proxy = proxy;
-	}
-
 	/**
 	 * Return the value of this property on the given object
 	 */

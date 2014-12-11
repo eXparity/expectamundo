@@ -65,9 +65,9 @@ public class Expactamundo {
 
 	private static void checkActivePrototype() {
 		if (currentPrototype() == null) {
-			throw new IllegalArgumentException("You can only set an expectation for a property create with Expactamundo.prototype()");
+			throw new IllegalArgumentException("You can only set an expectation for a property created with Expactamundo.prototype()");
 		} else if (currentPrototype().getActiveProperty() == null) {
-			throw new IllegalArgumentException("You can only set an expectation for a property create with Expactamundo.prototype()");
+			throw new IllegalArgumentException("You can only set an expectation for a property created with Expactamundo.prototype()");
 		}
 	}
 

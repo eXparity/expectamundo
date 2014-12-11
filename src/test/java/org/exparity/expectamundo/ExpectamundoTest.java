@@ -146,7 +146,9 @@ public class ExpectamundoTest {
 		verify(actual).matches(expected);
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({
+			"unchecked", "rawtypes"
+	})
 	@Test(expected = IllegalArgumentException.class)
 	public void canFailGenericPropertiesIfTypeNotPassed() {
 		final String expectedValue = aRandomString(), differentValue = expectedValue + aRandomString();
@@ -234,4 +236,8 @@ public class ExpectamundoTest {
 		verify(expected).matches(expected);
 	}
 
+	@Test(expected = IllegalArgumentException.class)
+	public void canFailToMatchPrimitiveType() {
+		prototype(byte.class);
+	}
 }

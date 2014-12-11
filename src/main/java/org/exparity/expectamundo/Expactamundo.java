@@ -14,6 +14,43 @@ import org.hamcrest.Matcher;
 import static org.exparity.expectamundo.core.PrototypeMatcherContext.currentPrototype;
 
 /**
+ * Expectamundo is a test library for preparing a prototype instance of a non-final type containing expected values against which actual instances can be verified against. For
+ * example:</p> <h5>To verifying object properties</h5>
+ * 
+ * <pre>
+ * Person expected = Expectamundo.prototype(Person.class);
+ * Expectamundo.expect(expected.getFirstName()).equalTo("Jane");
+ * Expectamundo.expect(expected.getLastName()).equalTo("Doe");
+ * Expectamundo.verify(new Person("Jane","Doe")).matches(expected));
+ * </pre>
+ * 
+ * <h5>To verifying list properties</h5>
+ * 
+ * <pre>
+ * Person expected = Expectamundo.prototype(Person.class);
+ * Expectamundo.expect(expected.getSiblings().get(0).getFirstName()).equalTo("John");
+ * Expectamundo.expect(expected.getSiblings().get(0).getLastName()).equalTo("Doe");
+ * 
+ * Person jane = new Person("Jane","Doe");
+ * jane.addSibling(new Person("John","Doe"));
+ * 
+ * Expectamundo.verify(jane).matches(expected));
+ * </pre>
+ * 
+ * To verifying map properties</p>
+ * 
+ * <pre>
+ * Person expected = Expectamundo.prototype(Person.class);
+ * Expectamundo.expect(expected.getSiblingMap().get("John").getFirstName()).equalTo("John");
+ * Expectamundo.expect(expected.getSiblingMap().get("John").getLastName()).equalTo("Doe");
+ * 
+ * Person jane = new Person("Jane","Doe");
+ * jane.addSibling(new Person("John","Doe"));
+ * 
+ * Expectamundo.verify(jane).matches(expected));
+ * </pre>
+ * 
+ * 
  * @author Stewart Bissett
  */
 public class Expactamundo {
@@ -28,7 +65,7 @@ public class Expactamundo {
 	}
 
 	/**
-	 * Prepare a new prototype.
+	 * Prepare a new prototype for a generic type
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> T prototype(final TypeReference<T> typeRef) {
@@ -36,7 +73,7 @@ public class Expactamundo {
 	}
 
 	/**
-	 * Setup an expecation for a property on a {@link Prototype}
+	 * Setup an expecation for a collection property on a {@link Prototype}
 	 */
 	public static <E, T extends Collection<E>> PrototypeCollectionExpectation<E, T> expect(final T property) {
 		checkActivePrototype();
@@ -44,7 +81,7 @@ public class Expactamundo {
 	}
 
 	/**
-	 * Setup an expecation for a property on a {@link Prototype}
+	 * Setup an expecation for a comparable property on a {@link Prototype}
 	 */
 	public static <T extends Comparable<T>> PrototypeComparableExpectation<T> expect(final T property) {
 		checkActivePrototype();

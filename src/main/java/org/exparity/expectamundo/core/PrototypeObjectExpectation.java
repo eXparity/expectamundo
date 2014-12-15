@@ -3,6 +3,7 @@ package org.exparity.expectamundo.core;
 
 import org.exparity.expectamundo.expectations.EqualToExpectation;
 import org.exparity.expectamundo.expectations.HamcrestExpectation;
+import org.exparity.expectamundo.expectations.InstanceOfExpectation;
 import org.exparity.expectamundo.expectations.NotNullExpectation;
 import org.exparity.expectamundo.expectations.NullExpectation;
 import org.hamcrest.Matcher;
@@ -24,15 +25,19 @@ public class PrototypeObjectExpectation {
 		setExpectation(new HamcrestExpectation<T>(expected));
 	}
 
-	public <T> void equalTo(final T expectedValue) {
+	public <T> void isEqualTo(final T expectedValue) {
 		setExpectation(new EqualToExpectation<T>(expectedValue));
 	}
 
-	public void nullValue() {
+	public <T> void isInstanceOf(final Class<T> expectedValue) {
+		setExpectation(new InstanceOfExpectation<T>(expectedValue));
+	}
+
+	public void isNullValue() {
 		setExpectation(new NullExpectation());
 	}
 
-	public void notNullValue() {
+	public void isNotNullValue() {
 		setExpectation(new NotNullExpectation());
 	}
 

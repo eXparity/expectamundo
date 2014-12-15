@@ -8,11 +8,11 @@ import org.exparity.expectamundo.core.PropertyExpectation;
  * 
  * @author Stewart Bissett
  */
-public class CompareEqualsToExpectaion<T extends Comparable<T>> implements PropertyExpectation<T> {
+public class ComparableToExpectation<T extends Comparable<T>> implements PropertyExpectation<T> {
 
 	private final T expected;
 
-	public CompareEqualsToExpectaion(final T expected) {
+	public ComparableToExpectation(final T expected) {
 		this.expected = expected;
 	}
 

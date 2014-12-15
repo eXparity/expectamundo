@@ -19,7 +19,7 @@ public class ExpectamundoIsEqualToTest {
 	public void canCheckForEqualTo() {
 		final String expectedValue = aRandomString();
 		SimpleType expected = prototype(SimpleType.class);
-		expect(expected.getValue()).equalTo(expectedValue);
+		expect(expected.getValue()).isEqualTo(expectedValue);
 		verify(new SimpleType(expectedValue)).matches(expected);
 	}
 
@@ -27,7 +27,7 @@ public class ExpectamundoIsEqualToTest {
 	public void canCheckForNotEqualTo() {
 		final String expectedValue = aRandomString(), differentValue = aRandomString();
 		SimpleType expected = prototype(SimpleType.class);
-		expect(expected.getValue()).equalTo(expectedValue);
+		expect(expected.getValue()).isEqualTo(expectedValue);
 		verify(new SimpleType(differentValue)).matches(expected);
 	}
 }

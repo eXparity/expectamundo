@@ -18,14 +18,14 @@ public class ExpectamundoIsNotNullTest {
 	@Test
 	public void canCheckForNotNull() {
 		SimpleType expected = prototype(SimpleType.class);
-		expect(expected.getValue()).notNullValue();
+		expect(expected.getValue()).isNotNullValue();
 		verify(new SimpleType(aRandomString())).matches(expected);
 	}
 
 	@Test(expected = AssertionError.class)
 	public void canCheckForIsNull() {
 		SimpleType expected = prototype(SimpleType.class);
-		expect(expected.getValue()).notNullValue();
+		expect(expected.getValue()).isNotNullValue();
 		verify(new SimpleType(null)).matches(expected);
 	}
 }

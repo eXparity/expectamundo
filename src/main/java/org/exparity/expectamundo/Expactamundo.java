@@ -19,8 +19,8 @@ import static org.exparity.expectamundo.core.PrototypeMatcherContext.currentProt
  * 
  * <pre>
  * Person expected = Expectamundo.prototype(Person.class);
- * Expectamundo.expect(expected.getFirstName()).equalTo("Jane");
- * Expectamundo.expect(expected.getLastName()).equalTo("Doe");
+ * Expectamundo.expect(expected.getFirstName()).isEqualTo("Jane");
+ * Expectamundo.expect(expected.getLastName()).isEqualTo("Doe");
  * Expectamundo.verify(new Person("Jane","Doe")).matches(expected));
  * </pre>
  * 
@@ -28,8 +28,8 @@ import static org.exparity.expectamundo.core.PrototypeMatcherContext.currentProt
  * 
  * <pre>
  * Person expected = Expectamundo.prototype(Person.class);
- * Expectamundo.expect(expected.getSiblings().get(0).getFirstName()).equalTo("John");
- * Expectamundo.expect(expected.getSiblings().get(0).getLastName()).equalTo("Doe");
+ * Expectamundo.expect(expected.getSiblings().get(0).getFirstName()).isEqualTo("John");
+ * Expectamundo.expect(expected.getSiblings().get(0).getLastName()).isEqualTo("Doe");
  * 
  * Person jane = new Person("Jane","Doe");
  * jane.addSibling(new Person("John","Doe"));
@@ -41,8 +41,8 @@ import static org.exparity.expectamundo.core.PrototypeMatcherContext.currentProt
  * 
  * <pre>
  * Person expected = Expectamundo.prototype(Person.class);
- * Expectamundo.expect(expected.getSiblingMap().get("John").getFirstName()).equalTo("John");
- * Expectamundo.expect(expected.getSiblingMap().get("John").getLastName()).equalTo("Doe");
+ * Expectamundo.expect(expected.getSiblingMap().get("John").getFirstName()).isEqualTo("John");
+ * Expectamundo.expect(expected.getSiblingMap().get("John").getLastName()).isEqualTo("Doe");
  * 
  * Person jane = new Person("Jane","Doe");
  * jane.addSibling(new Person("John","Doe"));

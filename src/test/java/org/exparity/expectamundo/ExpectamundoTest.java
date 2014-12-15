@@ -34,7 +34,7 @@ public class ExpectamundoTest {
 	public void canMatchSimpleProperty() {
 		final String expectedValue = aRandomString();
 		SimpleType expected = prototype(SimpleType.class);
-		expect(expected.getValue()).equalTo(expectedValue);
+		expect(expected.getValue()).isEqualTo(expectedValue);
 		verify(new SimpleType(expectedValue)).matches(expected);
 	}
 
@@ -42,7 +42,7 @@ public class ExpectamundoTest {
 	public void canFailSimpleProperty() {
 		final String expectedValue = aRandomString(), differentValue = expectedValue + aRandomString();
 		SimpleType expected = prototype(SimpleType.class);
-		expect(expected.getValue()).equalTo(expectedValue);
+		expect(expected.getValue()).isEqualTo(expectedValue);
 		verify(new SimpleType(differentValue)).matches(expected);
 	}
 
@@ -50,7 +50,7 @@ public class ExpectamundoTest {
 	public void canMatchPrimitiveProperty() {
 		final int expectedValue = aRandomInteger();
 		PrimitiveType expected = prototype(PrimitiveType.class);
-		expect(expected.getValue()).equalTo(expectedValue);
+		expect(expected.getValue()).isEqualTo(expectedValue);
 		verify(new PrimitiveType(expectedValue)).matches(expected);
 	}
 
@@ -58,7 +58,7 @@ public class ExpectamundoTest {
 	public void canFailPrimitiveProperty() {
 		final int expectedValue = aRandomInteger(), differentValue = expectedValue + aRandomInteger();
 		PrimitiveType expected = prototype(PrimitiveType.class);
-		expect(expected.getValue()).equalTo(expectedValue);
+		expect(expected.getValue()).isEqualTo(expectedValue);
 		verify(new PrimitiveType(differentValue)).matches(expected);
 	}
 
@@ -66,7 +66,7 @@ public class ExpectamundoTest {
 	public void canMatchPrimitiveArrayProperty() {
 		final byte[] expectedValue = aRandomByteArray();
 		PrimitiveArrayType expected = prototype(PrimitiveArrayType.class);
-		expect(expected.getValue()).equalTo(expectedValue);
+		expect(expected.getValue()).isEqualTo(expectedValue);
 		verify(new PrimitiveArrayType(expectedValue)).matches(expected);
 	}
 
@@ -74,7 +74,7 @@ public class ExpectamundoTest {
 	public void canFailPrimitiveArrayProperty() {
 		final byte[] expectedValue = aRandomByteArray(), differentValue = aRandomByteArray();
 		PrimitiveArrayType expected = prototype(PrimitiveArrayType.class);
-		expect(expected.getValue()).equalTo(expectedValue);
+		expect(expected.getValue()).isEqualTo(expectedValue);
 		verify(new PrimitiveArrayType(differentValue)).matches(expected);
 	}
 
@@ -82,7 +82,7 @@ public class ExpectamundoTest {
 	public void canMatchObjectProperty() {
 		final SimpleType expectedValue = new SimpleType(aRandomString());
 		GraphType expected = prototype(GraphType.class);
-		expect(expected.getChild()).equalTo(expectedValue);
+		expect(expected.getChild()).isEqualTo(expectedValue);
 		verify(new GraphType(aRandomString(), expectedValue)).matches(expected);
 	}
 
@@ -90,7 +90,7 @@ public class ExpectamundoTest {
 	public void canFailObjectProperty() {
 		final SimpleType expectedValue = new SimpleType(aRandomString()), differentValue = new SimpleType(aRandomString());
 		GraphType expected = prototype(GraphType.class);
-		expect(expected.getChild()).equalTo(expectedValue);
+		expect(expected.getChild()).isEqualTo(expectedValue);
 		verify(new GraphType(aRandomString(), differentValue)).matches(expected);
 	}
 
@@ -98,7 +98,7 @@ public class ExpectamundoTest {
 	public void canMatchToStringProperty() {
 		final String expectedValue = aRandomString();
 		ToStringType expected = prototype(ToStringType.class);
-		expect(expected.toString()).equalTo(expectedValue);
+		expect(expected.toString()).isEqualTo(expectedValue);
 		verify(new ToStringType(expectedValue)).matches(expected);
 	}
 
@@ -106,7 +106,7 @@ public class ExpectamundoTest {
 	public void canMatchHashCodeProperty() {
 		final int expectedValue = RandomBuilder.aRandomInteger();
 		HashCodeType expected = prototype(HashCodeType.class);
-		expect(expected.hashCode()).equalTo(expectedValue);
+		expect(expected.hashCode()).isEqualTo(expectedValue);
 		verify(new HashCodeType(expectedValue)).matches(expected);
 	}
 
@@ -114,8 +114,8 @@ public class ExpectamundoTest {
 	public void canMatchGraphProperties() {
 		final String expectedValue = aRandomString();
 		GraphType expected = prototype(GraphType.class);
-		expect(expected.getValue()).equalTo(expectedValue);
-		expect(expected.getChild().getValue()).equalTo(expectedValue);
+		expect(expected.getValue()).isEqualTo(expectedValue);
+		expect(expected.getChild().getValue()).isEqualTo(expectedValue);
 		verify(new GraphType(expectedValue, new SimpleType(expectedValue))).matches(expected);
 	}
 
@@ -123,8 +123,8 @@ public class ExpectamundoTest {
 	public void canFailGraphProperty() {
 		final String expectedValue = aRandomString(), differentValue = expectedValue + aRandomString();
 		GraphType expected = prototype(GraphType.class);
-		expect(expected.getValue()).equalTo(expectedValue);
-		expect(expected.getChild().getValue()).equalTo(expectedValue);
+		expect(expected.getValue()).isEqualTo(expectedValue);
+		expect(expected.getChild().getValue()).isEqualTo(expectedValue);
 		verify(new GraphType(expectedValue, new SimpleType(differentValue))).matches(expected);
 	}
 
@@ -132,7 +132,7 @@ public class ExpectamundoTest {
 	public void canMatchGenericProperties() {
 		final String expectedValue = aRandomString();
 		List<String> expected = prototype(new TypeReference<List<String>>() {});
-		expect(expected.get(0)).equalTo(expectedValue);
+		expect(expected.get(0)).isEqualTo(expectedValue);
 		List<String> actual = Arrays.asList(expectedValue);
 		verify(actual).matches(expected);
 	}
@@ -141,7 +141,7 @@ public class ExpectamundoTest {
 	public void canFailGenericProperties() {
 		final String expectedValue = aRandomString(), differentValue = expectedValue + aRandomString();
 		List<String> expected = prototype(new TypeReference<List<String>>() {});
-		expect(expected.get(0)).equalTo(expectedValue);
+		expect(expected.get(0)).isEqualTo(expectedValue);
 		List<String> actual = Arrays.asList(differentValue);
 		verify(actual).matches(expected);
 	}
@@ -158,7 +158,7 @@ public class ExpectamundoTest {
 	public void canMatchListProperties() {
 		final List<String> expectedValue = Arrays.asList(aRandomString());
 		ListReturnType expected = prototype(ListReturnType.class);
-		expect(expected.getValue().get(0)).equalTo(expectedValue.get(0));
+		expect(expected.getValue().get(0)).isEqualTo(expectedValue.get(0));
 		verify(new ListReturnType(expectedValue)).matches(expected);
 	}
 
@@ -167,7 +167,7 @@ public class ExpectamundoTest {
 		final String expectedString = aRandomString();
 		final List<String> expectedValue = Arrays.asList(expectedString), differentValue = Arrays.asList(expectedString + aRandomString());
 		ListReturnType expected = prototype(ListReturnType.class);
-		expect(expected.getValue().get(0)).equalTo(expectedValue.get(0));
+		expect(expected.getValue().get(0)).isEqualTo(expectedValue.get(0));
 		verify(new ListReturnType(differentValue)).matches(expected);
 	}
 
@@ -175,7 +175,7 @@ public class ExpectamundoTest {
 	public void canMatchMapProperties() {
 		String key = aRandomString(), value = aRandomString();
 		MapReturnType expected = prototype(MapReturnType.class);
-		expect(expected.getValue().get(key)).equalTo(value);
+		expect(expected.getValue().get(key)).isEqualTo(value);
 		verify(new MapReturnType(Collections.singletonMap(key, value))).matches(expected);
 	}
 
@@ -183,7 +183,7 @@ public class ExpectamundoTest {
 	public void canFailMapPropertiesBadKey() {
 		String key = aRandomString(), value = aRandomString(), aDifferentKey = aRandomString();
 		MapReturnType expected = prototype(MapReturnType.class);
-		expect(expected.getValue().get(key)).equalTo(value);
+		expect(expected.getValue().get(key)).isEqualTo(value);
 		verify(new MapReturnType(singletonMap(aDifferentKey, value))).matches(expected);
 	}
 
@@ -191,7 +191,7 @@ public class ExpectamundoTest {
 	public void canFailMapPropertiesBadValue() {
 		String key = aRandomString(), value = aRandomString(), aDifferentValue = aRandomString();
 		MapReturnType expected = prototype(MapReturnType.class);
-		expect(expected.getValue().get(key)).equalTo(value);
+		expect(expected.getValue().get(key)).isEqualTo(value);
 		verify(new MapReturnType(singletonMap(key, aDifferentValue))).matches(expected);
 	}
 
@@ -199,14 +199,14 @@ public class ExpectamundoTest {
 	public void canFailIfSettingExpectationOnNormalInstance() {
 		final String expectedValue = aRandomString();
 		SimpleType expected = new SimpleType(expectedValue);
-		expect(expected.getValue()).equalTo(expectedValue);
+		expect(expected.getValue()).isEqualTo(expectedValue);
 	}
 
 	@Test
 	public void canMatchUsingHamcrest() {
 		String expectedValue = aRandomString();
 		SimpleType expected = prototype(SimpleType.class);
-		expect(expected.getValue()).equalTo(expectedValue);
+		expect(expected.getValue()).isEqualTo(expectedValue);
 		SimpleType actual = new SimpleType(expectedValue);
 		assertThat(actual, matches(expected));
 	}
@@ -215,7 +215,7 @@ public class ExpectamundoTest {
 	public void canFailUsingHamcrest() {
 		String expectedValue = aRandomString(), differentValue = expectedValue + aRandomString();
 		SimpleType expected = prototype(SimpleType.class);
-		expect(expected.getValue()).equalTo(expectedValue);
+		expect(expected.getValue()).isEqualTo(expectedValue);
 		SimpleType actual = new SimpleType(differentValue);
 		assertThat(actual, matches(expected));
 	}

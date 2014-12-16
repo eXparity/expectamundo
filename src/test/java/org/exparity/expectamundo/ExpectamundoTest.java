@@ -9,6 +9,8 @@ import org.exparity.expectamundo.testutils.types.GraphType;
 import org.exparity.expectamundo.testutils.types.HashCodeType;
 import org.exparity.expectamundo.testutils.types.ListReturnType;
 import org.exparity.expectamundo.testutils.types.MapReturnType;
+import org.exparity.expectamundo.testutils.types.PolymorphicReturnType;
+import org.exparity.expectamundo.testutils.types.PolymorphicSubtype1;
 import org.exparity.expectamundo.testutils.types.PrimitiveArrayType;
 import org.exparity.expectamundo.testutils.types.PrimitiveType;
 import org.exparity.expectamundo.testutils.types.SimpleType;
@@ -244,4 +246,12 @@ public class ExpectamundoTest {
 		assertThat(actual, matches(new SimpleType(aRandomString())));
 	}
 
+	// Test disabled until we solve polymorphic approach
+	// @Test
+	public void canMatchPolymorphicTypes() {
+		Integer expectedValue = aRandomInteger();
+		PolymorphicReturnType expected = prototype(PolymorphicReturnType.class);
+		// expect(expected.getValue().getValue()).isEqualTo(expectedValue);
+		verify(new PolymorphicReturnType(new PolymorphicSubtype1(expectedValue))).matches(expected);
+	}
 }

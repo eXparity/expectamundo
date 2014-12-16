@@ -36,7 +36,6 @@ You can set up a test to verify the expected outcome as follows:
 
 This example captures the basics of what you can do with eXpectamundo. eXpectamundo allows you to set expectations on any non-final type or property on a object which returns a value.
 
-
 The libary includes expectations for all Object property types:
 
 * __isEqualTo__ - Set the expectation that the property value should be equal to an explicit value
@@ -66,6 +65,9 @@ The libary includes expectations for Comparable properties
 The libary includes expectations for String properties
 
 * __hasPattern__ - Set the expectation that the String matches the regular expression
+* __hasLength__ - Set the expectation that the String is of the given length
+
+Contributions are welcome to extend the list of expectations to match types.
 
 Downloads
 ---------

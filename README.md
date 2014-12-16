@@ -26,8 +26,9 @@ You can set up a test to verify the expected outcome as follows:
     public class SimpleTypeTest {
     	@Test
     	public void canReturnTheCorrectValue() {
+    	  String message = "eXpectamundo lets me test this";
     	  SimpleType expected = Expectamundo.prototype(SimpleType.class);
-    	  Expectamundo.expect(expected.getValue().get(0)).isEqualTo("eXpectamundo lets me test this");
+    	  Expectamundo.expect(expected.getValue().get(0)).isEqualTo(message);
     	  SimpleType actual = new SimpleType();
     	  Expectamundo.verify(actual).matches(expected);
       }
@@ -35,6 +36,36 @@ You can set up a test to verify the expected outcome as follows:
 
 This example captures the basics of what you can do with eXpectamundo. eXpectamundo allows you to set expectations on any non-final type or property on a object which returns a value.
 
+
+The libary includes expectations for all Object property types:
+
+* __isEqualTo__ - Set the expectation that the property value should be equal to an explicit value
+* __isNull__ - Set the expectation that the property should be null
+* __isNotNull__ - Set the expectation that the property should not be null
+* __matches__ - Set the expectation that the property matches a Hamcrest matcher
+* __isInstanceOf__ - Set the expectation that the property is an instance of a type
+
+The libary includes expectations for Collection properties:
+
+* __contains__ - Set the expectation that the collection property contains an object which is equal to the explicit value
+* __isEmpty__ - Set the expectation that the collection property is empty
+* __isNotEmpty__ - Set the expectation that the collection property is not empty
+* __hasSize__ - Set the expectation that the collection property is of an explicit size
+
+The libary includes expectations for array properties:
+
+* __contains__ - Set the expectation that the collection property contains an object which is equal to the explicit value
+* __isEmpty__ - Set the expectation that the collection property is empty
+* __isNotEmpty__ - Set the expectation that the collection property is not empty
+* __hasSize__ - Set the expectation that the collection property is of an explicit size
+
+The libary includes expectations for Comparable properties
+
+* __isComparableTo__ - Set the expectation that the colllection property is comparable to an explicit value
+
+The libary includes expectations for String properties
+
+* __hasPattern__ - Set the expectation that the String matches the regular expression
 
 Downloads
 ---------
@@ -45,12 +76,33 @@ A maven project
     <dependency>
         <groupId>org.exparity</groupId>
         <artifactId>expectamundo</artifactId>
-        <version>0.9.1</version>
+        <version>0.9.3</version>
     </dependency>
 
 A project which uses ivy for dependency management
 
-    <dependency org="org.exparity" name="expectamundo" rev="0.9.1"/>
+    <dependency org="org.exparity" name="expectamundo" rev="0.9.3"/>
+
+Source
+------
+The source is structured along the lines of the maven standard folder structure for a jar project.
+
+  * Core classes [src/main/java]
+  * Unit tests [src/test/java]
+
+The source includes a pom.xml for building with Maven 
+
+Release Notes
+-------------
+
+Changes 1.0.2 -> 1.0.3
+  * Expand expectation options
+
+Changes 1.0.1 -> 1.0.2
+  * Correct typo of expactomundo in package name
+
+Changes 1.0.0 -> 1.0.1
+  * Introduce static Expectamundo class
             
 Acknowledgements
 ----------------

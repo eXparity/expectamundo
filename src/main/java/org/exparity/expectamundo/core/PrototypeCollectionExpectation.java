@@ -2,8 +2,10 @@
 package org.exparity.expectamundo.core;
 
 import java.util.Collection;
-import org.exparity.expectamundo.expectations.ContainsExpectation;
-import org.exparity.expectamundo.expectations.IsEmptyExpectation;
+import org.exparity.expectamundo.expectations.Contains;
+import org.exparity.expectamundo.expectations.HasSize;
+import org.exparity.expectamundo.expectations.IsEmpty;
+import org.exparity.expectamundo.expectations.IsNotEmpty;
 
 /**
  * @author Stewart Bissett
@@ -15,10 +17,19 @@ public class PrototypeCollectionExpectation<E, T extends Collection<E>> extends 
 	}
 
 	public void isEmpty() {
-		setExpectation(new IsEmptyExpectation<E, T>());
+		setExpectation(new IsEmpty<E, T>());
+	}
+
+	public void isNotEmpty() {
+		setExpectation(new IsNotEmpty<E, T>());
+	}
+
+	public void hasSize(final int size) {
+		setExpectation(new HasSize<T>(size));
 	}
 
 	public void contains(final E element) {
-		setExpectation(new ContainsExpectation<E, T>(element));
+		setExpectation(new Contains<E, T>(element));
 	}
+
 }

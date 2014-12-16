@@ -1,7 +1,7 @@
 
 package org.exparity.expectamundo.core;
 
-import org.exparity.expectamundo.expectations.ComparableToExpectation;
+import org.exparity.expectamundo.expectations.IsComparableTo;
 
 /**
  * @author Stewart Bissett
@@ -13,6 +13,6 @@ public class PrototypeComparableExpectation<T extends Comparable<T>> extends Pro
 	}
 
 	public void isComparableTo(final T comparable) {
-		setExpectation(new ComparableToExpectation<T>(comparable));
+		setExpectation(new IsComparableTo<T>(comparable));
 	}
 }

@@ -9,7 +9,7 @@ import static org.exparity.expectamundo.Expactamundo.verify;
 import static org.exparity.stub.random.RandomBuilder.aRandomString;
 
 /**
- * Unit Test for {@link Expactamundo} invocations of the {@link EqualToExpectation} expectation
+ * Unit Test for {@link Expactamundo} invocations of the {@link IsEqualTo} expectation
  * 
  * @author Stewart Bissett
  */

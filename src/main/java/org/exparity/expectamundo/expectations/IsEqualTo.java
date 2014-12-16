@@ -4,26 +4,26 @@ package org.exparity.expectamundo.expectations;
 import org.exparity.expectamundo.core.PropertyExpectation;
 
 /**
- * Implemenation of a {@link PropertyExpectation} to check if a property is comparable to another
+ * Implementation of a {@link PropertyExpectation} to check if a property is equal to an expected value
  * 
  * @author Stewart Bissett
  */
-public class ComparableToExpectation<T extends Comparable<T>> implements PropertyExpectation<T> {
+public class IsEqualTo<T> implements PropertyExpectation<T> {
 
 	private final T expected;
 
-	public ComparableToExpectation(final T expected) {
+	public IsEqualTo(final T expected) {
 		this.expected = expected;
 	}
 
 	@Override
 	public boolean matches(final T actual) {
-		return expected.compareTo(actual) == 0;
+		return expected.equals(actual);
 	}
 
 	@Override
 	public String describe() {
-		return "is comparable to " + expected;
+		return "is equal to " + expected;
 	}
 
 }

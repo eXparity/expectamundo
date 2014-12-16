@@ -7,7 +7,7 @@ import org.exparity.expectamundo.core.PropertyExpectation;
 /**
  * @author Stewart Bissett
  */
-public class IsEmptyExpectation<E, T extends Collection<E>> implements PropertyExpectation<T> {
+public class IsEmpty<E, T extends Collection<E>> implements PropertyExpectation<T> {
 
 	@Override
 	public boolean matches(final T actual) {

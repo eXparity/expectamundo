@@ -2,10 +2,12 @@
 package org.exparity.expectamundo;
 
 import java.util.Collection;
+import org.exparity.expectamundo.core.PrototypeArrayExpectation;
 import org.exparity.expectamundo.core.PrototypeCollectionExpectation;
 import org.exparity.expectamundo.core.PrototypeComparableExpectation;
 import org.exparity.expectamundo.core.PrototypeFactory;
 import org.exparity.expectamundo.core.PrototypeObjectExpectation;
+import org.exparity.expectamundo.core.PrototypeStringExpectation;
 import org.exparity.expectamundo.core.PrototypeVerifier;
 import org.exparity.expectamundo.core.Prototyped;
 import org.exparity.expectamundo.core.TypeReference;
@@ -89,6 +91,22 @@ public class Expactamundo {
 	}
 
 	/**
+	 * Setup an expecation for a comparable property on a {@link Prototype}
+	 */
+	public static <T> PrototypeArrayExpectation<T> expect(final T[] property) {
+		checkActivePrototype();
+		return new PrototypeArrayExpectation<T>(currentPrototype(), currentPrototype().getActiveProperty());
+	}
+
+	/**
+	 * Setup an expecation for a String property on a {@link Prototype}
+	 */
+	public static PrototypeStringExpectation expect(final String property) {
+		checkActivePrototype();
+		return new PrototypeStringExpectation(currentPrototype(), currentPrototype().getActiveProperty());
+	}
+
+	/**
 	 * Setup an expecation for a property on a {@link Prototype}
 	 */
 	public static PrototypeObjectExpectation expect(final Object property) {
@@ -102,9 +120,9 @@ public class Expactamundo {
 
 	private static void checkActivePrototype() {
 		if (currentPrototype() == null) {
-			throw new IllegalArgumentException("You can only set an expectation for a property created with Expactamundo.prototype()");
+			throw new IllegalArgumentException("You can only set an expectation on an instance created with Expactamundo.prototype()");
 		} else if (currentPrototype().getActiveProperty() == null) {
-			throw new IllegalArgumentException("You can only set an expectation for a property created with Expactamundo.prototype()");
+			throw new IllegalArgumentException("You can only set an expectation for a property");
 		}
 	}
 

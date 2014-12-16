@@ -9,11 +9,11 @@ import org.exparity.expectamundo.core.PropertyExpectation;
  * 
  * @author Stewart Bissett
  */
-public class ContainsExpectation<E, T extends Collection<E>> implements PropertyExpectation<T> {
+public class Contains<E, T extends Collection<E>> implements PropertyExpectation<T> {
 
 	private E expected;
 
-	public ContainsExpectation(final E expected) {
+	public Contains(final E expected) {
 		this.expected = expected;
 	}
 

@@ -1,8 +1,6 @@
 
 package org.exparity.expectamundo;
 
-import java.util.Arrays;
-import org.exparity.expectamundo.testutils.types.ListReturnType;
 import org.exparity.expectamundo.testutils.types.SimpleType;
 import org.junit.Test;
 import static org.exparity.expectamundo.Expactamundo.expect;

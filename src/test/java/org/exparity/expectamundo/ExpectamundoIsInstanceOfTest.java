@@ -10,7 +10,7 @@ import static org.exparity.expectamundo.Expactamundo.prototype;
 import static org.exparity.expectamundo.Expactamundo.verify;
 
 /**
- * Unit Test for {@link Expactamundo} invocations of the {@link EqualToExpectation} expectation
+ * Unit Test for {@link Expactamundo} invocations of the {@link IsEqualTo} expectation
  * 
  * @author Stewart Bissett
  */

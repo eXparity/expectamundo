@@ -1,11 +1,11 @@
 
 package org.exparity.expectamundo.core;
 
-import org.exparity.expectamundo.expectations.EqualToExpectation;
-import org.exparity.expectamundo.expectations.HamcrestExpectation;
-import org.exparity.expectamundo.expectations.InstanceOfExpectation;
-import org.exparity.expectamundo.expectations.NotNullExpectation;
-import org.exparity.expectamundo.expectations.NullExpectation;
+import org.exparity.expectamundo.expectations.IsEqualTo;
+import org.exparity.expectamundo.expectations.Matches;
+import org.exparity.expectamundo.expectations.IsInstanceOf;
+import org.exparity.expectamundo.expectations.IsNotNull;
+import org.exparity.expectamundo.expectations.IsNull;
 import org.hamcrest.Matcher;
 
 /**
@@ -22,23 +22,23 @@ public class PrototypeObjectExpectation {
 	}
 
 	public <T> void matches(final Matcher<T> expected) {
-		setExpectation(new HamcrestExpectation<T>(expected));
+		setExpectation(new Matches<T>(expected));
 	}
 
 	public <T> void isEqualTo(final T expectedValue) {
-		setExpectation(new EqualToExpectation<T>(expectedValue));
+		setExpectation(new IsEqualTo<T>(expectedValue));
 	}
 
 	public <T> void isInstanceOf(final Class<T> expectedValue) {
-		setExpectation(new InstanceOfExpectation<T>(expectedValue));
+		setExpectation(new IsInstanceOf<T>(expectedValue));
 	}
 
-	public void isNullValue() {
-		setExpectation(new NullExpectation());
+	public void isNull() {
+		setExpectation(new IsNull());
 	}
 
-	public void isNotNullValue() {
-		setExpectation(new NotNullExpectation());
+	public void isNotNull() {
+		setExpectation(new IsNotNull());
 	}
 
 	protected void setExpectation(final PropertyExpectation<?> expectation) {

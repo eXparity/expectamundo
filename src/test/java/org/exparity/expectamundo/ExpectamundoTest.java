@@ -236,4 +236,12 @@ public class ExpectamundoTest {
 	public void canFailToMatchPrimitiveType() {
 		prototype(byte.class);
 	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void canFailIfPropertyExpectationNotSet() {
+		SimpleType actual = new SimpleType(aRandomString());
+		expect(actual).isNull();
+		assertThat(actual, matches(new SimpleType(aRandomString())));
+	}
+
 }

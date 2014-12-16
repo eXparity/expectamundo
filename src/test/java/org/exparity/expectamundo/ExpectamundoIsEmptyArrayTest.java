@@ -1,10 +1,7 @@
 
 package org.exparity.expectamundo;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import org.exparity.expectamundo.testutils.types.ListReturnType;
+import org.exparity.expectamundo.testutils.types.ArrayType;
 import org.junit.Test;
 import static org.exparity.expectamundo.Expactamundo.expect;
 import static org.exparity.expectamundo.Expactamundo.prototype;
@@ -16,28 +13,30 @@ import static org.exparity.stub.random.RandomBuilder.aRandomString;
  * 
  * @author Stewart Bissett
  */
-public class ExpectamundoIsEmptyTest {
+public class ExpectamundoIsEmptyArrayTest {
 
 	@Test
 	public void canCheckForIsEmpty() {
-		List<String> expectedValue = Collections.emptyList();
-		ListReturnType expected = prototype(ListReturnType.class);
+		String[] expectedValue = new String[0];
+		ArrayType expected = prototype(ArrayType.class);
 		expect(expected.getValue()).isEmpty();
-		verify(new ListReturnType(expectedValue)).matches(expected);
+		verify(new ArrayType(expectedValue)).matches(expected);
 	}
 
 	@Test
 	public void canCheckForIsEmptyForNull() {
-		ListReturnType expected = prototype(ListReturnType.class);
+		ArrayType expected = prototype(ArrayType.class);
 		expect(expected.getValue()).isEmpty();
-		verify(new ListReturnType(null)).matches(expected);
+		verify(new ArrayType(null)).matches(expected);
 	}
 
 	@Test(expected = AssertionError.class)
 	public void canCheckForIsNotEmpty() {
-		List<String> expectedValue = Arrays.asList(aRandomString());
-		ListReturnType expected = prototype(ListReturnType.class);
+		String[] expectedValue = new String[] {
+				aRandomString()
+		};
+		ArrayType expected = prototype(ArrayType.class);
 		expect(expected.getValue()).isEmpty();
-		verify(new ListReturnType(expectedValue)).matches(expected);
+		verify(new ArrayType(expectedValue)).matches(expected);
 	}
 }

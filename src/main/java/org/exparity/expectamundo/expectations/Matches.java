@@ -11,11 +11,11 @@ import org.hamcrest.StringDescription;
  * 
  * @author Stewart Bissett
  */
-public class HamcrestExpectation<T> implements PropertyExpectation<T> {
+public class Matches<T> implements PropertyExpectation<T> {
 
 	private final Matcher<T> matcher;
 
-	public HamcrestExpectation(final Matcher<T> matcher) {
+	public Matches(final Matcher<T> matcher) {
 		this.matcher = matcher;
 	}
 

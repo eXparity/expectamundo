@@ -11,6 +11,7 @@ import org.exparity.expectamundo.testutils.types.ListReturnType;
 import org.exparity.expectamundo.testutils.types.MapReturnType;
 import org.exparity.expectamundo.testutils.types.PolymorphicReturnType;
 import org.exparity.expectamundo.testutils.types.PolymorphicSubtype1;
+import org.exparity.expectamundo.testutils.types.PolymorphicSubtype2;
 import org.exparity.expectamundo.testutils.types.PrimitiveArrayType;
 import org.exparity.expectamundo.testutils.types.PrimitiveType;
 import org.exparity.expectamundo.testutils.types.SimpleType;
@@ -271,4 +272,14 @@ public class ExpectamundoTest {
 		expect(cast(expected.getValue(), PolymorphicSubtype1.class).getValue()).isEqualTo(expectedValue);
 		verify(new PolymorphicReturnType(new PolymorphicSubtype1(expectedValue))).matches(expected);
 	}
+
+	@Test(expected = ClassCastException.class)
+	public void canFailIfPolymorphicTypes() {
+		Integer expectedValue = aRandomInteger();
+		String differnentValue = aRandomString();
+		PolymorphicReturnType expected = prototype(PolymorphicReturnType.class);
+		expect(cast(expected.getValue(), PolymorphicSubtype1.class).getValue()).isEqualTo(expectedValue);
+		verify(new PolymorphicReturnType(new PolymorphicSubtype2(differnentValue))).matches(expected);
+	}
+
 }

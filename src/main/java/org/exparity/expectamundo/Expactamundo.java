@@ -201,7 +201,10 @@ public class Expactamundo {
 	 * @param <T> the expected type of the value
 	 */
 	public static <V, T extends V> T cast(final V value, final Class<T> type) {
-		return factory.createPrototype(type, currentPrototype().getActiveProperty(), currentPrototype());
+		checkActivePrototype();
+		T prototype = factory.createPrototype(type, currentPrototype().getActiveProperty(), currentPrototype());
+		currentPrototype().addChild((Prototyped<?>) prototype);
+		return prototype;
 	}
 
 

@@ -29,6 +29,8 @@ public class PrototypeProperty {
 	public Object getPropertyValue(final Object actual) {
 		try {
 			return proxy.invoke(parent != null ? parent.getPropertyValue(actual) : actual, args);
+		} catch (ClassCastException e) {
+			throw e;
 		} catch (Throwable e) {
 			throw new RuntimeException(e);
 		}

@@ -51,6 +51,19 @@ public class PrototypeFactory {
 		return proxy;
 	}
 
+	public <T> T createPrototype(final Class<T> type, final PrototypeProperty activeProperty, final Prototype<?> currentPrototype) {
+		if (isFinal(type.getModifiers())) {
+			throw new IllegalArgumentException("Final classes cannot be prototyped");
+		}
+		PrototypeInterceptor interceptor = createInterceptor(type);
+		LOG.debug("Produce Interceptor [{}] for [{}]", interceptor.getClass().getSimpleName(), type.getName());
+		Prototype<T> prototype = new Prototype<T>(activeProperty, type, activeProperty.getGenericTypeArguments(), interceptor);
+		Class<T> proxyType = createProxy(prototype);
+		T proxy = createProxyInstance(proxyType);
+		LOG.debug("Produce Proxy [{}] for [{}]", proxy, type.getName());
+		return proxy;
+	}
+
 	@SuppressWarnings({
 			"rawtypes", "unchecked"
 	})

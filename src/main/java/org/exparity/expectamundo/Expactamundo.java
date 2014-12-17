@@ -60,14 +60,28 @@ public class Expactamundo {
 	private static PrototypeFactory factory = new PrototypeFactory();
 
 	/**
-	 * Prepare a new prototype
+	 * Create a new prototype instance against which expectations can be set. For example</p>
+	 * 
+	 * <pre>
+	 * Person expected = Expectamundo.prototype(Person.class)
+	 * </pre>
+	 * @param type The class of type of the prototype to create.
+	 * @param <T> The type of the instance to create.
+	 * @return A new instance of the type against which expectations can be set
 	 */
 	public static <T> T prototype(final Class<T> type) {
 		return factory.createPrototype(type);
 	}
 
 	/**
-	 * Prepare a new prototype for a generic type
+	 * Create a new prototype instance against a generic type against which expectations can be set. For example</p>
+	 * 
+	 * <pre>
+	 * List&lt;String&gt; expected = Expectamundo.prototype(new TypeReference&lt;List&lt;String&gt;&gt;(){})
+	 * </pre>
+	 * @param typeRef An instance of a {@link TypeReference} parameterized with the type to prototype
+	 * @param <T> The class of the prototype to create
+	 * @return A new instance of the type against which expectations can be set
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> T prototype(final TypeReference<T> typeRef) {
@@ -75,47 +89,141 @@ public class Expactamundo {
 	}
 
 	/**
-	 * Setup an expecation for a collection property on a {@link Prototype}
-	 */
+	 * Setup an expectation for a collection property on a {@link Prototype}. For example</p>
+	 * 
+	 * <pre>
+	 * Person expected = Expectamundo.prototype(Person.class)
+	 * Expectamundo.expect(expected.getSiblings()).isEmpty();
+	 * Expectamundo.verify(new Person()).matches(expected);
+	 * </pre>
+	 * @param property the value to set the expectation for.
+	 * @param <T> the type of the collection
+	 * @param <E> the type of elements in this collection
+	 * @return A instance of a {@link PrototypeCollectionExpectation} to set collection expectations for the property
+	 * */
 	public static <E, T extends Collection<E>> PrototypeCollectionExpectation<E, T> expect(final T property) {
 		checkActivePrototype();
 		return new PrototypeCollectionExpectation<E, T>(currentPrototype(), currentPrototype().getActiveProperty());
 	}
 
 	/**
-	 * Setup an expecation for a comparable property on a {@link Prototype}
-	 */
+	 * Setup an expectation for a {@link Comparable} property on a {@link Prototype}. For example</p>
+	 * 
+	 * <pre>
+	 * Person expected = Expectamundo.prototype(Person.class)
+	 * Expectamundo.expect(expected.getAge()).isComparableTo(29);
+	 * Expectamundo.verify(new Person()).matches(expected);
+	 * </pre>
+	 * @param property the value to set the expectation for.
+	 * @param <T> the type of the property
+	 * @return A instance of a {@link PrototypeComparableExpectation} to set comparable expectations for the property
+	 * */
 	public static <T extends Comparable<T>> PrototypeComparableExpectation<T> expect(final T property) {
 		checkActivePrototype();
 		return new PrototypeComparableExpectation<T>(currentPrototype(), currentPrototype().getActiveProperty());
 	}
 
 	/**
-	 * Setup an expecation for a comparable property on a {@link Prototype}
-	 */
+	 * Setup an expectation for a array property on a {@link Prototype}. For example</p>
+	 * 
+	 * <pre>
+	 * Person expected = Expectamundo.prototype(Person.class)
+	 * Expectamundo.expect(expected.getSiblings()).isEmpty();
+	 * Expectamundo.verify(new Person()).matches(expected);
+	 * </pre>
+	 * @param property the value to set the expectation for.
+	 * @param <T> the type of the array
+	 * @return A instance of a {@link PrototypeArrayExpectation} to set array expectations for the property
+	 * */
 	public static <T> PrototypeArrayExpectation<T> expect(final T[] property) {
 		checkActivePrototype();
 		return new PrototypeArrayExpectation<T>(currentPrototype(), currentPrototype().getActiveProperty());
 	}
 
 	/**
-	 * Setup an expecation for a String property on a {@link Prototype}
-	 */
+	 * Setup an expectation for a string property on a {@link Prototype}. For example</p>
+	 * 
+	 * <pre>
+	 * Person expected = Expectamundo.prototype(Person.class)
+	 * Expectamundo.expect(expected.getSurname()).hasPattern("Sm.*");
+	 * Expectamundo.verify(new Person()).matches(expected);
+	 * </pre>
+	 * @param property the value to set the expectation for.
+	 * @return A instance of a {@link PrototypeStringExpectation} to set String expectations for the property
+	 * */
 	public static PrototypeStringExpectation expect(final String property) {
 		checkActivePrototype();
 		return new PrototypeStringExpectation(currentPrototype(), currentPrototype().getActiveProperty());
 	}
 
 	/**
-	 * Setup an expecation for a property on a {@link Prototype}
-	 */
+	 * Setup an expectation for a object property on a {@link Prototype}. For example</p>
+	 * 
+	 * <pre>
+	 * Person expected = Expectamundo.prototype(Person.class)
+	 * Expectamundo.expect(expected.getSurname()).isEqualTo("Smith");
+	 * Expectamundo.verify(new Person()).matches(expected);
+	 * </pre>
+	 * @param property the value to set the expectation for.
+	 * @return A instance of a {@link PrototypeObjectExpectation} to set object expectations for the property
+	 * */
 	public static PrototypeObjectExpectation expect(final Object property) {
 		checkActivePrototype();
 		return new PrototypeObjectExpectation(currentPrototype(), currentPrototype().getActiveProperty());
 	}
 
-	public static <T> PrototypeVerifier<T> verify(final T test) {
-		return new PrototypeVerifier<T>(test);
+	/**
+	 * Verify the actual value matches the expectation set up in the prototype. For example</p>
+	 * 
+	 * <pre>
+	 * Person expected = Expectamundo.prototype(Person.class)
+	 * Expectamundo.expect(expected.getSurname()).isEqualTo("Smith");
+	 * Expectamundo.verify(new Person()).matches(expected);
+	 * </pre>
+	 * @param actual the actual instance to test
+	 * @return A instance of a {@link PrototypeVerifier} to allow the expectation to be supplied
+	 */
+	public static <T> PrototypeVerifier<T> verify(final T actual) {
+		return new PrototypeVerifier<T>(actual);
+	}
+
+	/**
+	 * Cast a polymorphic return type to the expected subtype whilst setting an expectation. For example</p>
+	 * 
+	 * <pre>
+	 * Person expected = Expectamundo.prototype(Person.class)
+	 * Expectamundo.expect(Expectamundo.cast(expected.getProfession(), Doctor.class).getQualifications()).isNotEmpty())
+	 * Expectamundo.verify(new Person()).matches(expected);
+	 * </pre>
+	 * @param value the property value.
+	 * @param type the Class of the property value to cast to.
+	 * @param <V> the value type
+	 * @param <T> the expected type of the value
+	 */
+	public static <V, T extends V> T cast(final V value, final Class<T> type) {
+		return factory.createPrototype(type, currentPrototype().getActiveProperty(), currentPrototype());
+	}
+
+
+	/**
+	 * Return a hamcrest {@link Matcher} instance to support asserting the contents of an actual instance match the expected.
+	 * 
+	 * <pre>
+	 * Person expected = Expectamundo.prototype(Person.class)
+	 * Expectamundo.expect(expected.getSurname()).isEqualTo("Smith")
+	 * MatcherAssert.assertThat(new Person(), Expectamundo.matches(expected))
+	 * </pre>
+	 * @param expected The prototype with expectations defined against it
+	 * @param <T> The type of the prototype
+	 * @return A hamcrest Matcher for the prototype which can be used to assert the contents of a test object
+	 * */
+	@SuppressWarnings("unchecked")
+	public static <T> Matcher<T> matches(final T expected) {
+		if (!Prototyped.class.isInstance(expected)) {
+			throw new IllegalArgumentException("You can only match an expectation for a type created with Expactamundo.prototype()");
+		} else {
+			return new PrototypeMatcher<T>((Prototyped<T>) expected);
+		}
 	}
 
 	private static void checkActivePrototype() {
@@ -123,15 +231,6 @@ public class Expactamundo {
 			throw new IllegalArgumentException("You can only set an expectation on an instance created with Expactamundo.prototype()");
 		} else if (currentPrototype().getActiveProperty() == null) {
 			throw new IllegalArgumentException("You can only set an expectation for a property");
-		}
-	}
-
-	@SuppressWarnings("unchecked")
-	public static <T> Matcher<T> matches(final T expected) {
-		if (!Prototyped.class.isInstance(expected)) {
-			throw new IllegalArgumentException("You can only match an expectation for a type created with Expactamundo.prototype()");
-		} else {
-			return new PrototypeMatcher<T>((Prototyped<T>) expected);
 		}
 	}
 

@@ -51,7 +51,6 @@ public class PrototypeInterceptorImpl implements PrototypeInterceptor {
 	private boolean isInvokedByLogger(final PrototypeProperty activeProperty) {
 		boolean logging = false;
 		for (StackTraceElement x : Thread.currentThread().getStackTrace()) {
-			// System.out.println(x.getClassName());
 			if (x.getClassName().startsWith("org.slf4j")) {
 				LOG.debug("Discard {} during Logging", activeProperty);
 				logging = true;

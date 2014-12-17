@@ -18,10 +18,7 @@ import org.exparity.expectamundo.testutils.types.ToStringType;
 import org.exparity.stub.random.RandomBuilder;
 import org.junit.Test;
 import static java.util.Collections.singletonMap;
-import static org.exparity.expectamundo.Expactamundo.expect;
-import static org.exparity.expectamundo.Expactamundo.matches;
-import static org.exparity.expectamundo.Expactamundo.prototype;
-import static org.exparity.expectamundo.Expactamundo.verify;
+import static org.exparity.expectamundo.Expactamundo.*;
 import static org.exparity.stub.random.RandomBuilder.aRandomByteArray;
 import static org.exparity.stub.random.RandomBuilder.aRandomInteger;
 import static org.exparity.stub.random.RandomBuilder.aRandomString;
@@ -267,12 +264,11 @@ public class ExpectamundoTest {
 		verify(new SimpleType(expectedValue)).matches(expectedProperty);
 	}
 
-	// Test disabled until we solve polymorphic approach
-	// @Test
+	@Test
 	public void canMatchPolymorphicTypes() {
 		Integer expectedValue = aRandomInteger();
 		PolymorphicReturnType expected = prototype(PolymorphicReturnType.class);
-		// expect(expected.getValue().getValue()).isEqualTo(expectedValue);
+		expect(cast(expected.getValue(), PolymorphicSubtype1.class).getValue()).isEqualTo(expectedValue);
 		verify(new PolymorphicReturnType(new PolymorphicSubtype1(expectedValue))).matches(expected);
 	}
 }

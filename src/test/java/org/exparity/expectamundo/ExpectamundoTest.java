@@ -246,6 +246,27 @@ public class ExpectamundoTest {
 		assertThat(actual, matches(new SimpleType(aRandomString())));
 	}
 
+	@Test
+	public void canMatchIfPrototypeOverSeveralLines() {
+		String expectedValue = aRandomString();
+		GraphType expected = prototype(GraphType.class);
+		SimpleType expectedProperty = expected.getChild();
+		expect(expectedProperty.getValue()).isEqualTo(expectedValue);
+		verify(new GraphType(expectedValue, new SimpleType(expectedValue))).matches(expected);
+	}
+
+	@Test
+	public void canMatchIfDifferentPrototypeOverSeveralLines() {
+		String expectedValue = aRandomString();
+		GraphType expected = prototype(GraphType.class);
+		SimpleType expectedProperty = prototype(SimpleType.class);
+		expect(expected.getChild().getValue()).isEqualTo(expectedValue);
+		expect(expectedProperty.getValue()).isEqualTo(expectedValue);
+		expect(expected.getValue()).isEqualTo(expectedValue);
+		verify(new GraphType(expectedValue, new SimpleType(expectedValue))).matches(expected);
+		verify(new SimpleType(expectedValue)).matches(expectedProperty);
+	}
+
 	// Test disabled until we solve polymorphic approach
 	// @Test
 	public void canMatchPolymorphicTypes() {

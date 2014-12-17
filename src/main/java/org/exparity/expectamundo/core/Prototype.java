@@ -3,7 +3,6 @@ package org.exparity.expectamundo.core;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import net.sf.cglib.proxy.MethodInterceptor;
@@ -11,9 +10,10 @@ import net.sf.cglib.proxy.MethodProxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Prototype<T> implements Prototyped<T>, MethodInterceptor {
+public final class Prototype<T> implements Prototyped<T>, MethodInterceptor {
 
 	private static Logger LOG = LoggerFactory.getLogger(Prototype.class);
+
 	private final Class<T> rawType;
 	private final PrototypeInterceptor interceptor;
 	private final List<Prototyped<?>> children = new ArrayList<Prototyped<?>>();
@@ -43,7 +43,7 @@ public class Prototype<T> implements Prototyped<T>, MethodInterceptor {
 	}
 
 	public void setActiveProperty(final PrototypeProperty activeProperty) {
-		LOG.debug("SetProp {}", activeProperty);
+		LOG.debug("Current Property {}", activeProperty == null ? "NONE" : activeProperty.getPath());
 		this.activeProperty = activeProperty;
 	}
 
@@ -62,7 +62,7 @@ public class Prototype<T> implements Prototyped<T>, MethodInterceptor {
 	}
 
 	public void addExpectation(final PrototypePropertyMatcher expecation) {
-		LOG.debug("AddExpd {}", expecation);
+		LOG.info("Expects {} {}", expecation.getPropertyPath(), expecation.getExpectation());
 		this.expectations.add(expecation);
 	}
 

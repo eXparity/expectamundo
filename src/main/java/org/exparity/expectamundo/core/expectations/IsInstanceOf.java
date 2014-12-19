@@ -10,9 +10,9 @@ import org.exparity.expectamundo.core.PropertyExpectation;
  */
 public class IsInstanceOf<T> implements PropertyExpectation<T> {
 
-	private final Class<T> expected;
+	private final Class<? extends T> expected;
 
-	public IsInstanceOf(final Class<T> expected) {
+	public IsInstanceOf(final Class<? extends T> expected) {
 		this.expected = expected;
 	}
 

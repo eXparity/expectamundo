@@ -8,11 +8,10 @@ import org.exparity.expectamundo.core.PropertyExpectation;
  * 
  * @author Stewart Bissett
  */
-@SuppressWarnings("rawtypes")
-public class IsNull implements PropertyExpectation {
+public class IsNull<T> implements PropertyExpectation<T> {
 
 	@Override
-	public boolean matches(final Object actual) {
+	public boolean matches(final T actual) {
 		return actual == null;
 	}
 

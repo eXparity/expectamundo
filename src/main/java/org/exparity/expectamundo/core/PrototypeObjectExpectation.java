@@ -21,27 +21,27 @@ public class PrototypeObjectExpectation<T> {
 		this.property = property;
 	}
 
-	public <T> void matches(final Matcher<T> expected) {
+	public void matches(final Matcher<T> expected) {
 		hasExpectation(new Matches<T>(expected));
 	}
 
-	public <T> void isEqualTo(final T expectedValue) {
+	public void isEqualTo(final T expectedValue) {
 		hasExpectation(new IsEqualTo<T>(expectedValue));
 	}
 
-	public <T> void isInstanceOf(final Class<T> expectedValue) {
+	public void isInstanceOf(final Class<? extends T> expectedValue) {
 		hasExpectation(new IsInstanceOf<T>(expectedValue));
 	}
 
 	public void isNull() {
-		hasExpectation(new IsNull());
+		hasExpectation(new IsNull<T>());
 	}
 
 	public void isNotNull() {
-		hasExpectation(new IsNotNull());
+		hasExpectation(new IsNotNull<T>());
 	}
 
-	public void hasExpectation(final PropertyExpectation<?> expectation) {
+	public void hasExpectation(final PropertyExpectation<T> expectation) {
 		prototype.addExpectation(new PrototypePropertyMatcher(property, expectation));
 		prototype.setActiveProperty(null);
 	}

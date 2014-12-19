@@ -186,9 +186,9 @@ public class Expectamundo {
 	 * @param property the value to set the expectation for.
 	 * @return A instance of a {@link PrototypeObjectExpectation} to set object expectations for the property
 	 * */
-	public static PrototypeObjectExpectation expect(final Object property) {
+	public static <T> PrototypeObjectExpectation<T> expect(final T property) {
 		checkActivePrototype();
-		return new PrototypeObjectExpectation(currentPrototype(), currentPrototype().getActiveProperty());
+		return new PrototypeObjectExpectation<T>(currentPrototype(), currentPrototype().getActiveProperty());
 	}
 
 	/**

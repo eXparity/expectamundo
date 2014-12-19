@@ -11,7 +11,7 @@ import org.hamcrest.Matcher;
 /**
  * @author Stewart Bissett
  */
-public class PrototypeObjectExpectation {
+public class PrototypeObjectExpectation<T> {
 
 	private final Prototype<?> prototype;
 	private final PrototypeProperty property;

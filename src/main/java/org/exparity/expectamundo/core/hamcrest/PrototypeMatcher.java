@@ -1,5 +1,5 @@
 
-package org.exparity.expectamundo.hamcrest;
+package org.exparity.expectamundo.core.hamcrest;
 
 import java.util.List;
 import org.exparity.expectamundo.core.PrototypePropertyMatcher;

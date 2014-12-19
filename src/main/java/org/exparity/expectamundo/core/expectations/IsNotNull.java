@@ -1,24 +1,24 @@
 
-package org.exparity.expectamundo.expectations;
+package org.exparity.expectamundo.core.expectations;
 
 import org.exparity.expectamundo.core.PropertyExpectation;
 
 /**
- * Implementation of a {@link PropertyExpectation} to check if a property is null
+ * Implementation of a {@link PropertyExpectation} to check if a property is not null
  * 
  * @author Stewart Bissett
  */
 @SuppressWarnings("rawtypes")
-public class IsNull implements PropertyExpectation {
+public class IsNotNull implements PropertyExpectation {
 
 	@Override
 	public boolean matches(final Object actual) {
-		return actual == null;
+		return actual != null;
 	}
 
 	@Override
 	public String describe() {
-		return "is null";
+		return "is not null";
 	}
 
 }

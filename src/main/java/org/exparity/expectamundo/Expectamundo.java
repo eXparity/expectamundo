@@ -14,7 +14,7 @@ import org.exparity.expectamundo.core.PrototypeStringExpectation;
 import org.exparity.expectamundo.core.PrototypeVerifier;
 import org.exparity.expectamundo.core.Prototyped;
 import org.exparity.expectamundo.core.TypeReference;
-import org.exparity.expectamundo.hamcrest.PrototypeMatcher;
+import org.exparity.expectamundo.core.hamcrest.PrototypeMatcher;
 import org.hamcrest.Matcher;
 import static org.exparity.expectamundo.core.PrototypeMatcherContext.currentPrototype;
 

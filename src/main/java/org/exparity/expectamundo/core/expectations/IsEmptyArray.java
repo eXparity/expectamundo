@@ -1,21 +1,21 @@
 
-package org.exparity.expectamundo.expectations;
+package org.exparity.expectamundo.core.expectations;
 
 import org.exparity.expectamundo.core.PropertyExpectation;
 
 /**
  * @author Stewart Bissett
  */
-public class IsNotEmptyArray<T> implements PropertyExpectation<T[]> {
+public class IsEmptyArray<T> implements PropertyExpectation<T[]> {
 
 	@Override
 	public boolean matches(final T[] actual) {
-		return actual != null && actual.length > 0;
+		return actual == null || actual.length == 0;
 	}
 
 	@Override
 	public String describe() {
-		return "is not empty";
+		return "is empty";
 	}
 
 }

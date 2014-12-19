@@ -1,5 +1,5 @@
 
-package org.exparity.expectamundo.expectations;
+package org.exparity.expectamundo.core.expectations;
 
 import org.exparity.expectamundo.core.PropertyExpectation;
 import java.lang.String;

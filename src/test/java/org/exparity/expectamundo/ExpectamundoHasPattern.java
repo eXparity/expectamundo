@@ -8,7 +8,7 @@ import static org.exparity.expectamundo.Expectamundo.prototype;
 import static org.exparity.expectamundo.Expectamundo.expectThat;
 
 /**
- * Unit Test for {@link Expectamundo} invocations of the {@link org.exparity.expectamundo.expectations.HasPattern} expectation
+ * Unit Test for {@link Expectamundo} invocations of the {@link org.exparity.expectamundo.core.expectations.HasPattern} expectation
  * 
  * @author Stewart Bissett
  */

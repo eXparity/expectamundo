@@ -2,10 +2,10 @@
 package org.exparity.expectamundo.core;
 
 import java.util.Collection;
-import org.exparity.expectamundo.expectations.Contains;
-import org.exparity.expectamundo.expectations.HasSize;
-import org.exparity.expectamundo.expectations.IsEmpty;
-import org.exparity.expectamundo.expectations.IsNotEmpty;
+import org.exparity.expectamundo.core.expectations.Contains;
+import org.exparity.expectamundo.core.expectations.HasSize;
+import org.exparity.expectamundo.core.expectations.IsEmpty;
+import org.exparity.expectamundo.core.expectations.IsNotEmpty;
 
 /**
  * @author Stewart Bissett

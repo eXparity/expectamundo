@@ -1,7 +1,7 @@
 
 package org.exparity.expectamundo.core;
 
-import org.exparity.expectamundo.expectations.IsComparableTo;
+import org.exparity.expectamundo.core.expectations.IsComparableTo;
 
 /**
  * @author Stewart Bissett

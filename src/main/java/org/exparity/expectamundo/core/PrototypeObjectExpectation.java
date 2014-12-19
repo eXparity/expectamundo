@@ -1,11 +1,11 @@
 
 package org.exparity.expectamundo.core;
 
-import org.exparity.expectamundo.expectations.IsEqualTo;
-import org.exparity.expectamundo.expectations.Matches;
-import org.exparity.expectamundo.expectations.IsInstanceOf;
-import org.exparity.expectamundo.expectations.IsNotNull;
-import org.exparity.expectamundo.expectations.IsNull;
+import org.exparity.expectamundo.core.expectations.IsEqualTo;
+import org.exparity.expectamundo.core.expectations.IsInstanceOf;
+import org.exparity.expectamundo.core.expectations.IsNotNull;
+import org.exparity.expectamundo.core.expectations.IsNull;
+import org.exparity.expectamundo.core.expectations.Matches;
 import org.hamcrest.Matcher;
 
 /**

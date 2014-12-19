@@ -1,10 +1,10 @@
 
 package org.exparity.expectamundo.core;
 
-import org.exparity.expectamundo.expectations.ContainsInArray;
-import org.exparity.expectamundo.expectations.HasLengthOfArray;
-import org.exparity.expectamundo.expectations.IsEmptyArray;
-import org.exparity.expectamundo.expectations.IsNotEmptyArray;
+import org.exparity.expectamundo.core.expectations.ContainsInArray;
+import org.exparity.expectamundo.core.expectations.HasLengthOfArray;
+import org.exparity.expectamundo.core.expectations.IsEmptyArray;
+import org.exparity.expectamundo.core.expectations.IsNotEmptyArray;
 
 /**
  * @author Stewart Bissett

@@ -1,8 +1,8 @@
 
 package org.exparity.expectamundo.core;
 
-import org.exparity.expectamundo.expectations.HasLength;
-import org.exparity.expectamundo.expectations.HasPattern;
+import org.exparity.expectamundo.core.expectations.HasLength;
+import org.exparity.expectamundo.core.expectations.HasPattern;
 
 /**
  * @author Stewart Bissett

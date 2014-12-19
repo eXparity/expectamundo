@@ -3,9 +3,9 @@ package org.exparity.expectamundo.core;
 
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
-import org.exparity.expectamundo.expectations.IsAfter;
-import org.exparity.expectamundo.expectations.IsBefore;
-import org.exparity.expectamundo.expectations.IsWithin;
+import org.exparity.expectamundo.core.expectations.IsAfter;
+import org.exparity.expectamundo.core.expectations.IsBefore;
+import org.exparity.expectamundo.core.expectations.IsWithin;
 
 /**
  * @author Stewart Bissett

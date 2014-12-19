@@ -4,11 +4,11 @@ package org.exparity.expectamundo.core;
 /**
  * @author Stewart Bissett
  */
-public class PrototypeVerifier<T> {
+public class PrototypeChecker<T> {
 
 	private final T actual;
 
-	public PrototypeVerifier(final T actual) {
+	public PrototypeChecker(final T actual) {
 		this.actual = actual;
 	}
 
@@ -17,18 +17,13 @@ public class PrototypeVerifier<T> {
 	 * @param prototype the prototype object containing the expectations
 	 */
 	@SuppressWarnings("unchecked")
-	public void matches(final T prototype) {
+	public boolean matches(final T prototype) {
 		if (!Prototyped.class.isInstance(prototype)) {
 			throw new IllegalArgumentException("Object does not implement Prototyped. Please construct using PrototypeMatcher.expected");
 		}
 		StringBuffer mismatchDescription = new StringBuffer();
 		Prototyped<T> prototyped = (Prototyped) prototype;
-		if (!matchesPrototype(prototyped, mismatchDescription)) {
-			StringBuffer buffer = new StringBuffer("\nExpected ");
-			describeTo(buffer, prototyped);
-			buffer.append("\nbut actual is ").append(mismatchDescription);
-			throw new AssertionError(buffer.toString());
-		}
+		return matchesPrototype(prototyped, mismatchDescription);
 	}
 
 	protected boolean matchesPrototype(final Prototyped<?> prototyped, final StringBuffer mismatchDescription) {
@@ -43,16 +38,4 @@ public class PrototypeVerifier<T> {
 		}
 		return matches;
 	}
-
-	private void describeTo(final StringBuffer description, final Prototyped<?> prototyped) {
-		Class<?> rawType = prototyped.getRawType();
-		description.append("a ").append(rawType.getSimpleName());
-		if (!prototyped.getExpectations().isEmpty()) {
-			description.append(" containing properties :");
-			for (PrototypePropertyMatcher expecation : prototyped.getExpectations()) {
-				description.append("\n\t").append(expecation.getPropertyPath()).append(" is ").append(expecation.getExpectation());
-			}
-		}
-	}
-
 }

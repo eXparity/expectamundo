@@ -6,7 +6,7 @@ import org.exparity.stub.random.RandomBuilder;
 import org.junit.Test;
 import static org.exparity.expectamundo.Expactamundo.expect;
 import static org.exparity.expectamundo.Expactamundo.prototype;
-import static org.exparity.expectamundo.Expactamundo.verify;
+import static org.exparity.expectamundo.Expactamundo.expectThat;
 import static org.exparity.stub.random.RandomBuilder.aRandomArrayOf;
 import static org.exparity.stub.random.RandomBuilder.aRandomInteger;
 
@@ -22,21 +22,21 @@ public class ExpectamundoHasLengthOfArray {
 		int expectedLength = RandomBuilder.aRandomInteger(1, 10);
 		ArrayType expected = prototype(ArrayType.class);
 		expect(expected.getValue()).hasLength(expectedLength);
-		verify(new ArrayType(aRandomArrayOf(String.class, expectedLength, expectedLength))).matches(expected);
+		expectThat(new ArrayType(aRandomArrayOf(String.class, expectedLength, expectedLength))).matches(expected);
 	}
 
 	@Test
 	public void canCheckForIsSizeIfNull() {
 		ArrayType expected = prototype(ArrayType.class);
 		expect(expected.getValue()).hasLength(0);
-		verify(new ArrayType(null)).matches(expected);
+		expectThat(new ArrayType(null)).matches(expected);
 	}
 
 	@Test(expected = AssertionError.class)
 	public void canCheckForWrongSizeIfNull() {
 		ArrayType expected = prototype(ArrayType.class);
 		expect(expected.getValue()).hasLength(1);
-		verify(new ArrayType(null)).matches(expected);
+		expectThat(new ArrayType(null)).matches(expected);
 	}
 
 	@Test(expected = AssertionError.class)
@@ -44,6 +44,6 @@ public class ExpectamundoHasLengthOfArray {
 		int expectedLength = aRandomInteger(1, 10), differnentLength = aRandomInteger(11, 20);
 		ArrayType expected = prototype(ArrayType.class);
 		expect(expected.getValue()).hasLength(expectedLength);
-		verify(new ArrayType(aRandomArrayOf(String.class, differnentLength, differnentLength))).matches(expected);
+		expectThat(new ArrayType(aRandomArrayOf(String.class, differnentLength, differnentLength))).matches(expected);
 	}
 }

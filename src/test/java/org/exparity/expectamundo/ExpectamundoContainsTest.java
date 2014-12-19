@@ -6,7 +6,7 @@ import org.exparity.expectamundo.testutils.types.ListReturnType;
 import org.junit.Test;
 import static org.exparity.expectamundo.Expactamundo.expect;
 import static org.exparity.expectamundo.Expactamundo.prototype;
-import static org.exparity.expectamundo.Expactamundo.verify;
+import static org.exparity.expectamundo.Expactamundo.expectThat;
 import static org.exparity.stub.random.RandomBuilder.aRandomString;
 
 /**
@@ -21,7 +21,7 @@ public class ExpectamundoContainsTest {
 		String expectedValue = aRandomString();
 		ListReturnType expected = prototype(ListReturnType.class);
 		expect(expected.getValue()).contains(expectedValue);
-		verify(new ListReturnType(Arrays.asList(expectedValue))).matches(expected);
+		expectThat(new ListReturnType(Arrays.asList(expectedValue))).matches(expected);
 	}
 
 	@Test(expected = AssertionError.class)
@@ -29,14 +29,14 @@ public class ExpectamundoContainsTest {
 		String expectedValue = aRandomString(), differentValue = aRandomString();
 		ListReturnType expected = prototype(ListReturnType.class);
 		expect(expected.getValue()).contains(expectedValue);
-		verify(new ListReturnType(Arrays.asList(differentValue))).matches(expected);
+		expectThat(new ListReturnType(Arrays.asList(differentValue))).matches(expected);
 	}
 
 	@Test(expected = AssertionError.class)
 	public void canCheckForNotContainsIfNull() {
 		ListReturnType expected = prototype(ListReturnType.class);
 		expect(expected.getValue()).contains(aRandomString());
-		verify(new ListReturnType(null)).matches(expected);
+		expectThat(new ListReturnType(null)).matches(expected);
 	}
 
 }

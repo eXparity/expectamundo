@@ -5,7 +5,7 @@ import org.exparity.expectamundo.testutils.types.SimpleType;
 import org.junit.Test;
 import static org.exparity.expectamundo.Expactamundo.expect;
 import static org.exparity.expectamundo.Expactamundo.prototype;
-import static org.exparity.expectamundo.Expactamundo.verify;
+import static org.exparity.expectamundo.Expactamundo.expectThat;
 import static org.exparity.stub.random.RandomBuilder.aRandomString;
 
 /**
@@ -19,13 +19,13 @@ public class ExpectamundoIsNotNullTest {
 	public void canCheckForNotNull() {
 		SimpleType expected = prototype(SimpleType.class);
 		expect(expected.getValue()).isNotNull();
-		verify(new SimpleType(aRandomString())).matches(expected);
+		expectThat(new SimpleType(aRandomString())).matches(expected);
 	}
 
 	@Test(expected = AssertionError.class)
 	public void canCheckForIsNull() {
 		SimpleType expected = prototype(SimpleType.class);
 		expect(expected.getValue()).isNotNull();
-		verify(new SimpleType(null)).matches(expected);
+		expectThat(new SimpleType(null)).matches(expected);
 	}
 }

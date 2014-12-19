@@ -5,7 +5,7 @@ import org.exparity.expectamundo.testutils.types.ArrayType;
 import org.junit.Test;
 import static org.exparity.expectamundo.Expactamundo.expect;
 import static org.exparity.expectamundo.Expactamundo.prototype;
-import static org.exparity.expectamundo.Expactamundo.verify;
+import static org.exparity.expectamundo.Expactamundo.expectThat;
 import static org.exparity.stub.random.RandomBuilder.aRandomString;
 
 /**
@@ -20,7 +20,7 @@ public class ExpectamundoContainsInArrayTest {
 		String expectedValue = aRandomString();
 		ArrayType expected = prototype(ArrayType.class);
 		expect(expected.getValue()).contains(expectedValue);
-		verify(new ArrayType(new String[] {
+		expectThat(new ArrayType(new String[] {
 				expectedValue
 		})).matches(expected);
 	}
@@ -30,7 +30,7 @@ public class ExpectamundoContainsInArrayTest {
 		String expectedValue = aRandomString(), differentValue = aRandomString();
 		ArrayType expected = prototype(ArrayType.class);
 		expect(expected.getValue()).contains(expectedValue);
-		verify(new ArrayType(new String[] {
+		expectThat(new ArrayType(new String[] {
 				differentValue
 		})).matches(expected);
 	}
@@ -39,7 +39,7 @@ public class ExpectamundoContainsInArrayTest {
 	public void canCheckForNotContainsIfNull() {
 		ArrayType expected = prototype(ArrayType.class);
 		expect(expected.getValue()).contains(aRandomString());
-		verify(new ArrayType(null)).matches(expected);
+		expectThat(new ArrayType(null)).matches(expected);
 	}
 
 }

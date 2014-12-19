@@ -17,13 +17,15 @@ import org.exparity.expectamundo.testutils.types.PrimitiveType;
 import org.exparity.expectamundo.testutils.types.SimpleType;
 import org.exparity.expectamundo.testutils.types.ToStringType;
 import org.exparity.stub.random.RandomBuilder;
+import org.hamcrest.MatcherAssert;
+import org.junit.Assert;
 import org.junit.Test;
 import static java.util.Collections.singletonMap;
 import static org.exparity.expectamundo.Expactamundo.*;
 import static org.exparity.stub.random.RandomBuilder.aRandomByteArray;
 import static org.exparity.stub.random.RandomBuilder.aRandomInteger;
 import static org.exparity.stub.random.RandomBuilder.aRandomString;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author Stewart Bissett
@@ -35,7 +37,7 @@ public class ExpectamundoTest {
 		final String expectedValue = aRandomString();
 		SimpleType expected = prototype(SimpleType.class);
 		expect(expected.getValue()).isEqualTo(expectedValue);
-		verify(new SimpleType(expectedValue)).matches(expected);
+		expectThat(new SimpleType(expectedValue)).matches(expected);
 	}
 
 	@Test(expected = AssertionError.class)
@@ -43,7 +45,7 @@ public class ExpectamundoTest {
 		final String expectedValue = aRandomString(), differentValue = expectedValue + aRandomString();
 		SimpleType expected = prototype(SimpleType.class);
 		expect(expected.getValue()).isEqualTo(expectedValue);
-		verify(new SimpleType(differentValue)).matches(expected);
+		expectThat(new SimpleType(differentValue)).matches(expected);
 	}
 
 	@Test
@@ -51,7 +53,7 @@ public class ExpectamundoTest {
 		final int expectedValue = aRandomInteger();
 		PrimitiveType expected = prototype(PrimitiveType.class);
 		expect(expected.getValue()).isEqualTo(expectedValue);
-		verify(new PrimitiveType(expectedValue)).matches(expected);
+		expectThat(new PrimitiveType(expectedValue)).matches(expected);
 	}
 
 	@Test(expected = AssertionError.class)
@@ -59,7 +61,7 @@ public class ExpectamundoTest {
 		final int expectedValue = aRandomInteger(), differentValue = expectedValue + aRandomInteger();
 		PrimitiveType expected = prototype(PrimitiveType.class);
 		expect(expected.getValue()).isEqualTo(expectedValue);
-		verify(new PrimitiveType(differentValue)).matches(expected);
+		expectThat(new PrimitiveType(differentValue)).matches(expected);
 	}
 
 	@Test
@@ -67,7 +69,7 @@ public class ExpectamundoTest {
 		final byte[] expectedValue = aRandomByteArray();
 		PrimitiveArrayType expected = prototype(PrimitiveArrayType.class);
 		expect(expected.getValue()).isEqualTo(expectedValue);
-		verify(new PrimitiveArrayType(expectedValue)).matches(expected);
+		expectThat(new PrimitiveArrayType(expectedValue)).matches(expected);
 	}
 
 	@Test(expected = AssertionError.class)
@@ -75,7 +77,7 @@ public class ExpectamundoTest {
 		final byte[] expectedValue = aRandomByteArray(), differentValue = aRandomByteArray();
 		PrimitiveArrayType expected = prototype(PrimitiveArrayType.class);
 		expect(expected.getValue()).isEqualTo(expectedValue);
-		verify(new PrimitiveArrayType(differentValue)).matches(expected);
+		expectThat(new PrimitiveArrayType(differentValue)).matches(expected);
 	}
 
 	@Test
@@ -83,7 +85,7 @@ public class ExpectamundoTest {
 		final SimpleType expectedValue = new SimpleType(aRandomString());
 		GraphType expected = prototype(GraphType.class);
 		expect(expected.getChild()).isEqualTo(expectedValue);
-		verify(new GraphType(aRandomString(), expectedValue)).matches(expected);
+		expectThat(new GraphType(aRandomString(), expectedValue)).matches(expected);
 	}
 
 	@Test(expected = AssertionError.class)
@@ -91,7 +93,7 @@ public class ExpectamundoTest {
 		final SimpleType expectedValue = new SimpleType(aRandomString()), differentValue = new SimpleType(aRandomString());
 		GraphType expected = prototype(GraphType.class);
 		expect(expected.getChild()).isEqualTo(expectedValue);
-		verify(new GraphType(aRandomString(), differentValue)).matches(expected);
+		expectThat(new GraphType(aRandomString(), differentValue)).matches(expected);
 	}
 
 	@Test
@@ -99,7 +101,7 @@ public class ExpectamundoTest {
 		final String expectedValue = aRandomString();
 		ToStringType expected = prototype(ToStringType.class);
 		expect(expected.toString()).isEqualTo(expectedValue);
-		verify(new ToStringType(expectedValue)).matches(expected);
+		expectThat(new ToStringType(expectedValue)).matches(expected);
 	}
 
 	@Test
@@ -107,7 +109,7 @@ public class ExpectamundoTest {
 		final int expectedValue = RandomBuilder.aRandomInteger();
 		HashCodeType expected = prototype(HashCodeType.class);
 		expect(expected.hashCode()).isEqualTo(expectedValue);
-		verify(new HashCodeType(expectedValue)).matches(expected);
+		expectThat(new HashCodeType(expectedValue)).matches(expected);
 	}
 
 	@Test
@@ -116,7 +118,7 @@ public class ExpectamundoTest {
 		GraphType expected = prototype(GraphType.class);
 		expect(expected.getValue()).isEqualTo(expectedValue);
 		expect(expected.getChild().getValue()).isEqualTo(expectedValue);
-		verify(new GraphType(expectedValue, new SimpleType(expectedValue))).matches(expected);
+		expectThat(new GraphType(expectedValue, new SimpleType(expectedValue))).matches(expected);
 	}
 
 	@Test(expected = AssertionError.class)
@@ -125,7 +127,7 @@ public class ExpectamundoTest {
 		GraphType expected = prototype(GraphType.class);
 		expect(expected.getValue()).isEqualTo(expectedValue);
 		expect(expected.getChild().getValue()).isEqualTo(expectedValue);
-		verify(new GraphType(expectedValue, new SimpleType(differentValue))).matches(expected);
+		expectThat(new GraphType(expectedValue, new SimpleType(differentValue))).matches(expected);
 	}
 
 	@Test
@@ -134,7 +136,7 @@ public class ExpectamundoTest {
 		List<String> expected = prototype(new TypeReference<List<String>>() {});
 		expect(expected.get(0)).isEqualTo(expectedValue);
 		List<String> actual = Arrays.asList(expectedValue);
-		verify(actual).matches(expected);
+		expectThat(actual).matches(expected);
 	}
 
 	@Test(expected = AssertionError.class)
@@ -143,7 +145,7 @@ public class ExpectamundoTest {
 		List<String> expected = prototype(new TypeReference<List<String>>() {});
 		expect(expected.get(0)).isEqualTo(expectedValue);
 		List<String> actual = Arrays.asList(differentValue);
-		verify(actual).matches(expected);
+		expectThat(actual).matches(expected);
 	}
 
 	@SuppressWarnings({
@@ -159,7 +161,7 @@ public class ExpectamundoTest {
 		final List<String> expectedValue = Arrays.asList(aRandomString());
 		ListReturnType expected = prototype(ListReturnType.class);
 		expect(expected.getValue().get(0)).isEqualTo(expectedValue.get(0));
-		verify(new ListReturnType(expectedValue)).matches(expected);
+		expectThat(new ListReturnType(expectedValue)).matches(expected);
 	}
 
 	@Test(expected = AssertionError.class)
@@ -168,7 +170,7 @@ public class ExpectamundoTest {
 		final List<String> expectedValue = Arrays.asList(expectedString), differentValue = Arrays.asList(expectedString + aRandomString());
 		ListReturnType expected = prototype(ListReturnType.class);
 		expect(expected.getValue().get(0)).isEqualTo(expectedValue.get(0));
-		verify(new ListReturnType(differentValue)).matches(expected);
+		expectThat(new ListReturnType(differentValue)).matches(expected);
 	}
 
 	@Test
@@ -176,7 +178,7 @@ public class ExpectamundoTest {
 		String key = aRandomString(), value = aRandomString();
 		MapReturnType expected = prototype(MapReturnType.class);
 		expect(expected.getValue().get(key)).isEqualTo(value);
-		verify(new MapReturnType(Collections.singletonMap(key, value))).matches(expected);
+		expectThat(new MapReturnType(Collections.singletonMap(key, value))).matches(expected);
 	}
 
 	@Test(expected = AssertionError.class)
@@ -184,7 +186,7 @@ public class ExpectamundoTest {
 		String key = aRandomString(), value = aRandomString(), aDifferentKey = aRandomString();
 		MapReturnType expected = prototype(MapReturnType.class);
 		expect(expected.getValue().get(key)).isEqualTo(value);
-		verify(new MapReturnType(singletonMap(aDifferentKey, value))).matches(expected);
+		expectThat(new MapReturnType(singletonMap(aDifferentKey, value))).matches(expected);
 	}
 
 	@Test(expected = AssertionError.class)
@@ -192,7 +194,7 @@ public class ExpectamundoTest {
 		String key = aRandomString(), value = aRandomString(), aDifferentValue = aRandomString();
 		MapReturnType expected = prototype(MapReturnType.class);
 		expect(expected.getValue().get(key)).isEqualTo(value);
-		verify(new MapReturnType(singletonMap(key, aDifferentValue))).matches(expected);
+		expectThat(new MapReturnType(singletonMap(key, aDifferentValue))).matches(expected);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -208,7 +210,7 @@ public class ExpectamundoTest {
 		SimpleType expected = prototype(SimpleType.class);
 		expect(expected.getValue()).isEqualTo(expectedValue);
 		SimpleType actual = new SimpleType(expectedValue);
-		assertThat(actual, matches(expected));
+		MatcherAssert.assertThat(actual, asMatcher(expected));
 	}
 
 	@Test(expected = AssertionError.class)
@@ -217,19 +219,19 @@ public class ExpectamundoTest {
 		SimpleType expected = prototype(SimpleType.class);
 		expect(expected.getValue()).isEqualTo(expectedValue);
 		SimpleType actual = new SimpleType(differentValue);
-		assertThat(actual, matches(expected));
+		MatcherAssert.assertThat(actual, asMatcher(expected));
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void canFailUsingHamcrestOnNormalInstance() {
 		SimpleType actual = new SimpleType(aRandomString());
-		assertThat(actual, matches(new SimpleType(aRandomString())));
+		MatcherAssert.assertThat(actual, asMatcher(new SimpleType(aRandomString())));
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void canFailIfVerifyingExpectationOnNormalInstance() {
 		SimpleType expected = new SimpleType(aRandomString());
-		verify(expected).matches(expected);
+		expectThat(expected).matches(expected);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -241,7 +243,7 @@ public class ExpectamundoTest {
 	public void canFailIfPropertyExpectationNotSet() {
 		SimpleType actual = new SimpleType(aRandomString());
 		expect(actual).isNull();
-		assertThat(actual, matches(new SimpleType(aRandomString())));
+		expectThat(actual).matches(new SimpleType(aRandomString()));
 	}
 
 	@Test
@@ -250,7 +252,7 @@ public class ExpectamundoTest {
 		GraphType expected = prototype(GraphType.class);
 		SimpleType expectedProperty = expected.getChild();
 		expect(expectedProperty.getValue()).isEqualTo(expectedValue);
-		verify(new GraphType(expectedValue, new SimpleType(expectedValue))).matches(expected);
+		expectThat(new GraphType(expectedValue, new SimpleType(expectedValue))).matches(expected);
 	}
 
 	@Test
@@ -261,8 +263,8 @@ public class ExpectamundoTest {
 		expect(expected.getChild().getValue()).isEqualTo(expectedValue);
 		expect(expectedProperty.getValue()).isEqualTo(expectedValue);
 		expect(expected.getValue()).isEqualTo(expectedValue);
-		verify(new GraphType(expectedValue, new SimpleType(expectedValue))).matches(expected);
-		verify(new SimpleType(expectedValue)).matches(expectedProperty);
+		expectThat(new GraphType(expectedValue, new SimpleType(expectedValue))).matches(expected);
+		expectThat(new SimpleType(expectedValue)).matches(expectedProperty);
 	}
 
 	@Test
@@ -270,7 +272,7 @@ public class ExpectamundoTest {
 		Integer expectedValue = aRandomInteger();
 		PolymorphicReturnType expected = prototype(PolymorphicReturnType.class);
 		expect(cast(expected.getValue(), PolymorphicSubtype1.class).getValue()).isEqualTo(expectedValue);
-		verify(new PolymorphicReturnType(new PolymorphicSubtype1(expectedValue))).matches(expected);
+		expectThat(new PolymorphicReturnType(new PolymorphicSubtype1(expectedValue))).matches(expected);
 	}
 
 	@Test(expected = ClassCastException.class)
@@ -279,7 +281,23 @@ public class ExpectamundoTest {
 		String differnentValue = aRandomString();
 		PolymorphicReturnType expected = prototype(PolymorphicReturnType.class);
 		expect(cast(expected.getValue(), PolymorphicSubtype1.class).getValue()).isEqualTo(expectedValue);
-		verify(new PolymorphicReturnType(new PolymorphicSubtype2(differnentValue))).matches(expected);
+		expectThat(new PolymorphicReturnType(new PolymorphicSubtype2(differnentValue))).matches(expected);
+	}
+
+	@Test
+	public void canVerifySimpleProperty() {
+		final String expectedValue = aRandomString();
+		SimpleType expected = prototype(SimpleType.class);
+		expect(expected.getValue()).isEqualTo(expectedValue);
+		assertEquals(checkThat(new SimpleType(expectedValue)).matches(expected), true);
+	}
+
+	@Test
+	public void canFailVerificationOfSimpleProperty() {
+		final String expectedValue = aRandomString(), differentValue = expectedValue + aRandomString();
+		SimpleType expected = prototype(SimpleType.class);
+		expect(expected.getValue()).isEqualTo(expectedValue);
+		assertEquals(checkThat(new SimpleType(differentValue)).matches(expected), false);
 	}
 
 }

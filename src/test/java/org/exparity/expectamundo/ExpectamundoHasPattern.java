@@ -5,7 +5,7 @@ import org.exparity.expectamundo.testutils.types.SimpleType;
 import org.junit.Test;
 import static org.exparity.expectamundo.Expactamundo.expect;
 import static org.exparity.expectamundo.Expactamundo.prototype;
-import static org.exparity.expectamundo.Expactamundo.verify;
+import static org.exparity.expectamundo.Expactamundo.expectThat;
 
 /**
  * Unit Test for {@link Expactamundo} invocations of the {@link org.exparity.expectamundo.expectations.HasPattern} expectation
@@ -19,7 +19,7 @@ public class ExpectamundoHasPattern {
 		String pattern = ".*match";
 		SimpleType expected = prototype(SimpleType.class);
 		expect(expected.getValue()).hasPattern(pattern);
-		verify(new SimpleType("A string to match")).matches(expected);
+		expectThat(new SimpleType("A string to match")).matches(expected);
 	}
 
 	@Test(expected = AssertionError.class)
@@ -27,7 +27,7 @@ public class ExpectamundoHasPattern {
 		String pattern = ".*no match";
 		SimpleType expected = prototype(SimpleType.class);
 		expect(expected.getValue()).hasPattern(pattern);
-		verify(new SimpleType("A string to match")).matches(expected);
+		expectThat(new SimpleType("A string to match")).matches(expected);
 	}
 
 	@Test(expected = AssertionError.class)
@@ -35,6 +35,6 @@ public class ExpectamundoHasPattern {
 		String pattern = ".*no match";
 		SimpleType expected = prototype(SimpleType.class);
 		expect(expected.getValue()).hasPattern(pattern);
-		verify(new SimpleType(null)).matches(expected);
+		expectThat(new SimpleType(null)).matches(expected);
 	}
 }

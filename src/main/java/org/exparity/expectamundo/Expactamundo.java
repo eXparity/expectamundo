@@ -3,6 +3,7 @@ package org.exparity.expectamundo;
 
 import java.util.Collection;
 import org.exparity.expectamundo.core.PrototypeArrayExpectation;
+import org.exparity.expectamundo.core.PrototypeChecker;
 import org.exparity.expectamundo.core.PrototypeCollectionExpectation;
 import org.exparity.expectamundo.core.PrototypeComparableExpectation;
 import org.exparity.expectamundo.core.PrototypeFactory;
@@ -23,7 +24,7 @@ import static org.exparity.expectamundo.core.PrototypeMatcherContext.currentProt
  * Person expected = Expectamundo.prototype(Person.class);
  * Expectamundo.expect(expected.getFirstName()).isEqualTo("Jane");
  * Expectamundo.expect(expected.getLastName()).isEqualTo("Doe");
- * Expectamundo.verify(new Person("Jane","Doe")).matches(expected));
+ * Expectamundo.expectThat(new Person("Jane","Doe")).matches(expected));
  * </pre>
  * 
  * <h5>To verifying list properties</h5>
@@ -36,7 +37,7 @@ import static org.exparity.expectamundo.core.PrototypeMatcherContext.currentProt
  * Person jane = new Person("Jane","Doe");
  * jane.addSibling(new Person("John","Doe"));
  * 
- * Expectamundo.verify(jane).matches(expected));
+ * Expectamundo.expectThat(jane).matches(expected));
  * </pre>
  * 
  * To verifying map properties</p>
@@ -49,7 +50,7 @@ import static org.exparity.expectamundo.core.PrototypeMatcherContext.currentProt
  * Person jane = new Person("Jane","Doe");
  * jane.addSibling(new Person("John","Doe"));
  * 
- * Expectamundo.verify(jane).matches(expected));
+ * Expectamundo.expectThat(jane).matches(expected));
  * </pre>
  * 
  * 
@@ -94,7 +95,7 @@ public class Expactamundo {
 	 * <pre>
 	 * Person expected = Expectamundo.prototype(Person.class)
 	 * Expectamundo.expect(expected.getSiblings()).isEmpty();
-	 * Expectamundo.verify(new Person()).matches(expected);
+	 * Expectamundo.expectThat(new Person()).matches(expected);
 	 * </pre>
 	 * @param property the value to set the expectation for.
 	 * @param <T> the type of the collection
@@ -112,7 +113,7 @@ public class Expactamundo {
 	 * <pre>
 	 * Person expected = Expectamundo.prototype(Person.class)
 	 * Expectamundo.expect(expected.getAge()).isComparableTo(29);
-	 * Expectamundo.verify(new Person()).matches(expected);
+	 * Expectamundo.expectThat(new Person()).matches(expected);
 	 * </pre>
 	 * @param property the value to set the expectation for.
 	 * @param <T> the type of the property
@@ -129,7 +130,7 @@ public class Expactamundo {
 	 * <pre>
 	 * Person expected = Expectamundo.prototype(Person.class)
 	 * Expectamundo.expect(expected.getSiblings()).isEmpty();
-	 * Expectamundo.verify(new Person()).matches(expected);
+	 * Expectamundo.expectThat(new Person()).matches(expected);
 	 * </pre>
 	 * @param property the value to set the expectation for.
 	 * @param <T> the type of the array
@@ -146,7 +147,7 @@ public class Expactamundo {
 	 * <pre>
 	 * Person expected = Expectamundo.prototype(Person.class)
 	 * Expectamundo.expect(expected.getSurname()).hasPattern("Sm.*");
-	 * Expectamundo.verify(new Person()).matches(expected);
+	 * Expectamundo.expectThat(new Person()).matches(expected);
 	 * </pre>
 	 * @param property the value to set the expectation for.
 	 * @return A instance of a {@link PrototypeStringExpectation} to set String expectations for the property
@@ -162,7 +163,7 @@ public class Expactamundo {
 	 * <pre>
 	 * Person expected = Expectamundo.prototype(Person.class)
 	 * Expectamundo.expect(expected.getSurname()).isEqualTo("Smith");
-	 * Expectamundo.verify(new Person()).matches(expected);
+	 * Expectamundo.expectThat(new Person()).matches(expected);
 	 * </pre>
 	 * @param property the value to set the expectation for.
 	 * @return A instance of a {@link PrototypeObjectExpectation} to set object expectations for the property
@@ -173,18 +174,33 @@ public class Expactamundo {
 	}
 
 	/**
-	 * Verify the actual value matches the expectation set up in the prototype. For example</p>
+	 * Verify the actual value matches the expectation set up in the prototype and throws and AssertionError if the match fails. For example</p>
 	 * 
 	 * <pre>
 	 * Person expected = Expectamundo.prototype(Person.class)
 	 * Expectamundo.expect(expected.getSurname()).isEqualTo("Smith");
-	 * Expectamundo.verify(new Person()).matches(expected);
+	 * Expectamundo.expectThat(new Person()).matches(expected);
 	 * </pre>
 	 * @param actual the actual instance to test
 	 * @return A instance of a {@link PrototypeVerifier} to allow the expectation to be supplied
 	 */
-	public static <T> PrototypeVerifier<T> verify(final T actual) {
+	public static <T> PrototypeVerifier<T> expectThat(final T actual) {
 		return new PrototypeVerifier<T>(actual);
+	}
+
+	/**
+	 * Check the actual value matches the expectation set up in the prototype. For example</p>
+	 * 
+	 * <pre>
+	 * Person expected = Expectamundo.prototype(Person.class)
+	 * Expectamundo.expect(expected.getSurname()).isEqualTo("Smith");
+	 * Expectamundo.checkThat(new Person()).matches(expected);
+	 * </pre>
+	 * @param actual the actual instance to test
+	 * @return A instance of a {@link PrototypeChecker} to allow the expectation to be supplied
+	 */
+	public static <T> PrototypeChecker<T> checkThat(final T actual) {
+		return new PrototypeChecker<T>(actual);
 	}
 
 	/**
@@ -193,7 +209,7 @@ public class Expactamundo {
 	 * <pre>
 	 * Person expected = Expectamundo.prototype(Person.class)
 	 * Expectamundo.expect(Expectamundo.cast(expected.getProfession(), Doctor.class).getQualifications()).isNotEmpty())
-	 * Expectamundo.verify(new Person()).matches(expected);
+	 * Expectamundo.expectThat(new Person()).matches(expected);
 	 * </pre>
 	 * @param value the property value.
 	 * @param type the Class of the property value to cast to.
@@ -221,7 +237,7 @@ public class Expactamundo {
 	 * @return A hamcrest Matcher for the prototype which can be used to assert the contents of a test object
 	 * */
 	@SuppressWarnings("unchecked")
-	public static <T> Matcher<T> matches(final T expected) {
+	public static <T> Matcher<T> asMatcher(final T expected) {
 		if (!Prototyped.class.isInstance(expected)) {
 			throw new IllegalArgumentException("You can only match an expectation for a type created with Expactamundo.prototype()");
 		} else {

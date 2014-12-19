@@ -5,7 +5,7 @@ import org.exparity.expectamundo.testutils.types.ArrayType;
 import org.junit.Test;
 import static org.exparity.expectamundo.Expactamundo.expect;
 import static org.exparity.expectamundo.Expactamundo.prototype;
-import static org.exparity.expectamundo.Expactamundo.verify;
+import static org.exparity.expectamundo.Expactamundo.expectThat;
 import static org.exparity.stub.random.RandomBuilder.aRandomString;
 
 /**
@@ -22,7 +22,7 @@ public class ExpectamundoIsNotEmptyArrayTest {
 		};
 		ArrayType expected = prototype(ArrayType.class);
 		expect(expected.getValue()).isNotEmpty();
-		verify(new ArrayType(expectedValue)).matches(expected);
+		expectThat(new ArrayType(expectedValue)).matches(expected);
 	}
 
 	@Test(expected = AssertionError.class)
@@ -30,13 +30,13 @@ public class ExpectamundoIsNotEmptyArrayTest {
 		String[] expectedValue = new String[0];
 		ArrayType expected = prototype(ArrayType.class);
 		expect(expected.getValue()).isNotEmpty();
-		verify(new ArrayType(expectedValue)).matches(expected);
+		expectThat(new ArrayType(expectedValue)).matches(expected);
 	}
 
 	@Test(expected = AssertionError.class)
 	public void canCheckForIsEmptyForNull() {
 		ArrayType expected = prototype(ArrayType.class);
 		expect(expected.getValue()).isNotEmpty();
-		verify(new ArrayType(null)).matches(expected);
+		expectThat(new ArrayType(null)).matches(expected);
 	}
 }

@@ -6,6 +6,7 @@ import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
+import java.util.Date;
 import net.sf.cglib.proxy.MethodProxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +36,7 @@ public class PrototypeInterceptorImpl implements PrototypeInterceptor {
 		currentPrototype.setActiveProperty(activeProperty);
 		if (isProxiableMethod(method)) {
 			Class<?> returnType = getClassForPrototype(activeProperty, currentPrototype);
-			if (returnType.isPrimitive() || Modifier.isFinal(returnType.getModifiers())) {
+			if (returnType.isPrimitive() || Modifier.isFinal(returnType.getModifiers()) || isJava8AndTypeNotProxiable(returnType)) {
 				return null;
 			} else {
 				Object child = factory.createPrototype(activeProperty, currentPrototype);
@@ -46,6 +47,10 @@ public class PrototypeInterceptorImpl implements PrototypeInterceptor {
 			LOG.debug("Discard Method [{}]", method);
 			return proxy.invokeSuper(obj, args);
 		}
+	}
+
+	private boolean isJava8AndTypeNotProxiable(final Class<?> returnType) {
+		return System.getProperty("java.version").startsWith("1.8") && Date.class.isAssignableFrom(returnType);
 	}
 
 	private boolean isInvokedByLogger(final PrototypeProperty activeProperty) {

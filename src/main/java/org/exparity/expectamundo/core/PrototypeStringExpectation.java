@@ -14,10 +14,10 @@ public class PrototypeStringExpectation extends PrototypeComparableExpectation<S
 	}
 
 	public void hasLength(final int expectedSize) {
-		setExpectation(new HasLength(expectedSize));
+		hasExpectation(new HasLength(expectedSize));
 	}
 
 	public void hasPattern(final String pattern) {
-		setExpectation(new HasPattern(pattern));
+		hasExpectation(new HasPattern(pattern));
 	}
 }

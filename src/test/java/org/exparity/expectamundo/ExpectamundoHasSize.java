@@ -5,13 +5,13 @@ import java.util.Arrays;
 import java.util.List;
 import org.exparity.expectamundo.testutils.types.ListReturnType;
 import org.junit.Test;
-import static org.exparity.expectamundo.Expactamundo.expect;
-import static org.exparity.expectamundo.Expactamundo.prototype;
-import static org.exparity.expectamundo.Expactamundo.expectThat;
+import static org.exparity.expectamundo.Expectamundo.expect;
+import static org.exparity.expectamundo.Expectamundo.prototype;
+import static org.exparity.expectamundo.Expectamundo.expectThat;
 import static org.exparity.stub.random.RandomBuilder.aRandomString;
 
 /**
- * Unit Test for {@link Expactamundo} invocations of the {@link org.exparity.expectamundo.expectations.HasSize} expectation
+ * Unit Test for {@link Expectamundo} invocations of the {@link org.exparity.expectamundo.expectations.HasSize} expectation
  * 
  * @author Stewart Bissett
  */

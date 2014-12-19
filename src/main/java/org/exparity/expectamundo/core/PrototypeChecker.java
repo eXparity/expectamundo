@@ -16,7 +16,9 @@ public class PrototypeChecker<T> {
 	 * Check the actual instance of the object matches the expectations set on the proptype.
 	 * @param prototype the prototype object containing the expectations
 	 */
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({
+			"unchecked", "rawtypes"
+	})
 	public boolean matches(final T prototype) {
 		if (!Prototyped.class.isInstance(prototype)) {
 			throw new IllegalArgumentException("Object does not implement Prototyped. Please construct using PrototypeMatcher.expected");

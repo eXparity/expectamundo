@@ -17,19 +17,19 @@ public class PrototypeCollectionExpectation<E, T extends Collection<E>> extends 
 	}
 
 	public void isEmpty() {
-		setExpectation(new IsEmpty<E, T>());
+		hasExpectation(new IsEmpty<E, T>());
 	}
 
 	public void isNotEmpty() {
-		setExpectation(new IsNotEmpty<E, T>());
+		hasExpectation(new IsNotEmpty<E, T>());
 	}
 
 	public void hasSize(final int size) {
-		setExpectation(new HasSize<T>(size));
+		hasExpectation(new HasSize<T>(size));
 	}
 
 	public void contains(final E element) {
-		setExpectation(new Contains<E, T>(element));
+		hasExpectation(new Contains<E, T>(element));
 	}
 
 }

@@ -5,6 +5,7 @@ package org.exparity.expectamundo.core;
 /**
  * @author Stewart Bissett
  */
+@SuppressWarnings("rawtypes")
 public class PrototypePropertyMatcher {
 
 	private final PrototypeProperty property;
@@ -15,6 +16,7 @@ public class PrototypePropertyMatcher {
 		this.expectation = expectation;
 	}
 
+	@SuppressWarnings("unchecked")
 	public boolean matches(final Object actual) {
 		return expectation.matches(actual);
 	}

@@ -2,10 +2,12 @@
 package org.exparity.expectamundo;
 
 import java.util.Collection;
+import java.util.Date;
 import org.exparity.expectamundo.core.PrototypeArrayExpectation;
 import org.exparity.expectamundo.core.PrototypeChecker;
 import org.exparity.expectamundo.core.PrototypeCollectionExpectation;
 import org.exparity.expectamundo.core.PrototypeComparableExpectation;
+import org.exparity.expectamundo.core.PrototypeDateExpectation;
 import org.exparity.expectamundo.core.PrototypeFactory;
 import org.exparity.expectamundo.core.PrototypeObjectExpectation;
 import org.exparity.expectamundo.core.PrototypeStringExpectation;
@@ -56,7 +58,7 @@ import static org.exparity.expectamundo.core.PrototypeMatcherContext.currentProt
  * 
  * @author Stewart Bissett
  */
-public class Expactamundo {
+public class Expectamundo {
 
 	private static PrototypeFactory factory = new PrototypeFactory();
 
@@ -158,6 +160,22 @@ public class Expactamundo {
 	}
 
 	/**
+	 * Setup an expectation for a date property on a {@link Prototype}. For example</p>
+	 * 
+	 * <pre>
+	 * Person expected = Expectamundo.prototype(Person.class)
+	 * Expectamundo.expect(expected.getSurname()).hasPattern("Sm.*");
+	 * Expectamundo.expectThat(new Person()).matches(expected);
+	 * </pre>
+	 * @param property the value to set the expectation for.
+	 * @return A instance of a {@link PrototypeDateExpectation} to set date expectations for the property
+	 * */
+	public static PrototypeDateExpectation expect(final Date property) {
+		checkActivePrototype();
+		return new PrototypeDateExpectation(currentPrototype(), currentPrototype().getActiveProperty());
+	}
+
+	/**
 	 * Setup an expectation for a object property on a {@link Prototype}. For example</p>
 	 * 
 	 * <pre>
@@ -223,7 +241,6 @@ public class Expactamundo {
 		return prototype;
 	}
 
-
 	/**
 	 * Return a hamcrest {@link Matcher} instance to support asserting the contents of an actual instance match the expected.
 	 * 
@@ -237,17 +254,21 @@ public class Expactamundo {
 	 * @return A hamcrest Matcher for the prototype which can be used to assert the contents of a test object
 	 * */
 	@SuppressWarnings("unchecked")
-	public static <T> Matcher<T> asMatcher(final T expected) {
+	public static <T> Matcher<T> matcherFor(final T expected) {
 		if (!Prototyped.class.isInstance(expected)) {
-			throw new IllegalArgumentException("You can only match an expectation for a type created with Expactamundo.prototype()");
+			throw new IllegalArgumentException("You can only match an expectation for a type created with Expectamundo.prototype()");
 		} else {
 			return new PrototypeMatcher<T>((Prototyped<T>) expected);
 		}
 	}
 
+	public static boolean isPrototype(final Object obj) {
+		return obj instanceof Prototyped;
+	}
+
 	private static void checkActivePrototype() {
 		if (currentPrototype() == null) {
-			throw new IllegalArgumentException("You can only set an expectation on an instance created with Expactamundo.prototype()");
+			throw new IllegalArgumentException("You can only set an expectation on an instance created with Expectamundo.prototype()");
 		} else if (currentPrototype().getActiveProperty() == null) {
 			throw new IllegalArgumentException("You can only set an expectation for a property");
 		}

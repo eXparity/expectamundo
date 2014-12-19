@@ -18,10 +18,9 @@ import org.exparity.expectamundo.testutils.types.SimpleType;
 import org.exparity.expectamundo.testutils.types.ToStringType;
 import org.exparity.stub.random.RandomBuilder;
 import org.hamcrest.MatcherAssert;
-import org.junit.Assert;
 import org.junit.Test;
 import static java.util.Collections.singletonMap;
-import static org.exparity.expectamundo.Expactamundo.*;
+import static org.exparity.expectamundo.Expectamundo.*;
 import static org.exparity.stub.random.RandomBuilder.aRandomByteArray;
 import static org.exparity.stub.random.RandomBuilder.aRandomInteger;
 import static org.exparity.stub.random.RandomBuilder.aRandomString;
@@ -210,7 +209,7 @@ public class ExpectamundoTest {
 		SimpleType expected = prototype(SimpleType.class);
 		expect(expected.getValue()).isEqualTo(expectedValue);
 		SimpleType actual = new SimpleType(expectedValue);
-		MatcherAssert.assertThat(actual, asMatcher(expected));
+		MatcherAssert.assertThat(actual, matcherFor(expected));
 	}
 
 	@Test(expected = AssertionError.class)
@@ -219,13 +218,13 @@ public class ExpectamundoTest {
 		SimpleType expected = prototype(SimpleType.class);
 		expect(expected.getValue()).isEqualTo(expectedValue);
 		SimpleType actual = new SimpleType(differentValue);
-		MatcherAssert.assertThat(actual, asMatcher(expected));
+		MatcherAssert.assertThat(actual, matcherFor(expected));
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void canFailUsingHamcrestOnNormalInstance() {
 		SimpleType actual = new SimpleType(aRandomString());
-		MatcherAssert.assertThat(actual, asMatcher(new SimpleType(aRandomString())));
+		MatcherAssert.assertThat(actual, matcherFor(new SimpleType(aRandomString())));
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -300,4 +299,13 @@ public class ExpectamundoTest {
 		assertEquals(checkThat(new SimpleType(differentValue)).matches(expected), false);
 	}
 
+	@Test
+	public void canTestForAPrototype() {
+		assertEquals(isPrototype(prototype(SimpleType.class)), true);
+	}
+
+	@Test
+	public void canTestForNotAPrototype() {
+		assertEquals(isPrototype(new SimpleType(aRandomString())), false);
+	}
 }

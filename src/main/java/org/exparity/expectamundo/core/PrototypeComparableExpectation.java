@@ -13,6 +13,6 @@ public class PrototypeComparableExpectation<T extends Comparable<T>> extends Pro
 	}
 
 	public void isComparableTo(final T comparable) {
-		setExpectation(new IsComparableTo<T>(comparable));
+		hasExpectation(new IsComparableTo<T>(comparable));
 	}
 }

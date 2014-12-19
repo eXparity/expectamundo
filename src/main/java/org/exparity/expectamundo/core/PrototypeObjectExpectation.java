@@ -22,26 +22,26 @@ public class PrototypeObjectExpectation {
 	}
 
 	public <T> void matches(final Matcher<T> expected) {
-		setExpectation(new Matches<T>(expected));
+		hasExpectation(new Matches<T>(expected));
 	}
 
 	public <T> void isEqualTo(final T expectedValue) {
-		setExpectation(new IsEqualTo<T>(expectedValue));
+		hasExpectation(new IsEqualTo<T>(expectedValue));
 	}
 
 	public <T> void isInstanceOf(final Class<T> expectedValue) {
-		setExpectation(new IsInstanceOf<T>(expectedValue));
+		hasExpectation(new IsInstanceOf<T>(expectedValue));
 	}
 
 	public void isNull() {
-		setExpectation(new IsNull());
+		hasExpectation(new IsNull());
 	}
 
 	public void isNotNull() {
-		setExpectation(new IsNotNull());
+		hasExpectation(new IsNotNull());
 	}
 
-	protected void setExpectation(final PropertyExpectation<?> expectation) {
+	public void hasExpectation(final PropertyExpectation<?> expectation) {
 		prototype.addExpectation(new PrototypePropertyMatcher(property, expectation));
 		prototype.setActiveProperty(null);
 	}

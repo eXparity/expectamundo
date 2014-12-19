@@ -16,19 +16,19 @@ public class PrototypeArrayExpectation<T> extends PrototypeObjectExpectation {
 	}
 
 	public void isEmpty() {
-		setExpectation(new IsEmptyArray<T>());
+		hasExpectation(new IsEmptyArray<T>());
 	}
 
 	public void isNotEmpty() {
-		setExpectation(new IsNotEmptyArray<T>());
+		hasExpectation(new IsNotEmptyArray<T>());
 	}
 
 	public void hasLength(final int size) {
-		setExpectation(new HasLengthOfArray<T>(size));
+		hasExpectation(new HasLengthOfArray<T>(size));
 	}
 
 	public void contains(final T element) {
-		setExpectation(new ContainsInArray<T>(element));
+		hasExpectation(new ContainsInArray<T>(element));
 	}
 
 }

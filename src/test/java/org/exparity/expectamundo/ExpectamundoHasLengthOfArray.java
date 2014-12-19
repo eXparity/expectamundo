@@ -4,14 +4,14 @@ package org.exparity.expectamundo;
 import org.exparity.expectamundo.testutils.types.ArrayType;
 import org.exparity.stub.random.RandomBuilder;
 import org.junit.Test;
-import static org.exparity.expectamundo.Expactamundo.expect;
-import static org.exparity.expectamundo.Expactamundo.prototype;
-import static org.exparity.expectamundo.Expactamundo.expectThat;
+import static org.exparity.expectamundo.Expectamundo.expect;
+import static org.exparity.expectamundo.Expectamundo.prototype;
+import static org.exparity.expectamundo.Expectamundo.expectThat;
 import static org.exparity.stub.random.RandomBuilder.aRandomArrayOf;
 import static org.exparity.stub.random.RandomBuilder.aRandomInteger;
 
 /**
- * Unit Test for {@link Expactamundo} invocations of the {@link org.exparity.expectamundo.expectations.HasSize} expectation
+ * Unit Test for {@link Expectamundo} invocations of the {@link org.exparity.expectamundo.expectations.HasSize} expectation
  * 
  * @author Stewart Bissett
  */

@@ -78,12 +78,12 @@ A maven project
     <dependency>
         <groupId>org.exparity</groupId>
         <artifactId>expectamundo</artifactId>
-        <version>0.9.3</version>
+        <version>0.9.4</version>
     </dependency>
 
 A project which uses ivy for dependency management
 
-    <dependency org="org.exparity" name="expectamundo" rev="0.9.3"/>
+    <dependency org="org.exparity" name="expectamundo" rev="0.9.4"/>
 
 Source
 ------
@@ -96,6 +96,9 @@ The source includes a pom.xml for building with Maven
 
 Release Notes
 -------------
+
+Changes 1.0.3 -> 1.0.4
+  * Add support for casting down to subtypes
 
 Changes 1.0.2 -> 1.0.3
   * Expand expectation options

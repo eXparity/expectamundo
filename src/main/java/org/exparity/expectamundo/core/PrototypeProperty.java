@@ -7,6 +7,7 @@ import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
 import java.util.HashMap;
 import java.util.Map;
+import org.apache.commons.lang.StringUtils;
 import net.sf.cglib.proxy.MethodProxy;
 
 public class PrototypeProperty {
@@ -41,7 +42,7 @@ public class PrototypeProperty {
 	}
 
 	private String stripPrefix(final String name) {
-		return args.length == 0 ? name + "()" : name + "(...)";
+		return args.length == 0 ? name + "()" : name + "(" + StringUtils.join(args, ",") + ")";
 	}
 
 	public Type getGenericReturnType() {

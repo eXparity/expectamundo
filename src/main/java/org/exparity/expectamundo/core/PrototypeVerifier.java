@@ -22,7 +22,7 @@ public class PrototypeVerifier<T> {
 			throw new IllegalArgumentException("Object does not implement Prototyped. Please construct using PrototypeMatcher.expected");
 		}
 		StringBuffer mismatchDescription = new StringBuffer();
-		Prototyped<T> prototyped = (Prototyped) prototype;
+		Prototyped<T> prototyped = (Prototyped<T>) prototype;
 		if (!matchesPrototype(prototyped, mismatchDescription)) {
 			StringBuffer buffer = new StringBuffer("\nExpected ");
 			describeTo(buffer, prototyped);
@@ -37,7 +37,7 @@ public class PrototypeVerifier<T> {
 		for (PrototypePropertyMatcher expectation : prototyped.getExpectations()) {
 			Object actualValue = expectation.getPropertyValue(actual);
 			if (!expectation.matches(actualValue)) {
-				mismatchDescription.append("\t").append(expectation.getPropertyPath()).append(" is ").append(actualValue);
+				mismatchDescription.append("\t").append(expectation.getPropertyPath()).append(" is ").append(actualValue).append("\n");
 				matches = false;
 			}
 		}

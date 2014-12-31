@@ -78,12 +78,12 @@ A maven project
     <dependency>
         <groupId>org.exparity</groupId>
         <artifactId>expectamundo</artifactId>
-        <version>0.9.8</version>
+        <version>0.9.10</version>
     </dependency>
 
 A project which uses ivy for dependency management
 
-    <dependency org="org.exparity" name="expectamundo" rev="0.9.8"/>
+    <dependency org="org.exparity" name="expectamundo" rev="0.9.10"/>
 
 Source
 ------
@@ -96,6 +96,10 @@ The source includes a pom.xml for building with Maven
 
 Release Notes
 -------------
+
+Changes 0.9.9 -> 0.9.10
+  * Include arguments as strings when printing assertions
+  * Add line break after mismatching property in assertion
 
 Changes 0.9.3 -> 0.9.4
   * Add support for casting down to subtypes

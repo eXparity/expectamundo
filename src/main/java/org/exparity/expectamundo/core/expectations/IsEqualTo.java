@@ -18,7 +18,7 @@ public class IsEqualTo<T> implements PropertyExpectation<T> {
 
 	@Override
 	public boolean matches(final T actual) {
-		return expected.equals(actual);
+		return expected == null ? actual == null : expected.equals(actual);
 	}
 
 	@Override

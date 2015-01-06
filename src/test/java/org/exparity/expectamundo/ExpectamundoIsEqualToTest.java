@@ -23,6 +23,14 @@ public class ExpectamundoIsEqualToTest {
 		expectThat(new SimpleType(expectedValue)).matches(expected);
 	}
 
+	@Test
+	public void canCheckForEqualToNull() {
+		final String expectedValue = null;
+		SimpleType expected = prototype(SimpleType.class);
+		expect(expected.getValue()).isEqualTo(expectedValue);
+		expectThat(new SimpleType(expectedValue)).matches(expected);
+	}
+
 	@Test(expected = AssertionError.class)
 	public void canCheckForNotEqualTo() {
 		final String expectedValue = aRandomString(), differentValue = aRandomString();

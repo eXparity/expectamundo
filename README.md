@@ -78,12 +78,12 @@ A maven project
     <dependency>
         <groupId>org.exparity</groupId>
         <artifactId>expectamundo</artifactId>
-        <version>0.9.10</version>
+        <version>0.9.11</version>
     </dependency>
 
 A project which uses ivy for dependency management
 
-    <dependency org="org.exparity" name="expectamundo" rev="0.9.10"/>
+    <dependency org="org.exparity" name="expectamundo" rev="0.9.11"/>
 
 Source
 ------
@@ -96,6 +96,9 @@ The source includes a pom.xml for building with Maven
 
 Release Notes
 -------------
+
+Changes 0.9.10 -> 0.9.11
+  * IsEqualTo can check expected null == null (Issue #3)
 
 Changes 0.9.9 -> 0.9.10
   * Include arguments as strings when printing assertions

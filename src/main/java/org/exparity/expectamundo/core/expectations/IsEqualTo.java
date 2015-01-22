@@ -23,7 +23,7 @@ public class IsEqualTo<T> implements PropertyExpectation<T> {
 
 	@Override
 	public String describe() {
-		return "is equal to " + expected;
+		return "equal to " + expected;
 	}
 
 }

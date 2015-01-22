@@ -9,6 +9,7 @@ import org.exparity.expectamundo.core.PrototypeCollectionExpectation;
 import org.exparity.expectamundo.core.PrototypeComparableExpectation;
 import org.exparity.expectamundo.core.PrototypeDateExpectation;
 import org.exparity.expectamundo.core.PrototypeFactory;
+import org.exparity.expectamundo.core.PrototypeListVerifier;
 import org.exparity.expectamundo.core.PrototypeObjectExpectation;
 import org.exparity.expectamundo.core.PrototypeStringExpectation;
 import org.exparity.expectamundo.core.PrototypeVerifier;
@@ -204,6 +205,21 @@ public class Expectamundo {
 	 */
 	public static <T> PrototypeVerifier<T> expectThat(final T actual) {
 		return new PrototypeVerifier<T>(actual);
+	}
+
+	/**
+	 * Verify the actual value matches the expectation set up in the prototype and throws and AssertionError if the match fails. For example</p>
+	 * 
+	 * <pre>
+	 * Person expected = Expectamundo.prototype(Person.class)
+	 * Expectamundo.expect(expected.getSurname()).isEqualTo("Smith");
+	 * Expectamundo.expectThat(new Person()).matches(expected);
+	 * </pre>
+	 * @param actual the actual instance to test
+	 * @return A instance of a {@link PrototypeVerifier} to allow the expectation to be supplied
+	 */
+	public static <E, T extends Collection<E>> PrototypeListVerifier<E, T> expectThat(final T actual) {
+		return new PrototypeListVerifier<E, T>(actual);
 	}
 
 	/**

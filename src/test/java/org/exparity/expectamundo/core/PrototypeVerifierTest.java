@@ -24,7 +24,7 @@ public class PrototypeVerifierTest {
 			new PrototypeVerifier<>(new ListReturnType(differentValue)).matches(expected);
 		} catch (AssertionError e) {
 			MatcherAssert.assertThat(e.getMessage(),
-					Matchers.equalTo("\nExpected a ListReturnType containing properties :\n\tgetValue().get(0) is is equal to AB\nbut actual is a ListReturnType containing properties :\n\tgetValue().get(0) is ABC\n"));
+					Matchers.equalTo("\nExpected a ListReturnType containing properties:\n\tgetValue().get(0) is equal to AB\nbut actual is a ListReturnType containing properties:\n\tgetValue().get(0) is ABC"));
 		}
 	}
 

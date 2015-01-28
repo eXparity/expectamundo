@@ -9,7 +9,7 @@ import java.util.List;
 public class PrototypeListMatchResult<T> {
 
 	private final T expectation;
-	private final Prototype<T> prototyped;
+	private final Prototyped<T> prototyped;
 	private List<PrototypeMatchResult<T>> mismatches;
 
 	@SuppressWarnings("unchecked")
@@ -18,7 +18,7 @@ public class PrototypeListMatchResult<T> {
 		if (!Prototyped.class.isInstance(expectation)) {
 			throw new IllegalArgumentException("Object does not implement Prototyped. Please construct using Expectamundo.prototype");
 		}
-		this.prototyped = (Prototype<T>) expectation;
+		this.prototyped = (Prototyped<T>) expectation;
 		this.mismatches = mismatches;
 	}
 

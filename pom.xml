@@ -3,7 +3,7 @@
 
 	<groupId>org.exparity</groupId>
 	<artifactId>expectamundo</artifactId>
-	<version>0.9.12</version>
+	<version>0.9.13-SNAPSHOT</version>
 
 	<name>eXpectamundo</name>
 	<url>https://github.com/exparity/expectamundo</url>

@@ -4,7 +4,6 @@ package org.exparity.expectamundo.core;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import org.exparity.expectamundo.core.PrototypeMatcher.PrototypeMatchResult;
 
 /**
  * @author Stewart Bissett
@@ -24,7 +23,6 @@ public class PrototypeListVerifier<E, T extends Collection<E>> extends Prototype
 	 * Check the collection contains and object which matches the expectations set on the prototype
 	 * @param prototype the prototype object containing the expectations
 	 */
-	@SuppressWarnings("unchecked")
 	public void contains(final E prototype) {
 		if (!Prototyped.class.isInstance(prototype)) {
 			throw new IllegalArgumentException("Object does not implement Prototyped. Please construct using Expectamundo.prototype");
@@ -38,7 +36,7 @@ public class PrototypeListVerifier<E, T extends Collection<E>> extends Prototype
 					return;
 				}
 			}
-			throw new AssertionError(descriptor.describeListMismatch((Prototyped<E>) prototype, mismatches));
+			throw new AssertionError(descriptor.describeListMismatch(new PrototypeListMatchResult<E>(prototype, mismatches)));
 		}
 	}
 }

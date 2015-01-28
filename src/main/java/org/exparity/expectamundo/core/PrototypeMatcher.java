@@ -2,67 +2,13 @@
 package org.exparity.expectamundo.core;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
  * @author Stewart Bissett
  */
 public class PrototypeMatcher<T> {
-
-	public static class PrototypePropertyDifference {
-
-		private final String path;
-		private final Object value;
-
-		public PrototypePropertyDifference(final String path, final Object value) {
-			this.path = path;
-			this.value = value;
-		}
-
-		public Object getValue() {
-			return value;
-		}
-
-		public String getPath() {
-			return path;
-		}
-
-	}
-
-	public static class PrototypeMatchResult<T> {
-
-		private final List<PrototypePropertyDifference> differences;
-		private final T actual, expected;
-
-		public PrototypeMatchResult(final T actual, final T expected, final List<PrototypePropertyDifference> differences) {
-			this.actual = actual;
-			this.expected = expected;
-			this.differences = differences;
-		}
-
-		public boolean isMismatch() {
-			return !differences.isEmpty();
-		}
-
-		@SuppressWarnings("unchecked")
-		public Class<?> getExpectedType() {
-			return ((Prototyped<T>) expected).getRawType();
-		}
-
-		public Class<?> getActualType() {
-			return actual.getClass();
-		}
-
-		public List<PrototypePropertyDifference> getDifferences() {
-			return differences;
-		}
-
-		@SuppressWarnings("unchecked")
-		public List<PrototypePropertyMatcher> getExpectations() {
-			return ((Prototyped<T>) expected).getExpectations();
-		}
-
-	}
 
 	@SuppressWarnings("unchecked")
 	public PrototypeMatchResult<T> compare(final T actual, final T expectation) {
@@ -78,5 +24,18 @@ public class PrototypeMatcher<T> {
 			}
 			return new PrototypeMatchResult<T>(actual, expectation, differences);
 		}
+	}
+
+	public PrototypeListMatchResult<T> contains(final Collection<T> collection, final T expectation) {
+		List<PrototypeMatchResult<T>> mismatches = new ArrayList<>();
+		for (T entry : collection) {
+			PrototypeMatchResult<T> result = compare(entry, expectation);
+			if (result.isMismatch()) {
+				mismatches.add(result);
+			} else {
+				return new PrototypeListMatchResult<>(expectation, mismatches);
+			}
+		}
+		return new PrototypeListMatchResult<T>(expectation, mismatches);
 	}
 }

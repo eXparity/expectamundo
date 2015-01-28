@@ -2,8 +2,6 @@
 package org.exparity.expectamundo.core;
 
 import java.util.List;
-import org.exparity.expectamundo.core.PrototypeMatcher.PrototypeMatchResult;
-import org.exparity.expectamundo.core.PrototypeMatcher.PrototypePropertyDifference;
 
 /**
  * @author Stewart Bissett
@@ -13,11 +11,11 @@ public class PrototypeMismatchReporter {
 	private static final String TEMPLATE = "\nExpected a %s containing properties:%s\nbut actual is a %s containing properties:%s";
 	private static final String LISTTEMPLATE = "\nExpected a list containing a %s with properties:%s\nbut actual list contains:%s";
 
-	public <T> String describeListMismatch(final Prototyped<T> expected, final List<PrototypeMatchResult<T>> mismatches) {
+	public <T> String describeListMismatch(final PrototypeListMatchResult<T> result) {
 		return String.format(LISTTEMPLATE,
-				describeExpectedType(expected),
-				describeExpectations(expected.getExpectations()),
-				describeMismatches(mismatches));
+				describeExpectedType(result.getExpectationAsPrototype()),
+				describeExpectations(result.getExpectations()),
+				describeMismatches(result.getMismatches()));
 	}
 
 	public <T> String describeInstanceMismatch(final PrototypeMatchResult<T> result) {

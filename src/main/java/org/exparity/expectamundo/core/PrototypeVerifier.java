@@ -1,7 +1,6 @@
 
 package org.exparity.expectamundo.core;
 
-import org.exparity.expectamundo.core.PrototypeMatcher.PrototypeMatchResult;
 
 /**
  * @author Stewart Bissett

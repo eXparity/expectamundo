@@ -9,7 +9,7 @@ import org.exparity.expectamundo.core.expectations.IsNotEmptyArray;
 /**
  * @author Stewart Bissett
  */
-public class PrototypeArrayExpectation<T> extends PrototypeObjectExpectation {
+public class PrototypeArrayExpectation<T> extends PrototypeObjectExpectation<T[]> {
 
 	public PrototypeArrayExpectation(final Prototype<?> prototype, final PrototypeProperty property) {
 		super(prototype, property);

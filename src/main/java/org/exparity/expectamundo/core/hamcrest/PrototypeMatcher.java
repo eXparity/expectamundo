@@ -5,6 +5,7 @@ import java.util.List;
 import org.exparity.expectamundo.core.PrototypePropertyMatcher;
 import org.exparity.expectamundo.core.Prototyped;
 import org.hamcrest.Description;
+import org.hamcrest.Factory;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
 
 /**
@@ -14,18 +15,38 @@ import org.hamcrest.TypeSafeDiagnosingMatcher;
  */
 public class PrototypeMatcher<T> extends TypeSafeDiagnosingMatcher<T> {
 
-	private final Prototyped<T> expected;
+	/**
+	 * Creates a matcher that matches a prototype create using Expectamundo#prototype against an expected instance
+	 * <p/>
+	 * For example:
+	 * 
+	 * <pre>
+	 * MyObject expected = Expectamundo.prototype(MyObject.class);
+	 * Expectamundo.expect(expected.getValue()).hasPattern("A*");
+	 * assertThat(new MyObject("ATest), matchesPrototype(expected));
+	 * </pre>
+	 * 
+	 * @param prototype the prototype to use for the match
+	 */
+	@Factory
+	public static <M> PrototypeMatcher<M> matchesPrototype(final M prototype) {
+		return new PrototypeMatcher<M>(prototype);
+	}
 
-	public PrototypeMatcher(final Prototyped<T> stub) {
-		this.expected = stub;
+	private final Class<T> rawType;
+	private final List<PrototypePropertyMatcher> expectations;
+
+	@SuppressWarnings("unchecked")
+	public PrototypeMatcher(final T stub) {
+		if (!Prototyped.class.isInstance(stub)) {
+			throw new IllegalArgumentException("You can only match an expectation for a type created with Expectamundo.prototype()");
+		}
+		this.rawType = ((Prototyped<T>) stub).getRawType();
+		this.expectations = ((Prototyped<T>) stub).getExpectations();
 	}
 
 	@Override
 	public void describeTo(final Description description) {
-		describeTo(description, expected.getRawType(), expected.getExpectations());
-	}
-
-	private void describeTo(final Description description, final Class<?> rawType, final List<PrototypePropertyMatcher> expectations) {
 		description.appendText("a ").appendText(rawType.getSimpleName());
 		if (!expectations.isEmpty()) {
 			description.appendText(" containing properties :");
@@ -39,7 +60,7 @@ public class PrototypeMatcher<T> extends TypeSafeDiagnosingMatcher<T> {
 	protected boolean matchesSafely(final T actual, final Description mismatchDescription) {
 		mismatchDescription.appendText("a ").appendText(actual.getClass().getSimpleName()).appendText(" containing properties :\n");
 		boolean matches = true;
-		for (PrototypePropertyMatcher expectation : expected.getExpectations()) {
+		for (PrototypePropertyMatcher expectation : expectations) {
 			Object actualValue = expectation.getPropertyValue(actual);
 			if (!expectation.matches(actualValue)) {
 				mismatchDescription.appendText("\t").appendText(expectation.getPropertyPath()).appendText(" ").appendValue(actualValue);

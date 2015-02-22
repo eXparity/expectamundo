@@ -268,14 +268,27 @@ public class Expectamundo {
 	 * @param expected The prototype with expectations defined against it
 	 * @param <T> The type of the prototype
 	 * @return A hamcrest Matcher for the prototype which can be used to assert the contents of a test object
+	 * @deprecated Use matchesPrototype
 	 * */
-	@SuppressWarnings("unchecked")
-	public static <T> Matcher<T> matcherFor(final T expected) {
-		if (!Prototyped.class.isInstance(expected)) {
-			throw new IllegalArgumentException("You can only match an expectation for a type created with Expectamundo.prototype()");
-		} else {
-			return new PrototypeMatcher<T>((Prototyped<T>) expected);
-		}
+	@Deprecated
+	public static <T> Matcher<T> matcherFor(final T prototype) {
+		return matchesPrototype(prototype);
+	}
+
+	/**
+	 * Return a hamcrest {@link Matcher} instance to support asserting the contents of an actual instance match the expected.
+	 * 
+	 * <pre>
+	 * Person expected = Expectamundo.prototype(Person.class)
+	 * Expectamundo.expect(expected.getSurname()).isEqualTo("Smith")
+	 * MatcherAssert.assertThat(new Person(), Expectamundo.matchesPrototype(expected))
+	 * </pre>
+	 * @param expected The prototype with expectations defined against it
+	 * @param <T> The type of the prototype
+	 * @return A hamcrest Matcher for the prototype which can be used to assert the contents of a test object
+	 * */
+	public static <T> Matcher<T> matchesPrototype(final T prototype) {
+		return PrototypeMatcher.matchesPrototype(prototype);
 	}
 
 	public static boolean isPrototype(final Object obj) {

@@ -9,12 +9,14 @@ import org.exparity.expectamundo.testutils.types.GraphType;
 import org.exparity.expectamundo.testutils.types.HashCodeType;
 import org.exparity.expectamundo.testutils.types.ListReturnType;
 import org.exparity.expectamundo.testutils.types.MapReturnType;
+import org.exparity.expectamundo.testutils.types.ParameterizedListReturnType;
 import org.exparity.expectamundo.testutils.types.PolymorphicReturnType;
 import org.exparity.expectamundo.testutils.types.PolymorphicSubtype1;
 import org.exparity.expectamundo.testutils.types.PolymorphicSubtype2;
 import org.exparity.expectamundo.testutils.types.PrimitiveArrayType;
 import org.exparity.expectamundo.testutils.types.PrimitiveType;
 import org.exparity.expectamundo.testutils.types.SimpleType;
+import org.exparity.expectamundo.testutils.types.StringListReturnType;
 import org.exparity.expectamundo.testutils.types.ToStringType;
 import org.exparity.stub.random.RandomBuilder;
 import org.hamcrest.MatcherAssert;
@@ -130,6 +132,19 @@ public class ExpectamundoTest {
 	}
 
 	@Test
+	public void canMatchGenericSubclass() {
+		final String expectedValue = aRandomString(5);
+		StringListReturnType expected = prototype(StringListReturnType.class);
+		expect(expected.getValue().get(0)).isEqualTo(expectedValue);
+		expectThat(new StringListReturnType(Arrays.asList(expectedValue))).matches(expected);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void canThrowExceptionIfPrototypingGenericType() {
+		prototype(ParameterizedListReturnType.class);
+	}
+
+	@Test
 	public void canMatchGenericProperties() {
 		final String expectedValue = aRandomString(5);
 		List<String> expected = prototype(new TypeReference<List<String>>() {});
@@ -209,7 +224,7 @@ public class ExpectamundoTest {
 		SimpleType expected = prototype(SimpleType.class);
 		expect(expected.getValue()).isEqualTo(expectedValue);
 		SimpleType actual = new SimpleType(expectedValue);
-		MatcherAssert.assertThat(actual, matcherFor(expected));
+		MatcherAssert.assertThat(actual, matchesPrototype(expected));
 	}
 
 	@Test(expected = AssertionError.class)
@@ -218,13 +233,13 @@ public class ExpectamundoTest {
 		SimpleType expected = prototype(SimpleType.class);
 		expect(expected.getValue()).isEqualTo(expectedValue);
 		SimpleType actual = new SimpleType(differentValue);
-		MatcherAssert.assertThat(actual, matcherFor(expected));
+		MatcherAssert.assertThat(actual, matchesPrototype(expected));
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void canFailUsingHamcrestOnNormalInstance() {
 		SimpleType actual = new SimpleType(aRandomString(5));
-		MatcherAssert.assertThat(actual, matcherFor(new SimpleType(aRandomString(5))));
+		MatcherAssert.assertThat(actual, matchesPrototype(new SimpleType(aRandomString(5))));
 	}
 
 	@Test(expected = IllegalArgumentException.class)

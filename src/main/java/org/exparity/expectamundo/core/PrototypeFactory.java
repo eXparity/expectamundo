@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 import net.sf.cglib.proxy.Callback;
 import net.sf.cglib.proxy.Enhancer;
+import org.apache.commons.lang.ArrayUtils;
 import org.objenesis.Objenesis;
 import org.objenesis.ObjenesisStd;
 import org.objenesis.instantiator.ObjectInstantiator;
@@ -25,13 +26,16 @@ public class PrototypeFactory {
 	public <T> T createPrototype(final Class<T> type) {
 		if (isFinal(type.getModifiers())) {
 			throw new IllegalArgumentException("Final classes cannot be prototyped");
+		} else if (isGenericType(type)) {
+			throw new IllegalArgumentException("Use Expectamundo.prototype(final TypeReference<T> typeRef) method to create prototypes for generic types. See javadocs on method for example.");
+		} else {
+			PrototypeInterceptor interceptor = createInterceptor(type);
+			LOG.debug("Produce Interceptor [{}] for [{}]", interceptor.getClass().getSimpleName(), type.getName());
+			Class<T> proxyType = createProxy(new Prototype<T>(type, getGenericTypeArguments(type), interceptor));
+			T proxy = createProxyInstance(proxyType);
+			LOG.info("Proxied {} using [{}]", type.getSimpleName(), proxy);
+			return proxy;
 		}
-		PrototypeInterceptor interceptor = createInterceptor(type);
-		LOG.debug("Produce Interceptor [{}] for [{}]", interceptor.getClass().getSimpleName(), type.getName());
-		Class<T> proxyType = createProxy(new Prototype<T>(type, new HashMap<String, Class<?>>(), interceptor));
-		T proxy = createProxyInstance(proxyType);
-		LOG.info("Proxied {} using [{}]", type.getSimpleName(), proxy);
-		return proxy;
 	}
 
 	@SuppressWarnings({
@@ -47,7 +51,7 @@ public class PrototypeFactory {
 		Prototype prototype = new Prototype(type, getGenericTypeArguments(genericType), interceptor);
 		Class proxyType = createProxy(prototype);
 		Object proxy = createProxyInstance(proxyType);
-		LOG.debug("Produce Proxy [{}] for [{}]", proxy, type.getName());
+		LOG.info("Proxied {} using [{}]", type.getSimpleName(), proxy);
 		return proxy;
 	}
 
@@ -139,7 +143,15 @@ public class PrototypeFactory {
 		return proxyType;
 	}
 
-	public Map<String, Class<?>> getGenericTypeArguments(final Type genericType) {
+	private Map<String, Class<?>> getGenericTypeArguments(final Class<?> type) {
+		if (!isGenericType(type) && type.getGenericSuperclass() instanceof ParameterizedType) {
+			return getGenericTypeArguments(type.getGenericSuperclass());
+		} else {
+			return new HashMap<>();
+		}
+	}
+
+	private Map<String, Class<?>> getGenericTypeArguments(final Type genericType) {
 		Map<String, Class<?>> parameterizedTypes = new HashMap<String, Class<?>>();
 		if (genericType instanceof ParameterizedType) {
 			Type[] typeArguments = ((ParameterizedType) genericType).getActualTypeArguments();
@@ -152,4 +164,7 @@ public class PrototypeFactory {
 		return parameterizedTypes;
 	}
 
+	private <T> boolean isGenericType(final Class<T> type) {
+		return ArrayUtils.isNotEmpty(type.getTypeParameters());
+	}
 }

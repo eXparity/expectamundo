@@ -1,10 +1,8 @@
 package org.exparity.expectamundo.core.hamcrest;
 
-import org.exparity.expectamundo.Expectamundo;
 import org.exparity.expectamundo.testutils.types.SimpleType;
 import org.junit.Test;
 import static org.exparity.expectamundo.Expectamundo.expect;
-import static org.exparity.expectamundo.Expectamundo.expectThat;
 import static org.exparity.expectamundo.Expectamundo.prototype;
 import static org.exparity.expectamundo.core.hamcrest.PrototypeMatcher.matchesPrototype;
 import static org.exparity.stub.random.RandomBuilder.aRandomString;

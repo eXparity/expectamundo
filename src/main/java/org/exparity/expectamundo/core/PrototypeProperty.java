@@ -7,21 +7,23 @@ import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
 import java.util.HashMap;
 import java.util.Map;
-import org.apache.commons.lang.StringUtils;
 import net.sf.cglib.proxy.MethodProxy;
+import org.apache.commons.lang.StringUtils;
 
 public class PrototypeProperty {
 
 	private final Method method;
 	private final MethodProxy proxy;
 	private final Object[] args;
+	private final Map<String, Class<?>> typeParameters;
 	private PrototypeProperty parent;
 
-	public PrototypeProperty(final PrototypeProperty parent, final Method method, final MethodProxy proxy, final Object[] args) {
+	public PrototypeProperty(final PrototypeProperty parent, final Method method, final MethodProxy proxy, final Object[] args, final Map<String, Class<?>> typeParameters) {
 		this.parent = parent;
 		this.method = method;
 		this.args = args;
 		this.proxy = proxy;
+		this.typeParameters = typeParameters;
 	}
 
 	/**
@@ -55,11 +57,22 @@ public class PrototypeProperty {
 			Type[] typeArguments = ((ParameterizedType) method.getGenericReturnType()).getActualTypeArguments();
 			TypeVariable<?>[] typeKeys = ((Class<?>) ((ParameterizedType) method.getGenericReturnType()).getRawType()).getTypeParameters();
 			for (int i = 0; i < typeKeys.length; ++i) {
-				parameterizedTypes.put(typeKeys[i].getName(), (Class<?>) typeArguments[i]);
+				if (typeArguments[i] instanceof Class) {
+					parameterizedTypes.put(typeKeys[i].getName(), (Class<?>) typeArguments[i]);
+				} else if (typeArguments[i] instanceof TypeVariable) {
+					Class<?> resolvedType = resolveType((TypeVariable<?>) typeArguments[i]);
+					if (resolvedType != null) {
+						parameterizedTypes.put(typeKeys[i].getName(), resolvedType);
+					}
+				}
 			}
 			return parameterizedTypes;
 		}
 		return parameterizedTypes;
+	}
+
+	private Class<?> resolveType(final TypeVariable<?> type) {
+		return typeParameters.get(type.getName());
 	}
 
 	@Override

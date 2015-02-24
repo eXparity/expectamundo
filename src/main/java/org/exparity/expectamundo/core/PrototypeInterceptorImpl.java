@@ -26,7 +26,7 @@ public class PrototypeInterceptorImpl implements PrototypeInterceptor {
 	@Override
 	public Object intercept(final Object obj, final Method method, final Object[] args, final MethodProxy proxy, final Prototype<?> currentPrototype) throws Throwable {
 
-		PrototypeProperty activeProperty = new PrototypeProperty(currentPrototype.getParentProperty(), method, proxy, args);
+		PrototypeProperty activeProperty = new PrototypeProperty(currentPrototype.getParentProperty(), method, proxy, args, currentPrototype.getTypeParameters());
 		if (isInvokedByLogger(activeProperty)) {
 			LOG.debug("Discard Method [{}] invoke via logger", method);
 			return proxy.invokeSuper(obj, args);

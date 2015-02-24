@@ -12,7 +12,17 @@ public class PrototypeComparableExpectation<T extends Comparable<T>> extends Pro
 		super(prototype, property);
 	}
 
-	public void isComparableTo(final T comparable) {
-		hasExpectation(new IsComparableTo<T>(comparable));
+	/**
+	 * Set an expectation that the property value is comparable to a value. For example</p>
+	 * 
+	 * <pre>
+	 * MyObject expected = prototype(MyObject.class);
+	 * expect(expected.number()).isComparableTo(new BigDecimal("1.01");;
+	 * expectThat(actual).matches(expected);
+	 * </pre>
+	 * @param expectedValue the type this property should be comparable to
+	 */
+	public void isComparableTo(final T expectedValue) {
+		hasExpectation(new IsComparableTo<T>(expectedValue));
 	}
 }

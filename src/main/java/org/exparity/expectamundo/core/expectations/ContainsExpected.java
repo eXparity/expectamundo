@@ -20,7 +20,7 @@ public class ContainsExpected<E, T extends Collection<E>> implements PropertyExp
 	private E prototype;
 
 	public ContainsExpected(final E prototype) {
-		if (!Prototyped.class.isInstance(prototype)) {
+		if (prototype != null && !Prototyped.class.isInstance(prototype)) {
 			throw new IllegalArgumentException("Object does not implement Prototyped. Please construct using Expectamundo.prototype");
 		} else {
 			this.prototype = prototype;
@@ -29,11 +29,15 @@ public class ContainsExpected<E, T extends Collection<E>> implements PropertyExp
 
 	@Override
 	public boolean matches(final T actual) {
-		PrototypeListMatchResult<E> result = matcher.contains(actual, prototype);
-		if (result.isMismatch()) {
-			throw new AssertionError(reporter.describeListMismatch(result));
+		if (actual == null) {
+			return false;
+		} else {
+			PrototypeListMatchResult<E> result = matcher.contains(actual, prototype);
+			if (result.isMismatch()) {
+				throw new AssertionError(reporter.describeListMismatch(result));
+			}
+			return true;
 		}
-		return true;
 	}
 
 	@Override

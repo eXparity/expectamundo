@@ -13,10 +13,30 @@ public class PrototypeStringExpectation extends PrototypeComparableExpectation<S
 		super(prototype, property);
 	}
 
+	/**
+	 * Set an expectation that the property value is of the given length. For example</p>
+	 * 
+	 * <pre>
+	 * MyObject expected = prototype(MyObject.class);
+	 * expect(expected.name()).hasLength(52);
+	 * expectThat(actual).matches(expected);
+	 * </pre>
+	 * @param expectedSize the expected size of the property value
+	 */
 	public void hasLength(final int expectedSize) {
 		hasExpectation(new HasLength(expectedSize));
 	}
 
+	/**
+	 * Set an expectation that the property value matches a regular expression. For example</p>
+	 * 
+	 * <pre>
+	 * MyObject expected = prototype(MyObject.class);
+	 * expect(expected.name()).hasPattern(&quot;A.*&quot;);
+	 * expectThat(actual).matches(expected);
+	 * </pre>
+	 * @param pattern the pattern to match against
+	 */
 	public void hasPattern(final String pattern) {
 		hasExpectation(new HasPattern(pattern));
 	}

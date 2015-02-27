@@ -12,7 +12,7 @@ import static org.exparity.expectamundo.Expectamundo.expectThat;
  * 
  * @author Stewart Bissett
  */
-public class ExpectamundoHasPattern {
+public class HasPatternTest {
 
 	@Test
 	public void canCheckForHasPattern() {

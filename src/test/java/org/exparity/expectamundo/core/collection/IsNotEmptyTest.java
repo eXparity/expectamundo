@@ -19,7 +19,7 @@ import static org.exparity.stub.random.RandomBuilder.aRandomString;
  * 
  * @author Stewart Bissett
  */
-public class ExpectamundoIsNotEmptyTest {
+public class IsNotEmptyTest {
 
 	@Test
 	public void canCheckForIsNotEmpty() {

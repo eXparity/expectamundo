@@ -16,7 +16,7 @@ import static org.exparity.stub.random.RandomBuilder.aRandomString;
  * 
  * @author Stewart Bissett
  */
-public class ExpectamundoIsInstanceOfTest {
+public class IsInstanceOfTest {
 
 	@Test
 	public void canCheckForInstanceOf() {

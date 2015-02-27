@@ -41,4 +41,19 @@ public class PrototypeStringExpectation extends PrototypeComparableExpectation<S
 	public void hasPattern(final String pattern) {
 		hasExpectation(new HasPattern(pattern));
 	}
+
+	/**
+	 * Set an expectation that the property value matches another property regardless of case. For example</p>
+	 * 
+	 * <pre>
+	 * MyObject expected = prototype(MyObject.class);
+	 * expect(expected.name()).isEqualToIgnoreCase(&quot;jANe&quot;);
+	 * expectThat(actual).matches(expected);
+	 * </pre>
+	 * @param expected the value to check against
+	 */
+	public void isEqualToIgnoreCase(final String expected) {
+		hasExpectation(new IsEqualToIgnoreCase(expected));
+	}
+
 }

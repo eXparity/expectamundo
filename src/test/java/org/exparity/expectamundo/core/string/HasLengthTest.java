@@ -14,7 +14,7 @@ import static org.exparity.stub.random.RandomBuilder.aRandomString;
  * 
  * @author Stewart Bissett
  */
-public class ExpectamundoHasLength {
+public class HasLengthTest {
 
 	@Test
 	public void canCheckForSize() {

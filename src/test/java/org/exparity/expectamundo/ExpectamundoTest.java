@@ -4,6 +4,7 @@ package org.exparity.expectamundo;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import org.exparity.expectamundo.core.PrototypeMatcherContext;
 import org.exparity.expectamundo.core.TypeReference;
 import org.exparity.expectamundo.testutils.types.GraphType;
 import org.exparity.expectamundo.testutils.types.HashCodeType;
@@ -211,8 +212,9 @@ public class ExpectamundoTest {
 		expectThat(new MapReturnType(singletonMap(key, aDifferentValue))).matches(expected);
 	}
 
-	// @Test(expected = IllegalArgumentException.class)
+	@Test(expected = IllegalArgumentException.class)
 	public void canFailIfSettingExpectationOnNormalInstance() {
+		PrototypeMatcherContext.setCurrentPrototype(null);
 		final String expectedValue = aRandomString(5);
 		SimpleType expected = new SimpleType(expectedValue);
 		expect(expected.getValue()).isEqualTo(expectedValue);

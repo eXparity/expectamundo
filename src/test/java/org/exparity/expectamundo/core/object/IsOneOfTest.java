@@ -13,7 +13,7 @@ import static org.exparity.stub.random.RandomBuilder.aRandomString;
  * 
  * @author Stewart Bissett
  */
-public class ExpectamundoIsOneOfTest {
+public class IsOneOfTest {
 
 	@Test
 	public void canCheckForIsOneOf() {

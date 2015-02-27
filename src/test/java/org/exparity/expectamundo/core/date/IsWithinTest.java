@@ -15,7 +15,7 @@ import static org.exparity.expectamundo.Expectamundo.prototype;
  * 
  * @author Stewart Bissett
  */
-public class ExpectamundoIsWithinTest {
+public class IsWithinTest {
 
 	@Test
 	public void canCheckForIsWithin() {

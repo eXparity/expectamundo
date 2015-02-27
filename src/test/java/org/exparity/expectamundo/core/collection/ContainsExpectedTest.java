@@ -16,7 +16,7 @@ import static org.exparity.stub.random.RandomBuilder.aRandomString;
  * 
  * @author Stewart Bissett
  */
-public class ExpectamundoContainsExpected {
+public class ContainsExpectedTest {
 
 	@Test
 	public void canCheckForContains() {

@@ -13,7 +13,7 @@ import static org.exparity.stub.random.RandomBuilder.aRandomString;
  * 
  * @author Stewart Bissett
  */
-public class ExpectamundoIsEqualToTest {
+public class IsEqualToTest {
 
 	@Test
 	public void canCheckForEqualTo() {
@@ -25,10 +25,9 @@ public class ExpectamundoIsEqualToTest {
 
 	@Test
 	public void canCheckForEqualToNull() {
-		final String expectedValue = null;
 		SimpleType expected = prototype(SimpleType.class);
-		expect(expected.getValue()).isEqualTo(expectedValue);
-		expectThat(new SimpleType(expectedValue)).matches(expected);
+		expect(expected.getValue()).isEqualTo(null);
+		expectThat(new SimpleType(null)).matches(expected);
 	}
 
 	@Test(expected = AssertionError.class)
@@ -38,4 +37,19 @@ public class ExpectamundoIsEqualToTest {
 		expect(expected.getValue()).isEqualTo(expectedValue);
 		expectThat(new SimpleType(differentValue)).matches(expected);
 	}
+
+	@Test(expected = AssertionError.class)
+	public void canCheckForNotEqualToValueVsNull() {
+		SimpleType expected = prototype(SimpleType.class);
+		expect(expected.getValue()).isEqualTo(aRandomString());
+		expectThat(new SimpleType(null)).matches(expected);
+	}
+
+	@Test(expected = AssertionError.class)
+	public void canCheckForNotEqualToNullVsValue() {
+		SimpleType expected = prototype(SimpleType.class);
+		expect(expected.getValue()).isEqualTo(null);
+		expectThat(new SimpleType(aRandomString())).matches(expected);
+	}
+
 }

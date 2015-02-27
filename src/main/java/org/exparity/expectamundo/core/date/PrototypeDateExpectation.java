@@ -1,11 +1,11 @@
 
-package org.exparity.expectamundo.core;
+package org.exparity.expectamundo.core.date;
 
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
-import org.exparity.expectamundo.core.expectations.IsAfter;
-import org.exparity.expectamundo.core.expectations.IsBefore;
-import org.exparity.expectamundo.core.expectations.IsWithin;
+import org.exparity.expectamundo.core.Prototype;
+import org.exparity.expectamundo.core.PrototypeProperty;
+import org.exparity.expectamundo.core.comparable.PrototypeComparableExpectation;
 
 /**
  * @author Stewart Bissett

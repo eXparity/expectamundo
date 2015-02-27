@@ -1,7 +1,6 @@
 
-package org.exparity.expectamundo.core.expectations;
+package org.exparity.expectamundo.core.array;
 
-import java.util.Collection;
 import org.exparity.expectamundo.core.PropertyExpectation;
 
 /**
@@ -9,22 +8,22 @@ import org.exparity.expectamundo.core.PropertyExpectation;
  * 
  * @author Stewart Bissett
  */
-public class HasSize<T extends Collection<?>> implements PropertyExpectation<T> {
+public class HasLengthOfArray<T> implements PropertyExpectation<T[]> {
 
 	private final int expectedSize;
 
-	public HasSize(final int expectedSize) {
+	public HasLengthOfArray(final int expectedSize) {
 		this.expectedSize = expectedSize;
 	}
 
 	@Override
-	public boolean matches(final T actual) {
-		return actual == null ? expectedSize == 0 : actual.size() == expectedSize;
+	public boolean matches(final T[] actual) {
+		return actual == null ? expectedSize == 0 : actual.length == expectedSize;
 	}
 
 	@Override
 	public String describe() {
-		return "has size " + expectedSize;
+		return "has length " + expectedSize;
 	}
 
 }

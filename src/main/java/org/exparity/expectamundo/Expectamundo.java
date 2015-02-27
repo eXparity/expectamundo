@@ -3,19 +3,19 @@ package org.exparity.expectamundo;
 
 import java.util.Collection;
 import java.util.Date;
-import org.exparity.expectamundo.core.PrototypeArrayExpectation;
 import org.exparity.expectamundo.core.PrototypeChecker;
-import org.exparity.expectamundo.core.PrototypeCollectionExpectation;
-import org.exparity.expectamundo.core.PrototypeComparableExpectation;
-import org.exparity.expectamundo.core.PrototypeDateExpectation;
 import org.exparity.expectamundo.core.PrototypeFactory;
 import org.exparity.expectamundo.core.PrototypeListVerifier;
-import org.exparity.expectamundo.core.PrototypeObjectExpectation;
-import org.exparity.expectamundo.core.PrototypeStringExpectation;
 import org.exparity.expectamundo.core.PrototypeVerifier;
 import org.exparity.expectamundo.core.Prototyped;
 import org.exparity.expectamundo.core.TypeReference;
+import org.exparity.expectamundo.core.array.PrototypeArrayExpectation;
+import org.exparity.expectamundo.core.collection.PrototypeCollectionExpectation;
+import org.exparity.expectamundo.core.comparable.PrototypeComparableExpectation;
+import org.exparity.expectamundo.core.date.PrototypeDateExpectation;
 import org.exparity.expectamundo.core.hamcrest.PrototypeMatcher;
+import org.exparity.expectamundo.core.object.PrototypeObjectExpectation;
+import org.exparity.expectamundo.core.string.PrototypeStringExpectation;
 import org.hamcrest.Matcher;
 import static org.exparity.expectamundo.core.PrototypeMatcherContext.currentPrototype;
 

@@ -1,13 +1,11 @@
 
-package org.exparity.expectamundo.core;
+package org.exparity.expectamundo.core.collection;
 
 import java.util.Collection;
 import org.exparity.expectamundo.Expectamundo;
-import org.exparity.expectamundo.core.expectations.Contains;
-import org.exparity.expectamundo.core.expectations.ContainsExpected;
-import org.exparity.expectamundo.core.expectations.HasSize;
-import org.exparity.expectamundo.core.expectations.IsEmpty;
-import org.exparity.expectamundo.core.expectations.IsNotEmpty;
+import org.exparity.expectamundo.core.Prototype;
+import org.exparity.expectamundo.core.PrototypeProperty;
+import org.exparity.expectamundo.core.object.PrototypeObjectExpectation;
 
 /**
  * @author Stewart Bissett

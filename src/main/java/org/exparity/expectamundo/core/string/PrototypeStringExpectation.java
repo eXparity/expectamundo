@@ -1,8 +1,10 @@
 
-package org.exparity.expectamundo.core;
+package org.exparity.expectamundo.core.string;
 
-import org.exparity.expectamundo.core.expectations.HasLength;
-import org.exparity.expectamundo.core.expectations.HasPattern;
+import org.exparity.expectamundo.core.Prototype;
+import org.exparity.expectamundo.core.PrototypeProperty;
+import org.exparity.expectamundo.core.collection.HasLength;
+import org.exparity.expectamundo.core.comparable.PrototypeComparableExpectation;
 
 /**
  * @author Stewart Bissett

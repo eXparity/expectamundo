@@ -1,15 +1,12 @@
 
-package org.exparity.expectamundo.core;
+package org.exparity.expectamundo.core.object;
 
 import java.util.Arrays;
 import java.util.Collection;
-import org.exparity.expectamundo.core.expectations.IsEqualTo;
-import org.exparity.expectamundo.core.expectations.IsInstanceOf;
-import org.exparity.expectamundo.core.expectations.IsNotEqualTo;
-import org.exparity.expectamundo.core.expectations.IsNotNull;
-import org.exparity.expectamundo.core.expectations.IsNull;
-import org.exparity.expectamundo.core.expectations.IsOneOf;
-import org.exparity.expectamundo.core.expectations.Matches;
+import org.exparity.expectamundo.core.PropertyExpectation;
+import org.exparity.expectamundo.core.Prototype;
+import org.exparity.expectamundo.core.PrototypeProperty;
+import org.exparity.expectamundo.core.PrototypePropertyMatcher;
 import org.hamcrest.Matcher;
 
 /**

@@ -11,7 +11,7 @@ import static org.exparity.expectamundo.Expectamundo.expectThat;
 import static org.exparity.stub.random.RandomBuilder.aRandomString;
 
 /**
- * Unit Test for {@link Expectamundo} invocations of the {@link org.exparity.expectamundo.core.expectations.HasSize} expectation
+ * Unit Test for {@link Expectamundo} invocations of the {@link org.exparity.expectamundo.core.object.HasSize} expectation
  * 
  * @author Stewart Bissett
  */

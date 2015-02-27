@@ -10,7 +10,7 @@ import static org.exparity.expectamundo.Expectamundo.expectThat;
 import static org.exparity.expectamundo.Expectamundo.prototype;
 
 /**
- * Unit Test for {@link Expectamundo} invocations of the {@link org.exparity.expectamundo.core.expectations.IsBefore} expectation
+ * Unit Test for {@link Expectamundo} invocations of the {@link org.exparity.expectamundo.core.object.IsBefore} expectation
  * 
  * @author Stewart Bissett
  */

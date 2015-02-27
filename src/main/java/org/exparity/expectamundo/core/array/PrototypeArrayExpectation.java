@@ -1,10 +1,9 @@
 
-package org.exparity.expectamundo.core;
+package org.exparity.expectamundo.core.array;
 
-import org.exparity.expectamundo.core.expectations.ContainsInArray;
-import org.exparity.expectamundo.core.expectations.HasLengthOfArray;
-import org.exparity.expectamundo.core.expectations.IsEmptyArray;
-import org.exparity.expectamundo.core.expectations.IsNotEmptyArray;
+import org.exparity.expectamundo.core.Prototype;
+import org.exparity.expectamundo.core.PrototypeProperty;
+import org.exparity.expectamundo.core.object.PrototypeObjectExpectation;
 
 /**
  * @author Stewart Bissett

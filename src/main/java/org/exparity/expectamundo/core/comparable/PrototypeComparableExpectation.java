@@ -1,7 +1,9 @@
 
-package org.exparity.expectamundo.core;
+package org.exparity.expectamundo.core.comparable;
 
-import org.exparity.expectamundo.core.expectations.IsComparableTo;
+import org.exparity.expectamundo.core.Prototype;
+import org.exparity.expectamundo.core.PrototypeProperty;
+import org.exparity.expectamundo.core.object.PrototypeObjectExpectation;
 
 /**
  * @author Stewart Bissett

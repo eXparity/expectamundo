@@ -1,5 +1,5 @@
 
-package org.exparity.expectamundo.core.collection;
+package org.exparity.expectamundo.core.string;
 
 import org.exparity.expectamundo.core.PropertyExpectation;
 

@@ -3,7 +3,6 @@ package org.exparity.expectamundo.core.string;
 
 import org.exparity.expectamundo.core.Prototype;
 import org.exparity.expectamundo.core.PrototypeProperty;
-import org.exparity.expectamundo.core.collection.HasLength;
 import org.exparity.expectamundo.core.comparable.PrototypeComparableExpectation;
 
 /**

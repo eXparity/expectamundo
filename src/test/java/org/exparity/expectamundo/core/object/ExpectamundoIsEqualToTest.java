@@ -1,5 +1,5 @@
 
-package org.exparity.expectamundo;
+package org.exparity.expectamundo.core.object;
 
 import org.exparity.expectamundo.testutils.types.SimpleType;
 import org.junit.Test;

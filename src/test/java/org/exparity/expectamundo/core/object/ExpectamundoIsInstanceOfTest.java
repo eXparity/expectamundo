@@ -1,5 +1,5 @@
 
-package org.exparity.expectamundo;
+package org.exparity.expectamundo.core.object;
 
 import org.exparity.expectamundo.testutils.types.PolymorphicReturnType;
 import org.exparity.expectamundo.testutils.types.PolymorphicSubtype1;

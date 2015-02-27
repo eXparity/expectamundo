@@ -1,5 +1,5 @@
 
-package org.exparity.expectamundo;
+package org.exparity.expectamundo.core.date;
 
 import java.util.Date;
 import java.util.concurrent.TimeUnit;

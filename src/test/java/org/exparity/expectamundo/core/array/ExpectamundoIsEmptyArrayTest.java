@@ -1,5 +1,5 @@
 
-package org.exparity.expectamundo;
+package org.exparity.expectamundo.core.array;
 
 import org.exparity.expectamundo.testutils.types.ArrayType;
 import org.junit.Test;
@@ -13,30 +13,30 @@ import static org.exparity.stub.random.RandomBuilder.aRandomString;
  * 
  * @author Stewart Bissett
  */
-public class ExpectamundoIsNotEmptyArrayTest {
+public class ExpectamundoIsEmptyArrayTest {
 
 	@Test
+	public void canCheckForIsEmpty() {
+		String[] expectedValue = new String[0];
+		ArrayType expected = prototype(ArrayType.class);
+		expect(expected.getValue()).isEmpty();
+		expectThat(new ArrayType(expectedValue)).matches(expected);
+	}
+
+	@Test
+	public void canCheckForIsEmptyForNull() {
+		ArrayType expected = prototype(ArrayType.class);
+		expect(expected.getValue()).isEmpty();
+		expectThat(new ArrayType(null)).matches(expected);
+	}
+
+	@Test(expected = AssertionError.class)
 	public void canCheckForIsNotEmpty() {
 		String[] expectedValue = new String[] {
 				aRandomString()
 		};
 		ArrayType expected = prototype(ArrayType.class);
-		expect(expected.getValue()).isNotEmpty();
+		expect(expected.getValue()).isEmpty();
 		expectThat(new ArrayType(expectedValue)).matches(expected);
-	}
-
-	@Test(expected = AssertionError.class)
-	public void canCheckForIsEmpty() {
-		String[] expectedValue = new String[0];
-		ArrayType expected = prototype(ArrayType.class);
-		expect(expected.getValue()).isNotEmpty();
-		expectThat(new ArrayType(expectedValue)).matches(expected);
-	}
-
-	@Test(expected = AssertionError.class)
-	public void canCheckForIsEmptyForNull() {
-		ArrayType expected = prototype(ArrayType.class);
-		expect(expected.getValue()).isNotEmpty();
-		expectThat(new ArrayType(null)).matches(expected);
 	}
 }

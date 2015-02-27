@@ -1,5 +1,5 @@
 
-package org.exparity.expectamundo;
+package org.exparity.expectamundo.core.array;
 
 import org.exparity.expectamundo.testutils.types.ArrayType;
 import org.exparity.stub.random.RandomBuilder;

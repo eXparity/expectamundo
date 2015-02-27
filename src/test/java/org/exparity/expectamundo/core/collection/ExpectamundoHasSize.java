@@ -1,5 +1,5 @@
 
-package org.exparity.expectamundo;
+package org.exparity.expectamundo.core.collection;
 
 import java.util.Arrays;
 import java.util.List;

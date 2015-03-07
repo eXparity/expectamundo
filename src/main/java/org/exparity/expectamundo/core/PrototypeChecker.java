@@ -31,7 +31,7 @@ public class PrototypeChecker<T> {
 	protected boolean matchesPrototype(final Prototyped<?> prototyped, final StringBuffer mismatchDescription) {
 		mismatchDescription.append("a ").append(actual.getClass().getSimpleName()).append(" containing properties :\n");
 		boolean matches = true;
-		for (PrototypePropertyMatcher expectation : prototyped.getExpectations()) {
+		for (PrototypeValueMatcher expectation : prototyped.getExpectations()) {
 			Object actualValue = expectation.getPropertyValue(actual);
 			if (!expectation.matches(actualValue)) {
 				mismatchDescription.append("\t").append(expectation.getPropertyPath()).append(" is ").append(actualValue);

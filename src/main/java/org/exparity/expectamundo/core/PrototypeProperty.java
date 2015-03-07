@@ -10,7 +10,7 @@ import java.util.Map;
 import net.sf.cglib.proxy.MethodProxy;
 import org.apache.commons.lang.StringUtils;
 
-public class PrototypeProperty {
+public class PrototypeProperty implements PrototypeValue {
 
 	private final Method method;
 	private final MethodProxy proxy;
@@ -29,14 +29,19 @@ public class PrototypeProperty {
 	/**
 	 * Return the value of this property on the given object
 	 */
-	public Object getPropertyValue(final Object actual) {
+	public Object getValue(final Object actual) {
 		try {
-			return proxy.invoke(parent != null ? parent.getPropertyValue(actual) : actual, args);
+			return proxy.invoke(parent != null ? parent.getValue(actual) : actual, args);
 		} catch (ClassCastException e) {
 			throw e;
 		} catch (Throwable e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@Override
+	public String getLabel() {
+		return getPath();
 	}
 
 	public String getPath() {

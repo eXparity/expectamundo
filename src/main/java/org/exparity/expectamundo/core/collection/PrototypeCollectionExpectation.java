@@ -5,6 +5,7 @@ import java.util.Collection;
 import org.exparity.expectamundo.Expectamundo;
 import org.exparity.expectamundo.core.Prototype;
 import org.exparity.expectamundo.core.PrototypeProperty;
+import org.exparity.expectamundo.core.PrototypeValue;
 import org.exparity.expectamundo.core.object.PrototypeObjectExpectation;
 
 /**
@@ -12,7 +13,7 @@ import org.exparity.expectamundo.core.object.PrototypeObjectExpectation;
  */
 public class PrototypeCollectionExpectation<E, T extends Collection<E>> extends PrototypeObjectExpectation<T> {
 
-	public PrototypeCollectionExpectation(final Prototype<?> prototype, final PrototypeProperty property) {
+	public PrototypeCollectionExpectation(final Prototype<?> prototype, final PrototypeValue property) {
 		super(prototype, property);
 	}
 

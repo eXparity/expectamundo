@@ -4,7 +4,7 @@ package org.exparity.expectamundo.core.date;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 import org.exparity.expectamundo.core.Prototype;
-import org.exparity.expectamundo.core.PrototypeProperty;
+import org.exparity.expectamundo.core.PrototypeValue;
 import org.exparity.expectamundo.core.comparable.PrototypeComparableExpectation;
 
 /**
@@ -12,7 +12,7 @@ import org.exparity.expectamundo.core.comparable.PrototypeComparableExpectation;
  */
 public class PrototypeDateExpectation extends PrototypeComparableExpectation<Date> {
 
-	public PrototypeDateExpectation(final Prototype<?> prototype, final PrototypeProperty property) {
+	public PrototypeDateExpectation(final Prototype<?> prototype, final PrototypeValue property) {
 		super(prototype, property);
 	}
 

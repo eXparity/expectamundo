@@ -3,9 +3,13 @@ package org.exparity.expectamundo;
 
 import java.util.Collection;
 import java.util.Date;
+import org.exparity.expectamundo.core.Prototype;
 import org.exparity.expectamundo.core.PrototypeChecker;
 import org.exparity.expectamundo.core.PrototypeFactory;
 import org.exparity.expectamundo.core.PrototypeListVerifier;
+import org.exparity.expectamundo.core.PrototypeMatcherContext;
+import org.exparity.expectamundo.core.PrototypeProperty;
+import org.exparity.expectamundo.core.PrototypeValue;
 import org.exparity.expectamundo.core.PrototypeVerifier;
 import org.exparity.expectamundo.core.Prototyped;
 import org.exparity.expectamundo.core.TypeReference;
@@ -17,7 +21,8 @@ import org.exparity.expectamundo.core.hamcrest.PrototypeMatcher;
 import org.exparity.expectamundo.core.object.PrototypeObjectExpectation;
 import org.exparity.expectamundo.core.string.PrototypeStringExpectation;
 import org.hamcrest.Matcher;
-import static org.exparity.expectamundo.core.PrototypeMatcherContext.currentPrototype;
+
+//import static org.exparity.expectamundo.core.PrototypeMatcherContext.currentPrototype;
 
 /**
  * Expectamundo is a test library for preparing a prototype instance of a non-final type containing expected values against which actual instances can be verified against. For
@@ -106,8 +111,7 @@ public class Expectamundo {
 	 * @return A instance of a {@link PrototypeCollectionExpectation} to set collection expectations for the property
 	 * */
 	public static <E, T extends Collection<E>> PrototypeCollectionExpectation<E, T> expect(final T property) {
-		checkActivePrototype();
-		return new PrototypeCollectionExpectation<E, T>(currentPrototype(), currentPrototype().getActiveProperty());
+		return new PrototypeCollectionExpectation<E, T>(currentPrototype(), currentValue(property));
 	}
 
 	/**
@@ -123,8 +127,7 @@ public class Expectamundo {
 	 * @return A instance of a {@link PrototypeComparableExpectation} to set comparable expectations for the property
 	 * */
 	public static <T extends Comparable<T>> PrototypeComparableExpectation<T> expect(final T property) {
-		checkActivePrototype();
-		return new PrototypeComparableExpectation<T>(currentPrototype(), currentPrototype().getActiveProperty());
+		return new PrototypeComparableExpectation<T>(currentPrototype(), currentValue(property));
 	}
 
 	/**
@@ -140,8 +143,7 @@ public class Expectamundo {
 	 * @return A instance of a {@link PrototypeArrayExpectation} to set array expectations for the property
 	 * */
 	public static <T> PrototypeArrayExpectation<T> expect(final T[] property) {
-		checkActivePrototype();
-		return new PrototypeArrayExpectation<T>(currentPrototype(), currentPrototype().getActiveProperty());
+		return new PrototypeArrayExpectation<T>(currentPrototype(), currentValue(property));
 	}
 
 	/**
@@ -156,8 +158,7 @@ public class Expectamundo {
 	 * @return A instance of a {@link PrototypeStringExpectation} to set String expectations for the property
 	 * */
 	public static PrototypeStringExpectation expect(final String property) {
-		checkActivePrototype();
-		return new PrototypeStringExpectation(currentPrototype(), currentPrototype().getActiveProperty());
+		return new PrototypeStringExpectation(currentPrototype(), currentValue(property));
 	}
 
 	/**
@@ -172,8 +173,7 @@ public class Expectamundo {
 	 * @return A instance of a {@link PrototypeDateExpectation} to set date expectations for the property
 	 * */
 	public static PrototypeDateExpectation expect(final Date property) {
-		checkActivePrototype();
-		return new PrototypeDateExpectation(currentPrototype(), currentPrototype().getActiveProperty());
+		return new PrototypeDateExpectation(currentPrototype(), currentValue(property));
 	}
 
 	/**
@@ -188,8 +188,7 @@ public class Expectamundo {
 	 * @return A instance of a {@link PrototypeObjectExpectation} to set object expectations for the property
 	 * */
 	public static <T> PrototypeObjectExpectation<T> expect(final T property) {
-		checkActivePrototype();
-		return new PrototypeObjectExpectation<T>(currentPrototype(), currentPrototype().getActiveProperty());
+		return new PrototypeObjectExpectation<T>(currentPrototype(), currentValue(property));
 	}
 
 	/**
@@ -251,8 +250,7 @@ public class Expectamundo {
 	 * @param <T> the expected type of the value
 	 */
 	public static <V, T extends V> T cast(final V value, final Class<T> type) {
-		checkActivePrototype();
-		T prototype = factory.createPrototype(type, currentPrototype().getActiveProperty(), currentPrototype());
+		T prototype = factory.createPrototype(type, currentProperty(), currentPrototype());
 		currentPrototype().addChild((Prototyped<?>) prototype);
 		return prototype;
 	}
@@ -295,12 +293,30 @@ public class Expectamundo {
 		return obj instanceof Prototyped;
 	}
 
-	private static void checkActivePrototype() {
-		if (currentPrototype() == null) {
+	private static <T> PrototypeValue currentValue(final T value) {
+		PrototypeProperty currentProperty = currentPrototype().getActiveProperty();
+		if ( currentProperty != null ) {
+			return currentProperty;
+		} else if ( isPrototype(value) ) {
+			return (PrototypeValue) value;
+		} else {
 			throw new IllegalArgumentException("You can only set an expectation on an instance created with Expectamundo.prototype()");
-		} else if (currentPrototype().getActiveProperty() == null) {
-			throw new IllegalArgumentException("You can only set an expectation for a property");
 		}
 	}
 
+	private static Prototype<?> currentPrototype() {
+		Prototype<?> currentPrototype = PrototypeMatcherContext.currentPrototype();
+		if (currentPrototype == null) {
+			throw new IllegalArgumentException("You can only set an expectation on an instance created with Expectamundo.prototype()");
+		}
+		return currentPrototype;
+	}
+
+	private static PrototypeProperty currentProperty() {
+		PrototypeProperty activeProperty = currentPrototype().getActiveProperty();
+		if (activeProperty == null) {
+			throw new IllegalArgumentException("You can only set an expectation for a property");
+		}
+		return activeProperty;
+	}
 }

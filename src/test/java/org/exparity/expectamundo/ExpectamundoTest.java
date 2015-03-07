@@ -344,4 +344,11 @@ public class ExpectamundoTest {
 		expectThat(listOfTypes).contains(expected);
 	}
 
+	@Test
+	public void canMatchAPrototype() {
+		String value = aRandomString();
+		List<String> expected = prototype(new TypeReference<List<String>>() {});
+		expect(expected).contains(value);
+		expectThat(Arrays.asList(value)).matches(expected);
+	}
 }

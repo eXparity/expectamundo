@@ -38,7 +38,7 @@ public class PrototypeListMatchResult<T> {
 		return prototyped;
 	}
 
-	public List<PrototypePropertyMatcher> getExpectations() {
+	public List<PrototypeValueMatcher> getExpectations() {
 		return prototyped.getExpectations();
 	}
 

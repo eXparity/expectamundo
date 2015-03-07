@@ -38,17 +38,17 @@ public class PrototypeMismatchReporter {
 		return result.getRawType().getSimpleName();
 	}
 
-	private String describeExpectations(final List<PrototypePropertyMatcher> expectations) {
+	private String describeExpectations(final List<PrototypeValueMatcher> expectations) {
 		StringBuffer buffer = new StringBuffer();
-		for (PrototypePropertyMatcher expecation : expectations) {
+		for (PrototypeValueMatcher expecation : expectations) {
 			buffer.append("\n\t").append(expecation.getPropertyPath()).append(" is ").append(expecation.getExpectation());
 		}
 		return buffer.toString();
 	}
 
-	private String describeDifferences(final List<PrototypePropertyDifference> mismatches) {
+	private String describeDifferences(final List<PrototypeValueDifference> mismatches) {
 		StringBuffer buffer = new StringBuffer();
-		for (PrototypePropertyDifference mismatch : mismatches) {
+		for (PrototypeValueDifference mismatch : mismatches) {
 			buffer.append("\n\t").append(mismatch.getPath()).append(" is ").append(mismatch.getValue());
 		}
 		return buffer.toString();
@@ -61,7 +61,7 @@ public class PrototypeMismatchReporter {
 			StringBuffer buffer = new StringBuffer();
 			for (PrototypeMatchResult<T> mismatch : mismatches) {
 				buffer.append("\n\t").append(describeActualType(mismatch)).append(" containing properties");
-				for (PrototypePropertyDifference difference : mismatch.getDifferences()) {
+				for (PrototypeValueDifference difference : mismatch.getDifferences()) {
 					buffer.append("\n\t\t").append(difference.getPath()).append(" is ").append(difference.getValue());
 				}
 			}

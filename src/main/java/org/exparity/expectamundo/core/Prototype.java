@@ -10,14 +10,14 @@ import net.sf.cglib.proxy.MethodProxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public final class Prototype<T> implements Prototyped<T>, MethodInterceptor {
+public final class Prototype<T> implements Prototyped<T>, MethodInterceptor, PrototypeValue {
 
 	private static Logger LOG = LoggerFactory.getLogger(Prototype.class);
 
 	private final Class<T> rawType;
 	private final PrototypeInterceptor interceptor;
 	private final List<Prototyped<?>> children = new ArrayList<Prototyped<?>>();
-	private final List<PrototypePropertyMatcher> expectations = new ArrayList<PrototypePropertyMatcher>();
+	private final List<PrototypeValueMatcher> expectations = new ArrayList<PrototypeValueMatcher>();
 	private final Map<String, Class<?>> typeParameters;
 	private PrototypeProperty parentProperty = null, activeProperty = null;
 
@@ -52,8 +52,8 @@ public final class Prototype<T> implements Prototyped<T>, MethodInterceptor {
 	}
 
 	@Override
-	public List<PrototypePropertyMatcher> getExpectations() {
-		List<PrototypePropertyMatcher> expectations = new ArrayList<PrototypePropertyMatcher>();
+	public List<PrototypeValueMatcher> getExpectations() {
+		List<PrototypeValueMatcher> expectations = new ArrayList<PrototypeValueMatcher>();
 		expectations.addAll(this.expectations);
 		for (Prototyped<?> child : children) {
 			expectations.addAll(child.getExpectations());
@@ -61,7 +61,7 @@ public final class Prototype<T> implements Prototyped<T>, MethodInterceptor {
 		return expectations;
 	}
 
-	public void addExpectation(final PrototypePropertyMatcher expecation) {
+	public void addExpectation(final PrototypeValueMatcher expecation) {
 		LOG.info("Expects {} {}", expecation.getPropertyPath(), expecation.getExpectation());
 		this.expectations.add(expecation);
 	}
@@ -77,23 +77,21 @@ public final class Prototype<T> implements Prototyped<T>, MethodInterceptor {
 
 	@Override
 	public Object intercept(final Object obj, final Method method, final Object[] args, final MethodProxy proxy) throws Throwable {
-		if (method.getDeclaringClass().equals(Prototyped.class)) {
-			return getClass().getMethod(method.getName(), parameterTypes(args)).invoke(this);
+		if (method.getDeclaringClass().equals(Prototyped.class) || method.getDeclaringClass().equals(PrototypeValue.class)) {
+			return method.invoke(this, args);
 		} else {
 			return this.interceptor.intercept(obj, method, args, proxy, this);
 		}
 	}
 
-	private Class<?>[] parameterTypes(final Object[] args) {
-		if (args == null || args.length == 0) {
-			return new Class<?>[0];
-		} else {
-			Class<?>[] types = new Class[args.length];
-			for (int i = 0; i < args.length; ++i) {
-				types[i] = args[i].getClass();
-			}
-			return types;
-		}
+	@Override
+	public String getLabel() {
+		return this.rawType.getSimpleName();
+	}
+
+	@Override
+	public Object getValue(final Object actual) {
+		return this;
 	}
 
 	@Override

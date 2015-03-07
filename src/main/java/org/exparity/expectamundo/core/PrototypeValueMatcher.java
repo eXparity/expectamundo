@@ -6,12 +6,12 @@ package org.exparity.expectamundo.core;
  * @author Stewart Bissett
  */
 @SuppressWarnings("rawtypes")
-public class PrototypePropertyMatcher {
+public class PrototypeValueMatcher {
 
-	private final PrototypeProperty property;
+	private final PrototypeValue property;
 	private final PropertyExpectation expectation;
 
-	public PrototypePropertyMatcher(final PrototypeProperty property, final PropertyExpectation expectation) {
+	public PrototypeValueMatcher(final PrototypeValue property, final PropertyExpectation expectation) {
 		this.property = property;
 		this.expectation = expectation;
 	}
@@ -22,20 +22,20 @@ public class PrototypePropertyMatcher {
 	}
 
 	public String getPropertyPath() {
-		return property.getPath();
+		return property.getLabel();
 	}
 
 	public Object getPropertyValue(final Object actual) {
-		return property.getPropertyValue(actual);
+		return property.getValue(actual);
 	}
 
 	public String getExpectation() {
 		return expectation.describe();
 	}
 
-	public PrototypeProperty getProperty() {
-		return property;
-	}
+	// public PrototypeProperty getProperty() {
+	// return property;
+	// }
 
 	@Override
 	public String toString() {

@@ -1,12 +1,12 @@
 package org.exparity.expectamundo.core;
 
-public class PrototypePropertyDifference {
+public class PrototypeValueDifference {
 
-	private final String path;
+	private final String label;
 	private final Object value;
 
-	public PrototypePropertyDifference(final String path, final Object value) {
-		this.path = path;
+	public PrototypeValueDifference(final String path, final Object value) {
+		this.label = path;
 		this.value = value;
 	}
 
@@ -15,7 +15,7 @@ public class PrototypePropertyDifference {
 	}
 
 	public String getPath() {
-		return path;
+		return label;
 	}
 
 }

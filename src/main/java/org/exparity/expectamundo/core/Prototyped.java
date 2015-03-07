@@ -11,7 +11,7 @@ public interface Prototyped<T> {
 	/**
 	 * Return the collection of expectations relevant to this protype
 	 */
-	public List<PrototypePropertyMatcher> getExpectations();
+	public List<PrototypeValueMatcher> getExpectations();
 
 	/**
 	 * Return

@@ -126,12 +126,14 @@ public class PrototypeFactory {
 		if (prototype.getRawType().isInterface()) {
 			classFactory.setInterfaces(new Class[] {
 					prototype.getRawType(),
-					Prototyped.class
+					Prototyped.class,
+					PrototypeValue.class
 			});
 		} else {
 			classFactory.setSuperclass(prototype.getRawType());
 			classFactory.setInterfaces(new Class[] {
-					Prototyped.class
+					Prototyped.class,
+					PrototypeValue.class
 			});
 		}
 		classFactory.setCallbackType(prototype.getClass());

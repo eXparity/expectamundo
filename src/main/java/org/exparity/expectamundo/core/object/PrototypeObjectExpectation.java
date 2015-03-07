@@ -6,7 +6,8 @@ import java.util.Collection;
 import org.exparity.expectamundo.core.PropertyExpectation;
 import org.exparity.expectamundo.core.Prototype;
 import org.exparity.expectamundo.core.PrototypeProperty;
-import org.exparity.expectamundo.core.PrototypePropertyMatcher;
+import org.exparity.expectamundo.core.PrototypeValue;
+import org.exparity.expectamundo.core.PrototypeValueMatcher;
 import org.hamcrest.Matcher;
 
 /**
@@ -15,11 +16,11 @@ import org.hamcrest.Matcher;
 public class PrototypeObjectExpectation<T> {
 
 	private final Prototype<?> prototype;
-	private final PrototypeProperty property;
+	private final PrototypeValue value;
 
-	public PrototypeObjectExpectation(final Prototype<?> prototype, final PrototypeProperty property) {
+	public PrototypeObjectExpectation(final Prototype<?> prototype, final PrototypeValue property) {
 		this.prototype = prototype;
-		this.property = property;
+		this.value = property;
 	}
 
 	/**
@@ -144,7 +145,7 @@ public class PrototypeObjectExpectation<T> {
 	 * </pre>
 	 */
 	public void hasExpectation(final PropertyExpectation<T> expectation) {
-		prototype.addExpectation(new PrototypePropertyMatcher(property, expectation));
+		prototype.addExpectation(new PrototypeValueMatcher(value, expectation));
 		prototype.setActiveProperty(null);
 	}
 

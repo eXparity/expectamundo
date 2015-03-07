@@ -2,7 +2,7 @@
 package org.exparity.expectamundo.core.array;
 
 import org.exparity.expectamundo.core.Prototype;
-import org.exparity.expectamundo.core.PrototypeProperty;
+import org.exparity.expectamundo.core.PrototypeValue;
 import org.exparity.expectamundo.core.object.PrototypeObjectExpectation;
 
 /**
@@ -10,7 +10,7 @@ import org.exparity.expectamundo.core.object.PrototypeObjectExpectation;
  */
 public class PrototypeArrayExpectation<T> extends PrototypeObjectExpectation<T[]> {
 
-	public PrototypeArrayExpectation(final Prototype<?> prototype, final PrototypeProperty property) {
+	public PrototypeArrayExpectation(final Prototype<?> prototype, final PrototypeValue property) {
 		super(prototype, property);
 	}
 

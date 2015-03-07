@@ -2,7 +2,7 @@
 package org.exparity.expectamundo.core.string;
 
 import org.exparity.expectamundo.core.Prototype;
-import org.exparity.expectamundo.core.PrototypeProperty;
+import org.exparity.expectamundo.core.PrototypeValue;
 import org.exparity.expectamundo.core.comparable.PrototypeComparableExpectation;
 
 /**
@@ -10,7 +10,7 @@ import org.exparity.expectamundo.core.comparable.PrototypeComparableExpectation;
  */
 public class PrototypeStringExpectation extends PrototypeComparableExpectation<String> {
 
-	public PrototypeStringExpectation(final Prototype<?> prototype, final PrototypeProperty property) {
+	public PrototypeStringExpectation(final Prototype<?> prototype, final PrototypeValue property) {
 		super(prototype, property);
 	}
 

@@ -66,6 +66,7 @@ public class PrototypeInterceptorImpl implements PrototypeInterceptor {
 
 	private boolean isProxiableMethod(final Method method) {
 		switch (method.getName()) {
+			case "equals":
 			case "iterator":
 			case "finalize":
 			case "hashCode":

@@ -2,7 +2,7 @@
 package org.exparity.expectamundo.core.hamcrest;
 
 import java.util.List;
-import org.exparity.expectamundo.core.PrototypePropertyMatcher;
+import org.exparity.expectamundo.core.PrototypeValueMatcher;
 import org.exparity.expectamundo.core.Prototyped;
 import org.hamcrest.Description;
 import org.hamcrest.Factory;
@@ -34,7 +34,7 @@ public class PrototypeMatcher<T> extends TypeSafeDiagnosingMatcher<T> {
 	}
 
 	private final Class<T> rawType;
-	private final List<PrototypePropertyMatcher> expectations;
+	private final List<PrototypeValueMatcher> expectations;
 
 	@SuppressWarnings("unchecked")
 	public PrototypeMatcher(final T stub) {
@@ -50,7 +50,7 @@ public class PrototypeMatcher<T> extends TypeSafeDiagnosingMatcher<T> {
 		description.appendText("a ").appendText(rawType.getSimpleName());
 		if (!expectations.isEmpty()) {
 			description.appendText(" containing properties :");
-			for (PrototypePropertyMatcher expecation : expectations) {
+			for (PrototypeValueMatcher expecation : expectations) {
 				description.appendText("\n\t").appendText(expecation.getPropertyPath()).appendText(" ").appendText(expecation.getExpectation());
 			}
 		}
@@ -60,7 +60,7 @@ public class PrototypeMatcher<T> extends TypeSafeDiagnosingMatcher<T> {
 	protected boolean matchesSafely(final T actual, final Description mismatchDescription) {
 		mismatchDescription.appendText("a ").appendText(actual.getClass().getSimpleName()).appendText(" containing properties :\n");
 		boolean matches = true;
-		for (PrototypePropertyMatcher expectation : expectations) {
+		for (PrototypeValueMatcher expectation : expectations) {
 			Object actualValue = expectation.getPropertyValue(actual);
 			if (!expectation.matches(actualValue)) {
 				mismatchDescription.appendText("\t").appendText(expectation.getPropertyPath()).appendText(" ").appendValue(actualValue);

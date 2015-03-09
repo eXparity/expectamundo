@@ -34,7 +34,22 @@ You can set up a test to verify the expected outcome as follows:
       }
     }
 
-This example captures the basics of what you can do with eXpectamundo. eXpectamundo allows you to set expectations on any non-final type or property on a object which returns a value.
+You can also set up a test to verify the protoptype directly, for example setting expectations on a list as follows:
+
+    public class SimpleTypeTest {
+    	@Test
+    	public void canReturnTheCorrectValue() {
+    	  String message = "eXpectamundo lets me test this";
+    	  SimpleType expected = Expectamundo.prototype(SimpleType.class);
+    	  Expectamundo.expect(expected.getValue().get(0)).isEqualTo(message);
+    	  List<SimpleType> expectedList = Expectamundo.prototype(new TypeReference<List<SimpleType>>(){});
+    	  Expectamundo.expect(expectedList).containsExpected(expected);
+    	  SimpleType actual = new SimpleType();
+    	  Expectamundo.verify(Arrays.asList(actual)).matches(expectedList);
+      }
+    }
+
+These examples capture the basics of what you can do with eXpectamundo. eXpectamundo allows you to set expectations on any non-final type or property on a object which returns a value.
 
 The libary includes expectations for all Object property types:
 
@@ -100,6 +115,12 @@ The source includes a pom.xml for building with Maven
 
 Release Notes
 -------------
+
+Changes 0.9.11 -> 0.9.15
+  * Add IsEqualsIgnoreCase to Strings
+  * Add IsSameDay to Date  
+  * Add ContainsExpected to collections
+  * Improve handling of array index out of range  
 
 Changes 0.9.10 -> 0.9.11
   * IsEqualTo can check expected null == null (Issue #3)

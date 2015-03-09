@@ -39,14 +39,17 @@ This example captures the basics of what you can do with eXpectamundo. eXpectamu
 The libary includes expectations for all Object property types:
 
 * __isEqualTo__ - Set the expectation that the property value should be equal to an explicit value
+* __isNotEqualTo__ - Set the expectation that the property value should not be equal to an explicit value
 * __isNull__ - Set the expectation that the property should be null
 * __isNotNull__ - Set the expectation that the property should not be null
 * __matches__ - Set the expectation that the property matches a Hamcrest matcher
 * __isInstanceOf__ - Set the expectation that the property is an instance of a type
+* __isOneOf__ - Set the expectation that the property one of a number of values
 
 The libary includes expectations for Collection properties:
 
 * __contains__ - Set the expectation that the collection property contains an object which is equal to the explicit value
+* __containsExpected__ - Set the expectation that the collection property contains an a prototype with the defined expectations
 * __isEmpty__ - Set the expectation that the collection property is empty
 * __isNotEmpty__ - Set the expectation that the collection property is not empty
 * __hasSize__ - Set the expectation that the collection property is of an explicit size
@@ -66,6 +69,7 @@ The libary includes expectations for String properties
 
 * __hasPattern__ - Set the expectation that the String matches the regular expression
 * __hasLength__ - Set the expectation that the String is of the given length
+* __isEqualToIgnoreCase__ - Set the expectation that the String is the same as another regardless of case
 
 Contributions are welcome to extend the list of expectations to match types.
 
@@ -78,7 +82,7 @@ A maven project
     <dependency>
         <groupId>org.exparity</groupId>
         <artifactId>expectamundo</artifactId>
-        <version>0.9.11</version>
+        <version>0.9.15</version>
     </dependency>
 
 A project which uses ivy for dependency management

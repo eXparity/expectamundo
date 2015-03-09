@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.Map;
 import net.sf.cglib.proxy.Callback;
 import net.sf.cglib.proxy.Enhancer;
-import org.apache.commons.lang.ArrayUtils;
 import org.objenesis.Objenesis;
 import org.objenesis.ObjenesisStd;
 import org.objenesis.instantiator.ObjectInstantiator;
@@ -167,6 +166,6 @@ public class PrototypeFactory {
 	}
 
 	private <T> boolean isGenericType(final Class<T> type) {
-		return ArrayUtils.isNotEmpty(type.getTypeParameters());
+		return type.getTypeParameters() != null && type.getTypeParameters().length > 0;
 	}
 }

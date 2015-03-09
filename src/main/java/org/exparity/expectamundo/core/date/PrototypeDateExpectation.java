@@ -33,6 +33,20 @@ public class PrototypeDateExpectation extends PrototypeComparableExpectation<Dat
 	}
 
 	/**
+	 * Set an expectation that the property value is on the same day. For example</p>
+	 * 
+	 * <pre>
+	 * MyObject expected = prototype(MyObject.class);
+	 * expect(expected.aDate()).isSameDay(new Date());
+	 * expectThat(actual).matches(expected);
+	 * </pre>
+	 * @param date the date to test the value against
+	 */
+	public void isSameDay(final Date date) {
+		hasExpectation(new IsSameDay(date));
+	}
+
+	/**
 	 * Set an expectation that the property value is after a given date. For example</p>
 	 * 
 	 * <pre>

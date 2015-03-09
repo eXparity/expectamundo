@@ -32,6 +32,8 @@ public class PrototypeProperty implements PrototypeValue {
 	public Object getValue(final Object actual) {
 		try {
 			return proxy.invoke(parent != null ? parent.getValue(actual) : actual, args);
+		} catch (ArrayIndexOutOfBoundsException e) {
+			return "<INDEX OUT OF BOUNDS>";
 		} catch (ClassCastException e) {
 			throw e;
 		} catch (Throwable e) {

@@ -188,6 +188,16 @@ public class ExpectamundoTest {
 		expectThat(new ListReturnType(differentValue)).matches(expected);
 	}
 
+	@Test(expected = AssertionError.class)
+	public void canFailIfListSmaller() {
+		final String expectedString = aRandomString(5);
+		final List<String> expectedValue = Arrays.asList(expectedString);
+		ListReturnType expected = prototype(ListReturnType.class);
+		expect(expected.getValue().get(0)).isEqualTo(expectedString);
+		expect(expected.getValue().get(1)).isEqualTo(expectedString);
+		expectThat(new ListReturnType(expectedValue)).matches(expected);
+	}
+
 	@Test
 	public void canMatchMapProperties() {
 		String key = aRandomString(5), value = aRandomString(5);

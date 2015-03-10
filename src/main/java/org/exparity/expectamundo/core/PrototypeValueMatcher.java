@@ -33,10 +33,6 @@ public class PrototypeValueMatcher {
 		return expectation.describe();
 	}
 
-	// public PrototypeProperty getProperty() {
-	// return property;
-	// }
-
 	@Override
 	public String toString() {
 		return "Expectation [" + getPropertyPath() + "=" + getExpectation() + "]";

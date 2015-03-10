@@ -97,12 +97,12 @@ A maven project
     <dependency>
         <groupId>org.exparity</groupId>
         <artifactId>expectamundo</artifactId>
-        <version>0.9.15</version>
+        <version>0.9.16</version>
     </dependency>
 
 A project which uses ivy for dependency management
 
-    <dependency org="org.exparity" name="expectamundo" rev="0.9.11"/>
+    <dependency org="org.exparity" name="expectamundo" rev="0.9.16"/>
 
 Source
 ------
@@ -115,6 +115,9 @@ The source includes a pom.xml for building with Maven
 
 Release Notes
 -------------
+
+Changes 0.9.15 -> 0.9.16
+  * Catch IndexOutOfBounds
 
 Changes 0.9.11 -> 0.9.15
   * Add IsEqualsIgnoreCase to Strings

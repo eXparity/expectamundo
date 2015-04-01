@@ -2,9 +2,9 @@
 package org.exparity.expectamundo.core.collection;
 
 import java.util.Collection;
+
 import org.exparity.expectamundo.Expectamundo;
 import org.exparity.expectamundo.core.Prototype;
-import org.exparity.expectamundo.core.PrototypeProperty;
 import org.exparity.expectamundo.core.PrototypeValue;
 import org.exparity.expectamundo.core.object.PrototypeObjectExpectation;
 

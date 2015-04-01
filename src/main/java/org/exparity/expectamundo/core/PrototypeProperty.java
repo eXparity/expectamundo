@@ -33,7 +33,7 @@ public class PrototypeProperty implements PrototypeValue {
 		try {
 			return proxy.invoke(parent != null ? parent.getValue(actual) : actual, args);
 		} catch (final IndexOutOfBoundsException e) {
-			return "<INDEX OUT OF BOUNDS>";
+			return null;
 		} catch (ClassCastException e) {
 			throw e;
 		} catch (Throwable e) {

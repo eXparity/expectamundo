@@ -40,7 +40,7 @@ public class PrototypeProperty implements PrototypeValue {
 	public Object getValue(final Object actual) {
 		try {
 			return proxy.invoke(parent != null ? parent.getValue(actual) : actual, args);
-		} catch (final IndexOutOfBoundsException e) {
+		} catch (final IndexOutOfBoundsException|NullPointerException e) {
 			return createNullMethodProxy(method);
 		} catch (ClassCastException e) {
 			throw e;

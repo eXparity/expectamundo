@@ -140,6 +140,15 @@ public class ExpectamundoTest {
 		expectThat(new GraphType(expectedValue, new SimpleType(differentValue))).matches(expected);
 	}
 
+	@Test(expected = AssertionError.class)
+	public void canFailNullGraphProperty() {
+		final String expectedValue = aRandomString(5), differentValue = expectedValue + aRandomString(5);
+		GraphType expected = prototype(GraphType.class);
+		expect(expected.getValue()).isEqualTo(expectedValue);
+		expect(expected.getChild().getValue()).isEqualTo(expectedValue);
+		expectThat(new GraphType(differentValue, null)).matches(expected);
+	}
+
 	@Test
 	public void canMatchGenericSubclass() {
 		final String expectedValue = aRandomString(5);
@@ -212,7 +221,8 @@ public class ExpectamundoTest {
 	public void canFailIfListOfObjectsSmaller() {
 		final String expectedString = aRandomString(5), secondString = aRandomString(5);
 		final List<SimpleType> expectedList = Arrays.asList(new SimpleType(expectedString));
-		final List<SimpleType> expected = prototype(new TypeReference<List<SimpleType>>() {});
+		final List<SimpleType> expected = prototype(new TypeReference<List<SimpleType>>() {
+		});
 		expect(expected.get(0).getValue()).isEqualTo(expectedString);
 		expect(expected.get(1).getValue()).isEqualTo(secondString);
 		expectThat(expectedList).matches(expected);
@@ -221,8 +231,10 @@ public class ExpectamundoTest {
 	@Test(expected = AssertionError.class)
 	public void canFailIfListOfGraphObjectsSmaller() {
 		final String expectedString = aRandomString(5), secondString = aRandomString(5);
-		final List<GraphType> expectedList = Arrays.asList(new GraphType(expectedString, new SimpleType(expectedString)));
-		final List<GraphType> expected = prototype(new TypeReference<List<GraphType>>() {});
+		final List<GraphType> expectedList = Arrays
+				.asList(new GraphType(expectedString, new SimpleType(expectedString)));
+		final List<GraphType> expected = prototype(new TypeReference<List<GraphType>>() {
+		});
 		expect(expected.get(0).getValue()).isEqualTo(expectedString);
 		expect(expected.get(0).getChild().getValue()).isEqualTo(expectedString);
 		expect(expected.get(1).getValue()).isEqualTo(secondString);

@@ -116,6 +116,9 @@ The source includes a pom.xml for building with Maven
 Release Notes
 -------------
 
+Changes 0.9.16 -> 0.9.18
+  * Handle IndexOutOfBounds and NullPointerException by returning a null proxy to improve error printing
+
 Changes 0.9.15 -> 0.9.16
   * Catch IndexOutOfBounds
 

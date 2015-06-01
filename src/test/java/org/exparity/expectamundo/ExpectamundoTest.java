@@ -1,9 +1,22 @@
-
 package org.exparity.expectamundo;
+
+import static java.util.Collections.singletonMap;
+import static org.exparity.expectamundo.Expectamundo.cast;
+import static org.exparity.expectamundo.Expectamundo.checkThat;
+import static org.exparity.expectamundo.Expectamundo.expect;
+import static org.exparity.expectamundo.Expectamundo.expectThat;
+import static org.exparity.expectamundo.Expectamundo.isPrototype;
+import static org.exparity.expectamundo.Expectamundo.matchesPrototype;
+import static org.exparity.expectamundo.Expectamundo.prototype;
+import static org.exparity.stub.random.RandomBuilder.aRandomByteArray;
+import static org.exparity.stub.random.RandomBuilder.aRandomInteger;
+import static org.exparity.stub.random.RandomBuilder.aRandomString;
+import static org.junit.Assert.assertEquals;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
 import org.exparity.expectamundo.core.PrototypeMatcherContext;
 import org.exparity.expectamundo.core.TypeReference;
 import org.exparity.expectamundo.testutils.types.GraphType;
@@ -22,12 +35,6 @@ import org.exparity.expectamundo.testutils.types.ToStringType;
 import org.exparity.stub.random.RandomBuilder;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
-import static java.util.Collections.singletonMap;
-import static org.exparity.expectamundo.Expectamundo.*;
-import static org.exparity.stub.random.RandomBuilder.aRandomByteArray;
-import static org.exparity.stub.random.RandomBuilder.aRandomInteger;
-import static org.exparity.stub.random.RandomBuilder.aRandomString;
-import static org.junit.Assert.assertEquals;
 
 /**
  * @author Stewart Bissett
@@ -92,7 +99,8 @@ public class ExpectamundoTest {
 
 	@Test(expected = AssertionError.class)
 	public void canFailObjectProperty() {
-		final SimpleType expectedValue = new SimpleType(aRandomString(5)), differentValue = new SimpleType(aRandomString(5));
+		final SimpleType expectedValue = new SimpleType(aRandomString(5)), differentValue = new SimpleType(
+				aRandomString(5));
 		GraphType expected = prototype(GraphType.class);
 		expect(expected.getChild()).isEqualTo(expectedValue);
 		expectThat(new GraphType(aRandomString(5), differentValue)).matches(expected);
@@ -148,7 +156,8 @@ public class ExpectamundoTest {
 	@Test
 	public void canMatchGenericProperties() {
 		final String expectedValue = aRandomString(5);
-		List<String> expected = prototype(new TypeReference<List<String>>() {});
+		List<String> expected = prototype(new TypeReference<List<String>>() {
+		});
 		expect(expected.get(0)).isEqualTo(expectedValue);
 		List<String> actual = Arrays.asList(expectedValue);
 		expectThat(actual).matches(expected);
@@ -157,18 +166,18 @@ public class ExpectamundoTest {
 	@Test(expected = AssertionError.class)
 	public void canFailGenericProperties() {
 		final String expectedValue = aRandomString(5), differentValue = expectedValue + aRandomString(5);
-		List<String> expected = prototype(new TypeReference<List<String>>() {});
+		List<String> expected = prototype(new TypeReference<List<String>>() {
+		});
 		expect(expected.get(0)).isEqualTo(expectedValue);
 		List<String> actual = Arrays.asList(differentValue);
 		expectThat(actual).matches(expected);
 	}
 
-	@SuppressWarnings({
-			"unchecked", "rawtypes"
-	})
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Test(expected = IllegalArgumentException.class)
 	public void canFailGenericPropertiesIfTypeNotPassed() {
-		prototype(new TypeReference() {});
+		prototype(new TypeReference() {
+		});
 	}
 
 	@Test
@@ -182,7 +191,8 @@ public class ExpectamundoTest {
 	@Test(expected = AssertionError.class)
 	public void canFailListProperties() {
 		final String expectedString = aRandomString(5);
-		final List<String> expectedValue = Arrays.asList(expectedString), differentValue = Arrays.asList(expectedString + aRandomString(5));
+		final List<String> expectedValue = Arrays.asList(expectedString), differentValue = Arrays
+				.asList(expectedString + aRandomString(5));
 		ListReturnType expected = prototype(ListReturnType.class);
 		expect(expected.getValue().get(0)).isEqualTo(expectedValue.get(0));
 		expectThat(new ListReturnType(differentValue)).matches(expected);
@@ -196,6 +206,28 @@ public class ExpectamundoTest {
 		expect(expected.getValue().get(0)).isEqualTo(expectedString);
 		expect(expected.getValue().get(1)).isEqualTo(expectedString);
 		expectThat(new ListReturnType(expectedValue)).matches(expected);
+	}
+
+	@Test(expected = AssertionError.class)
+	public void canFailIfListOfObjectsSmaller() {
+		final String expectedString = aRandomString(5), secondString = aRandomString(5);
+		final List<SimpleType> expectedList = Arrays.asList(new SimpleType(expectedString));
+		final List<SimpleType> expected = prototype(new TypeReference<List<SimpleType>>() {});
+		expect(expected.get(0).getValue()).isEqualTo(expectedString);
+		expect(expected.get(1).getValue()).isEqualTo(secondString);
+		expectThat(expectedList).matches(expected);
+	}
+
+	@Test(expected = AssertionError.class)
+	public void canFailIfListOfGraphObjectsSmaller() {
+		final String expectedString = aRandomString(5), secondString = aRandomString(5);
+		final List<GraphType> expectedList = Arrays.asList(new GraphType(expectedString, new SimpleType(expectedString)));
+		final List<GraphType> expected = prototype(new TypeReference<List<GraphType>>() {});
+		expect(expected.get(0).getValue()).isEqualTo(expectedString);
+		expect(expected.get(0).getChild().getValue()).isEqualTo(expectedString);
+		expect(expected.get(1).getValue()).isEqualTo(secondString);
+		expect(expected.get(1).getChild().getValue()).isEqualTo(secondString);
+		expectThat(expectedList).matches(expected);
 	}
 
 	@Test
@@ -357,7 +389,8 @@ public class ExpectamundoTest {
 	@Test
 	public void canMatchAPrototype() {
 		String value = aRandomString();
-		List<String> expected = prototype(new TypeReference<List<String>>() {});
+		List<String> expected = prototype(new TypeReference<List<String>>() {
+		});
 		expect(expected).contains(value);
 		expectThat(Arrays.asList(value)).matches(expected);
 	}

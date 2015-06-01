@@ -8,15 +8,10 @@ import java.lang.reflect.TypeVariable;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.sf.cglib.proxy.Callback;
-import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
 
 import org.apache.commons.lang.StringUtils;
-import org.objenesis.Objenesis;
-import org.objenesis.ObjenesisStd;
-import org.objenesis.instantiator.ObjectInstantiator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,12 +41,26 @@ public class PrototypeProperty implements PrototypeValue {
 		try {
 			return proxy.invoke(parent != null ? parent.getValue(actual) : actual, args);
 		} catch (final IndexOutOfBoundsException e) {
-			Class<?> actualReturnType = getReturnType(method);
-			return isProxiable(actualReturnType) ? createNullProxy(actualReturnType) : null;
+			return createNullMethodProxy(method);
 		} catch (ClassCastException e) {
 			throw e;
 		} catch (Throwable e) {
 			throw new RuntimeException(e);
+		}
+	}
+
+	private Object createNullMethodProxy(Method method) {
+		Class<?> returnType = getReturnType(method);
+		if ( isProxiable(returnType) ) {
+			return new ProxyFactory().createProxy(returnType, new MethodInterceptor() {
+			
+				@Override
+				public Object intercept(Object obj, Method inner, Object[] args, MethodProxy proxy) throws Throwable {
+					return createNullMethodProxy(inner);
+				}
+			});
+		} else {
+			return null;
 		}
 	}
 
@@ -69,35 +78,13 @@ public class PrototypeProperty implements PrototypeValue {
 	}
 
 	private <T> T createNullProxy(final Class<T> type) {
-		return createProxyInstance(createProxy(type));
-	}
-
-	private <T> T createProxyInstance(final Class<T> proxyType) {
-		Objenesis instantiatorFactory = new ObjenesisStd();
-		ObjectInstantiator<T> instanceFactory = instantiatorFactory.getInstantiatorOf(proxyType);
-		T instance = instanceFactory.newInstance();
-		LOG.debug("Produce Proxy Instance [{}] for [{}]", System.identityHashCode(instance), proxyType.getName());
-		return instance;
-	}
-
-	@SuppressWarnings("unchecked")
-	private <T> Class<T> createProxy(final Class<T> rawType) {
-		Enhancer classFactory = new Enhancer();
-		if (rawType.isInterface()) {
-			classFactory.setInterfaces(new Class[] { rawType });
-		} else {
-			classFactory.setSuperclass(rawType);
-		}
-		classFactory.setCallbackType(MethodInterceptor.class);
-		Class<T> proxyType = classFactory.createClass();
-		Enhancer.registerCallbacks(proxyType, new Callback[] { new MethodInterceptor() {
+		return new ProxyFactory().createProxy(type, new MethodInterceptor() {
 
 			@Override
 			public Object intercept(Object obj, Method method, Object[] args, MethodProxy proxy) throws Throwable {
 				return null;
 			}
-		} });
-		return proxyType;
+		});
 	}
 
 	private boolean isProxiable(Class<?> type) {

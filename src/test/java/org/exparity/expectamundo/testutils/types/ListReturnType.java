@@ -1,4 +1,3 @@
-
 package org.exparity.expectamundo.testutils.types;
 
 import java.util.List;

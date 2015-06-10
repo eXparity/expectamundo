@@ -349,23 +349,39 @@ public class ExpectamundoTest {
 
 	@Test(expected = AssertionError.class)
 	public void canFailIfListOfObjectsEmpty() {
-		final String expectedString = aRandomString(5), secondString = aRandomString(5);
+		final String expectedString = aRandomString(5);
 		final List<SimpleType> expected = prototype(new TypeReference<List<SimpleType>>() {});
 		expect(expected.get(0).getValue()).isEqualTo(expectedString);
-		expect(expected.get(1).getValue()).isEqualTo(secondString);
 		List<SimpleType> actualList = new ArrayList<>();
 		expectThat(actualList).matches(expected);
 	}
 
 	@Test(expected = AssertionError.class)
+	public void canFailIfListOfObjectsNull() {
+		final String expectedString = aRandomString(5);
+		final List<SimpleType> expected = prototype(new TypeReference<List<SimpleType>>() {});
+		expect(expected.get(0).getValue()).isEqualTo(expectedString);
+		List<SimpleType> actualList = null;
+		expectThat(actualList).matches(expected);
+	}
+
+	@Test(expected = AssertionError.class)
 	public void canFailIfListOfGraphObjectsEmpty() {
-		String expectedString = aRandomString(5), secondString = aRandomString(5);
+		String expectedString = aRandomString(5);
 		List<GraphType> expected = prototype(new TypeReference<List<GraphType>>() {});
 		expect(expected.get(0).getValue()).isEqualTo(expectedString);
 		expect(expected.get(0).getChild().getValue()).isEqualTo(expectedString);
-		expect(expected.get(1).getValue()).isEqualTo(secondString);
-		expect(expected.get(1).getChild().getValue()).isEqualTo(secondString);
 		List<GraphType> actualList = new ArrayList<>();
+		expectThat(actualList).matches(expected);
+	}
+
+	@Test(expected = AssertionError.class)
+	public void canFailIfListOfGraphObjectsNull() {
+		String expectedString = aRandomString(5);
+		List<GraphType> expected = prototype(new TypeReference<List<GraphType>>() {});
+		expect(expected.get(0).getValue()).isEqualTo(expectedString);
+		expect(expected.get(0).getChild().getValue()).isEqualTo(expectedString);
+		List<GraphType> actualList = null;
 		expectThat(actualList).matches(expected);
 	}
 

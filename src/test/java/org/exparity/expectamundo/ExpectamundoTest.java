@@ -227,6 +227,16 @@ public class ExpectamundoTest {
 		expectThat(new ListReturnType(actualValue)).matches(expected);
 	}
 
+	@Test(expected = AssertionError.class)
+	public void canFailIfSimpleListPropertyNull() {
+		final String expectedString = aRandomString(5);
+		ListReturnType expected = prototype(ListReturnType.class);
+		expect(expected.getValue().get(0)).isEqualTo(expectedString);
+		expect(expected.getValue().get(1)).isEqualTo(expectedString);
+		List<String> actualValue = null;
+		expectThat(new ListReturnType(actualValue)).matches(expected);
+	}
+
 	@Test
 	public void canMatchGraphListProperty() {
 		final String expectedValue = aRandomString(5);
@@ -268,6 +278,62 @@ public class ExpectamundoTest {
 		expect(expected.getValue().get(0).getValue()).isEqualTo(expectedValue);
 		expect(expected.getValue().get(0).getChild().getValue()).isEqualTo(expectedValue);
 		GraphListReturnType actual = new GraphListReturnType();
+		expectThat(actual).matches(expected);
+	}
+
+	@Test(expected = AssertionError.class)
+	public void canFailIfGraphListPropertyNull() {
+		final String expectedValue = aRandomString(5);
+		GraphListReturnType expected = prototype(GraphListReturnType.class);
+		expect(expected.getValue().get(0).getValue()).isEqualTo(expectedValue);
+		expect(expected.getValue().get(0).getChild().getValue()).isEqualTo(expectedValue);
+		GraphListReturnType actual = null;
+		expectThat(actual).matches(expected);
+	}
+
+	@Test
+	public void canMatchParameterizedListProperty() {
+		final String expectedValue = aRandomString(5);
+		ParameterizedListReturnType<String> expected = prototype(new TypeReference<ParameterizedListReturnType<String>>() {});
+		expect(expected.getValue().get(0)).isEqualTo(expectedValue);
+		ParameterizedListReturnType<String> actual = new ParameterizedListReturnType<String>(expectedValue);
+		expectThat(actual).matches(expected);
+	}
+
+	@Test(expected = AssertionError.class)
+	public void canFailParameterizedListProperty() {
+		final String expectedValue = aRandomString(5), otherValue = expectedValue + expectedValue;
+		ParameterizedListReturnType<String> expected = prototype(new TypeReference<ParameterizedListReturnType<String>>() {});
+		expect(expected.getValue().get(0)).isEqualTo(expectedValue);
+		ParameterizedListReturnType<String> actual = new ParameterizedListReturnType<String>(otherValue);
+		expectThat(actual).matches(expected);
+	}
+
+	@Test(expected = AssertionError.class)
+	public void canFailIfParameterizedListPropertySmaller() {
+		final String expectedValue = aRandomString(5), expectedValue2 = expectedValue + expectedValue;
+		ParameterizedListReturnType<String> expected = prototype(new TypeReference<ParameterizedListReturnType<String>>() {});
+		expect(expected.getValue().get(0)).isEqualTo(expectedValue);
+		expect(expected.getValue().get(1)).isEqualTo(expectedValue2);
+		ParameterizedListReturnType<String> actual = new ParameterizedListReturnType<String>(expectedValue);
+		expectThat(actual).matches(expected);
+	}
+
+	@Test(expected = AssertionError.class)
+	public void canFailIfParameterizedListPropertyEmpty() {
+		final String expectedValue = aRandomString(5);
+		ParameterizedListReturnType<String> expected = prototype(new TypeReference<ParameterizedListReturnType<String>>() {});
+		expect(expected.getValue().get(0)).isEqualTo(expectedValue);
+		ParameterizedListReturnType<String> actual = new ParameterizedListReturnType<String>();
+		expectThat(actual).matches(expected);
+	}
+
+	@Test(expected = AssertionError.class)
+	public void canFailIfParameterizedListPropertyNull() {
+		final String expectedValue = aRandomString(5);
+		ParameterizedListReturnType<String> expected = prototype(new TypeReference<ParameterizedListReturnType<String>>() {});
+		expect(expected.getValue().get(0)).isEqualTo(expectedValue);
+		ParameterizedListReturnType<String> actual = null;
 		expectThat(actual).matches(expected);
 	}
 

@@ -12,12 +12,8 @@ import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
 
 import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class PrototypeProperty implements PrototypeValue {
-
-	private static final Logger LOG = LoggerFactory.getLogger(PrototypeProperty.class);
 
 	private final Method method;
 	private final MethodProxy proxy;
@@ -40,7 +36,7 @@ public class PrototypeProperty implements PrototypeValue {
 	public Object getValue(final Object actual) {
 		try {
 			return proxy.invoke(parent != null ? parent.getValue(actual) : actual, args);
-		} catch (final IndexOutOfBoundsException|NullPointerException e) {
+		} catch (final IndexOutOfBoundsException | NullPointerException e) {
 			return createNullMethodProxy(method);
 		} catch (ClassCastException e) {
 			throw e;
@@ -51,9 +47,9 @@ public class PrototypeProperty implements PrototypeValue {
 
 	private Object createNullMethodProxy(Method method) {
 		Class<?> returnType = getReturnType(method);
-		if ( isProxiable(returnType) ) {
+		if (isProxiable(returnType)) {
 			return new ProxyFactory().createProxy(returnType, new MethodInterceptor() {
-			
+
 				@Override
 				public Object intercept(Object obj, Method inner, Object[] args, MethodProxy proxy) throws Throwable {
 					return createNullMethodProxy(inner);
@@ -75,16 +71,6 @@ public class PrototypeProperty implements PrototypeValue {
 		} else {
 			throw new RuntimeException("Failed to get return type for '" + genericType + "'");
 		}
-	}
-
-	private <T> T createNullProxy(final Class<T> type) {
-		return new ProxyFactory().createProxy(type, new MethodInterceptor() {
-
-			@Override
-			public Object intercept(Object obj, Method method, Object[] args, MethodProxy proxy) throws Throwable {
-				return null;
-			}
-		});
 	}
 
 	private boolean isProxiable(Class<?> type) {

@@ -25,6 +25,10 @@ public class PrototypeMatchResult<T> {
 	public Class<?> getActualType() {
 		return actual.getClass();
 	}
+	
+	public boolean  isActualNull() {
+		return actual == null;
+	}
 
 	public List<PrototypeValueDifference> getDifferences() {
 		return differences;

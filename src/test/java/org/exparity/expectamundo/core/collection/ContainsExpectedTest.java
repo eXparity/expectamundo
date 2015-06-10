@@ -1,15 +1,19 @@
 
 package org.exparity.expectamundo.core.collection;
 
-import java.util.Arrays;
-import org.exparity.expectamundo.core.TypeReference;
-import org.exparity.expectamundo.testutils.types.ParameterizedListReturnType;
-import org.exparity.expectamundo.testutils.types.SimpleType;
-import org.junit.Test;
 import static org.exparity.expectamundo.Expectamundo.expect;
 import static org.exparity.expectamundo.Expectamundo.expectThat;
 import static org.exparity.expectamundo.Expectamundo.prototype;
 import static org.exparity.stub.random.RandomBuilder.aRandomString;
+
+import java.util.Arrays;
+import java.util.List;
+
+import org.exparity.expectamundo.Expectamundo;
+import org.exparity.expectamundo.core.TypeReference;
+import org.exparity.expectamundo.testutils.types.ParameterizedListReturnType;
+import org.exparity.expectamundo.testutils.types.SimpleType;
+import org.junit.Test;
 
 /**
  * Unit Test for {@link Expectamundo} invocations of the {@link Contains} expectation
@@ -45,7 +49,7 @@ public class ContainsExpectedTest {
 		expect(expectedValue.getValue()).isEqualTo(expectedString);
 		ParameterizedListReturnType<SimpleType> expected = prototype(new TypeReference<ParameterizedListReturnType<SimpleType>>() {});
 		expect(expected.getValue()).containsExpected(expectedValue);
-		expectThat(new ParameterizedListReturnType<SimpleType>(null)).matches(expected);
+		expectThat(new ParameterizedListReturnType<SimpleType>((List<SimpleType>)null)).matches(expected);
 	}
 
 	@Test(expected = IllegalArgumentException.class)

@@ -1,4 +1,3 @@
-
 package org.exparity.expectamundo.core;
 
 import java.util.List;
@@ -12,22 +11,24 @@ public class PrototypeMismatchReporter {
 	private static final String LISTTEMPLATE = "\nExpected a list containing a %s with properties:%s\nbut actual list contains:%s";
 
 	public <T> String describeListMismatch(final PrototypeListMatchResult<T> result) {
-		return String.format(LISTTEMPLATE,
-				describeExpectedType(result.getExpectationAsPrototype()),
-				describeExpectations(result.getExpectations()),
-				describeMismatches(result.getMismatches()));
+		return String.format(
+				LISTTEMPLATE,
+					describeExpectedType(result.getExpectationAsPrototype()),
+					describeExpectations(result.getExpectations()),
+					describeMismatches(result.getMismatches()));
 	}
 
 	public <T> String describeInstanceMismatch(final PrototypeMatchResult<T> result) {
-		return String.format(TEMPLATE,
-				describeExpectedType(result),
-				describeExpectations(result.getExpectations()),
-				describeActualType(result),
-				describeDifferences(result.getDifferences()));
+		return String.format(
+				TEMPLATE,
+					describeExpectedType(result),
+					describeExpectations(result.getExpectations()),
+					describeActualType(result),
+					describeDifferences(result.getDifferences()));
 	}
 
 	private <T> String describeActualType(final PrototypeMatchResult<T> result) {
-		return result.getActualType().getSimpleName();
+		return result.isActualNull() ? "null" : result.getActualType().getSimpleName();
 	}
 
 	private <T> String describeExpectedType(final PrototypeMatchResult<T> result) {
@@ -41,7 +42,11 @@ public class PrototypeMismatchReporter {
 	private String describeExpectations(final List<PrototypeValueMatcher> expectations) {
 		StringBuffer buffer = new StringBuffer();
 		for (PrototypeValueMatcher expecation : expectations) {
-			buffer.append("\n\t").append(expecation.getPropertyPath()).append(" is ").append(expecation.getExpectation());
+			buffer
+					.append("\n\t")
+						.append(expecation.getPropertyPath())
+						.append(" is ")
+						.append(expecation.getExpectation());
 		}
 		return buffer.toString();
 	}

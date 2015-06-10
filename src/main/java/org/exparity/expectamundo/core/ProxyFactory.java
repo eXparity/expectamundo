@@ -7,6 +7,7 @@ import net.sf.cglib.proxy.Callback;
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.MethodInterceptor;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.objenesis.Objenesis;
 import org.objenesis.ObjenesisStd;
 import org.objenesis.instantiator.ObjectInstantiator;
@@ -40,10 +41,12 @@ public class ProxyFactory {
 			final Class<?>... interfaces) {
 		Enhancer classFactory = new Enhancer();
 		if (rawType.isInterface()) {
-			classFactory.setInterfaces(new Class[] { rawType, Prototyped.class, PrototypeValue.class });
+			classFactory.setInterfaces((Class[]) ArrayUtils.add(interfaces, rawType));
 		} else {
 			classFactory.setSuperclass(rawType);
-			classFactory.setInterfaces(interfaces);
+			if (interfaces.length > 0) {
+				classFactory.setInterfaces(interfaces);
+			}
 		}
 		classFactory.setCallbackType(callback.getClass());
 		Class<T> proxyType = classFactory.createClass();

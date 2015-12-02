@@ -30,7 +30,7 @@ You can set up a test to verify the expected outcome as follows:
     	  SimpleType expected = Expectamundo.prototype(SimpleType.class);
     	  Expectamundo.expect(expected.getValue().get(0)).isEqualTo(message);
     	  SimpleType actual = new SimpleType();
-    	  Expectamundo.verify(actual).matches(expected);
+    	  Expectamundo.expectThat(actual).matches(expected);
       }
     }
 
@@ -45,7 +45,7 @@ You can also set up a test to verify the protoptype directly, for example settin
     	  List<SimpleType> expectedList = Expectamundo.prototype(new TypeReference<List<SimpleType>>(){});
     	  Expectamundo.expect(expectedList).containsExpected(expected);
     	  SimpleType actual = new SimpleType();
-    	  Expectamundo.verify(Arrays.asList(actual)).matches(expectedList);
+    	  Expectamundo.expectThat(Arrays.asList(actual)).matches(expectedList);
       }
     }
 
@@ -97,12 +97,12 @@ A maven project
     <dependency>
         <groupId>org.exparity</groupId>
         <artifactId>expectamundo</artifactId>
-        <version>0.9.16</version>
+        <version>0.9.18<version>
     </dependency>
 
 A project which uses ivy for dependency management
 
-    <dependency org="org.exparity" name="expectamundo" rev="0.9.16"/>
+    <dependency org="org.exparity" name="expectamundo" rev="0.9.18"/>
 
 Source
 ------

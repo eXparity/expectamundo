@@ -15,43 +15,54 @@ Usage
 Given a simple class as defined below:
 
     class SimpleType {
-     private final List<String> value  = Arrays.asList("eXpectamundo lets me test this");
-     public List<String> getValue() {
-       return value;
+    
+     private final String firstName, surname;
+     private final List<String> values;
+     
+     public SimpleType(String firstName, String surname, String ... values) {
+       this.firstName = firstName;
+       this.surname = surname;
+       this.values = Arrays.asList(values);
      }
+       
+     public List<String> getValues() { return values; }
+     public String getFirstName() { return firstName; }
+     public String getSurname() { return surname; }
+     
     }
 
 You can set up a test to verify the expected outcome as follows:
 
     public class SimpleTypeTest {
-    	@Test
-    	public void canReturnTheCorrectValue() {
-    	  String message = "eXpectamundo lets me test this";
-    	  SimpleType expected = Expectamundo.prototype(SimpleType.class);
-    	  Expectamundo.expect(expected.getValue().get(0)).isEqualTo(message);
-    	  SimpleType actual = new SimpleType();
-    	  Expectamundo.expectThat(actual).matches(expected);
-      }
+		@Test
+		public void canReturnTheCorrectValue() {
+			SimpleType expected = Expectamundo.prototype(SimpleType.class);
+			Expectamundo.expect(expected.getFirstName()).isEqualTo("Jane");
+			Expectamundo.expect(expected.getSurname()).isEqualTo("Smith");
+			Expectamundo.expect(expected.getValues()).contains("eXpectamundo lets me test this");
+			SimpleType actual = new SimpleType("Jane", "Smith", "eXpectamundo lets me test this");
+			Expectamundo.expectThat(actual).matches(expected);
+		}
     }
 
-You can also set up a test to verify the protoptype directly, for example setting expectations on a list as follows:
+You can also set up a test to verify the prototype directly, for example setting expectations on a list as follows:
 
     public class SimpleTypeTest {
-    	@Test
-    	public void canReturnTheCorrectValue() {
-    	  String message = "eXpectamundo lets me test this";
-    	  SimpleType expected = Expectamundo.prototype(SimpleType.class);
-    	  Expectamundo.expect(expected.getValue().get(0)).isEqualTo(message);
-    	  List<SimpleType> expectedList = Expectamundo.prototype(new TypeReference<List<SimpleType>>(){});
-    	  Expectamundo.expect(expectedList).containsExpected(expected);
-    	  SimpleType actual = new SimpleType();
-    	  Expectamundo.expectThat(Arrays.asList(actual)).matches(expectedList);
-      }
+		@Test
+		public void canMatchPrototypeInList() {
+			SimpleType expected = Expectamundo.prototype(SimpleType.class);
+			Expectamundo.expect(expected.getFirstName()).isEqualTo("Jane");
+			Expectamundo.expect(expected.getSurname()).isEqualTo("Smith");
+			Expectamundo.expect(expected.getValues()).contains("eXpectamundo lets me test this");
+			SimpleType actual = new SimpleType("Jane", "Smith", "eXpectamundo lets me test this");
+			List<SimpleType> actualList = Arrays.asList(actual);
+			Expectamundo.expectThat(actualList).contains(expected);
+		}
     }
 
 These examples capture the basics of what you can do with eXpectamundo. eXpectamundo allows you to set expectations on any non-final type or property on a object which returns a value.
 
-The libary includes expectations for all Object property types:
+The library includes expectations for all Object property types:
 
 * __isEqualTo__ - Set the expectation that the property value should be equal to an explicit value
 * __isNotEqualTo__ - Set the expectation that the property value should not be equal to an explicit value
@@ -61,7 +72,7 @@ The libary includes expectations for all Object property types:
 * __isInstanceOf__ - Set the expectation that the property is an instance of a type
 * __isOneOf__ - Set the expectation that the property one of a number of values
 
-The libary includes expectations for Collection properties:
+The library includes expectations for Collection properties:
 
 * __contains__ - Set the expectation that the collection property contains an object which is equal to the explicit value
 * __containsExpected__ - Set the expectation that the collection property contains an a prototype with the defined expectations

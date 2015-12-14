@@ -13,13 +13,11 @@ import org.exparity.expectamundo.Expectamundo;
 import org.exparity.expectamundo.core.TypeReference;
 import org.exparity.expectamundo.testutils.types.ParameterizedListReturnType;
 import org.exparity.expectamundo.testutils.types.SimpleType;
-import org.exparity.expectamundo.testutils.types.SimpleTypeOldStyle;
 import org.junit.Test;
-import org.junit.Ignore;
 
 /**
  * Unit Test for {@link Expectamundo} invocations of the {@link Contains} expectation
- * 
+ *
  * @author Stewart Bissett
  */
 public class ContainsExpectedTest {
@@ -63,17 +61,4 @@ public class ContainsExpectedTest {
 		expect(expected.getValue()).containsExpected(expectedValue);
 		expectThat(new ParameterizedListReturnType<SimpleType>(Arrays.asList(new SimpleType(expectedString), new SimpleType(anotherString)))).matches(expected);
 	}
-	
-    @Ignore("Disable whilst developing fix")
-    @Test(expected = AssertionError.class)
-    public void canCheckForCorrectValueBasedOnGITDocumentation() {
-      String message = "eXpectamundo lets me test this - not the same";
-      SimpleTypeOldStyle expected = Expectamundo.prototype(SimpleTypeOldStyle.class);
-      Expectamundo.expect(expected.getValue().get(0)).isEqualTo(message);
-      List<SimpleTypeOldStyle> expectedList = Expectamundo.prototype(new TypeReference<List<SimpleTypeOldStyle>>(){});
-      Expectamundo.expect(expectedList).containsExpected(expected);
-      SimpleTypeOldStyle actual = new SimpleTypeOldStyle();
-      Expectamundo.expectThat(Arrays.asList(actual)).matches(expectedList);
-  }	
-
 }

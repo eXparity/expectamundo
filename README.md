@@ -9,6 +9,18 @@ What is eXpectamundo?
 -----------------
 eXpectamundo is a test library to facilitate testing the properties of any Java object to ensure they meet expectations. The expectations are setup by creating a prototype instance of the type you are expecting and defining the expecations on the prototype instance.  
 
+Downloads
+---------
+You can obtain the expectamundo jar from [maven central][]. To include your project in:
+
+A maven project
+
+    <dependency>
+        <groupId>org.exparity</groupId>
+        <artifactId>expectamundo</artifactId>
+        <version>0.9.19<version>
+    </dependency>
+
 Usage
 -------------
 
@@ -98,22 +110,6 @@ The libary includes expectations for String properties
 * __isEqualToIgnoreCase__ - Set the expectation that the String is the same as another regardless of case
 
 Contributions are welcome to extend the list of expectations to match types.
-
-Downloads
----------
-You can obtain the expectamundo jar from [maven central][]. To include your project in:
-
-A maven project
-
-    <dependency>
-        <groupId>org.exparity</groupId>
-        <artifactId>expectamundo</artifactId>
-        <version>0.9.18<version>
-    </dependency>
-
-A project which uses ivy for dependency management
-
-    <dependency org="org.exparity" name="expectamundo" rev="0.9.18"/>
 
 Source
 ------

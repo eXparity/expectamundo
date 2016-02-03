@@ -1,4 +1,4 @@
-eXpectamundo  [![Build Status](https://travis-ci.org/eXparity/expectamundo.svg?branch=master)](https://travis-ci.org/eXparity/expectamundo) [![Coverage Status](https://coveralls.io/repos/eXparity/expectamundo/badge.png?branch=master)](https://coveralls.io/r/eXparity/expectamundo?branch=master) [![Maven Central](https://img.shields.io/maven-central/v/org.exparity/expectamundo.svg)]([Maven central][])
+eXpectamundo  [![Build Status](https://travis-ci.org/eXparity/expectamundo.svg?branch=master)](https://travis-ci.org/eXparity/expectamundo) [![Coverage Status](https://coveralls.io/repos/eXparity/expectamundo/badge.png?branch=master)](https://coveralls.io/r/eXparity/expectamundo?branch=master) [![Maven Central](https://img.shields.io/maven-central/v/org.exparity/expectamundo.svg)](http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22expectamundo%22)
 =============
 
 A Java library for creating a prototype object with expected values and verifying the actual object has matching values

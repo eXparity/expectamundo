@@ -1,5 +1,8 @@
-eXpectamundo  [![Build Status](https://travis-ci.org/eXparity/expectamundo.svg?branch=master)](https://travis-ci.org/eXparity/expectamundo) [![Coverage Status](https://coveralls.io/repos/eXparity/expectamundo/badge.png?branch=master)](https://coveralls.io/r/eXparity/expectamundo?branch=master)
+eXpectamundo  [![Build Status](https://travis-ci.org/eXparity/expectamundo.svg?branch=master)](https://travis-ci.org/eXparity/expectamundo) [![Coverage Status](https://coveralls.io/repos/eXparity/expectamundo/badge.png?branch=master)](https://coveralls.io/r/eXparity/expectamundo?branch=master) [![Maven Central](https://img.shields.io/maven-central/v/org.exparity/expectamundo.svg)](https://img.shields.io/maven-central/v/org.exparity/expectamundo.svg)
 =============
+
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.jcandksolutions.gradle/android-unit-test/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.jcandksolutions.gradle/android-unit-test)
+
 
 A Java library for creating a prototype object with expected values and verifying the actual object has matching values
 
@@ -18,7 +21,7 @@ A maven project
     <dependency>
         <groupId>org.exparity</groupId>
         <artifactId>expectamundo</artifactId>
-        <version>0.9.19<version>
+        <version>0.9.20<version>
     </dependency>
 
 Usage
@@ -122,6 +125,9 @@ The source includes a pom.xml for building with Maven
 
 Release Notes
 -------------
+
+Changes 0.9.18 -> 0.9.20
+  * Fix issue with expectations on BigDecimal and BigInteger
 
 Changes 0.9.16 -> 0.9.18
   * Handle IndexOutOfBounds and NullPointerException by returning a null proxy to improve error printing

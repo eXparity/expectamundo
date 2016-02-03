@@ -30,7 +30,6 @@ public class PrototypeFactory {
 			PrototypeInterceptor interceptor = createInterceptor(type);
 			LOG.debug("Produce Interceptor [{}] for [{}]", interceptor.getClass().getSimpleName(), type.getName());
 			T proxy = createProxy(new Prototype<T>(type, getGenericTypeArguments(type), interceptor));
-			;
 			LOG.info("Proxied {} using [{}]", type.getSimpleName(), proxy);
 			return proxy;
 		}

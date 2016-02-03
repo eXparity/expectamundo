@@ -2,18 +2,14 @@ package org.exparity.expectamundo;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonMap;
-import static org.exparity.expectamundo.Expectamundo.cast;
-import static org.exparity.expectamundo.Expectamundo.checkThat;
-import static org.exparity.expectamundo.Expectamundo.expect;
-import static org.exparity.expectamundo.Expectamundo.expectThat;
-import static org.exparity.expectamundo.Expectamundo.isPrototype;
-import static org.exparity.expectamundo.Expectamundo.matchesPrototype;
-import static org.exparity.expectamundo.Expectamundo.prototype;
+import static org.exparity.expectamundo.Expectamundo.*;
 import static org.exparity.stub.random.RandomBuilder.aRandomByteArray;
 import static org.exparity.stub.random.RandomBuilder.aRandomInteger;
 import static org.exparity.stub.random.RandomBuilder.aRandomString;
 import static org.junit.Assert.assertEquals;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -21,6 +17,8 @@ import java.util.List;
 
 import org.exparity.expectamundo.core.PrototypeMatcherContext;
 import org.exparity.expectamundo.core.TypeReference;
+import org.exparity.expectamundo.testutils.types.BigDecimalReturnType;
+import org.exparity.expectamundo.testutils.types.BigIntegerReturnType;
 import org.exparity.expectamundo.testutils.types.GraphListReturnType;
 import org.exparity.expectamundo.testutils.types.GraphType;
 import org.exparity.expectamundo.testutils.types.HashCodeType;
@@ -100,10 +98,26 @@ public class ExpectamundoTest {
 		expectThat(new GraphType(aRandomString(5), expectedValue)).matches(expected);
 	}
 
+	@Test
+	public void canMatchBigDecimalProperty() {
+		final BigDecimal expectedValue = new BigDecimal("10");
+		BigDecimalReturnType expected = prototype(BigDecimalReturnType.class);
+		expect(expected.getValue()).isEqualTo(expectedValue);
+		expectThat(new BigDecimalReturnType(expectedValue)).matches(expected);
+	}
+
+	@Test
+	public void canMatchBigIntegerProperty() {
+		final BigInteger expectedValue = new BigInteger("10");
+		BigIntegerReturnType expected = prototype(BigIntegerReturnType.class);
+		expect(expected.getValue()).isEqualTo(expectedValue);
+		expectThat(new BigIntegerReturnType(expectedValue)).matches(expected);
+	}
+
 	@Test(expected = AssertionError.class)
 	public void canFailObjectProperty() {
-		final SimpleType expectedValue = new SimpleType(aRandomString(5)), differentValue = new SimpleType(
-				aRandomString(5));
+		final SimpleType expectedValue = new SimpleType(aRandomString(5)),
+		        differentValue = new SimpleType(aRandomString(5));
 		GraphType expected = prototype(GraphType.class);
 		expect(expected.getChild()).isEqualTo(expectedValue);
 		expectThat(new GraphType(aRandomString(5), differentValue)).matches(expected);
@@ -200,8 +214,8 @@ public class ExpectamundoTest {
 	@Test(expected = AssertionError.class)
 	public void canFailSimpleListProperty() {
 		final String expectedString = aRandomString(5);
-		final List<String> expectedValue = Arrays.asList(expectedString), differentValue = Arrays
-				.asList(expectedString + aRandomString(5));
+		final List<String> expectedValue = Arrays.asList(expectedString),
+		        differentValue = Arrays.asList(expectedString + aRandomString(5));
 		ListReturnType expected = prototype(ListReturnType.class);
 		expect(expected.getValue().get(0)).isEqualTo(expectedValue.get(0));
 		expectThat(new ListReturnType(differentValue)).matches(expected);
@@ -243,8 +257,8 @@ public class ExpectamundoTest {
 		GraphListReturnType expected = prototype(GraphListReturnType.class);
 		expect(expected.getValue().get(0).getValue()).isEqualTo(expectedValue);
 		expect(expected.getValue().get(0).getChild().getValue()).isEqualTo(expectedValue);
-		GraphListReturnType actual = new GraphListReturnType(
-				new GraphType(expectedValue, new SimpleType(expectedValue)));
+		GraphListReturnType actual =
+		        new GraphListReturnType(new GraphType(expectedValue, new SimpleType(expectedValue)));
 		expectThat(actual).matches(expected);
 	}
 
@@ -266,8 +280,8 @@ public class ExpectamundoTest {
 		expect(expected.getValue().get(0).getChild().getValue()).isEqualTo(expectedValue);
 		expect(expected.getValue().get(1).getValue()).isEqualTo(expectedValue2);
 		expect(expected.getValue().get(1).getChild().getValue()).isEqualTo(expectedValue2);
-		GraphListReturnType actual = new GraphListReturnType(
-				new GraphType(expectedValue, new SimpleType(expectedValue)));
+		GraphListReturnType actual =
+		        new GraphListReturnType(new GraphType(expectedValue, new SimpleType(expectedValue)));
 		expectThat(actual).matches(expected);
 	}
 
@@ -294,7 +308,8 @@ public class ExpectamundoTest {
 	@Test
 	public void canMatchParameterizedListProperty() {
 		final String expectedValue = aRandomString(5);
-		ParameterizedListReturnType<String> expected = prototype(new TypeReference<ParameterizedListReturnType<String>>() {});
+		ParameterizedListReturnType<String> expected =
+		        prototype(new TypeReference<ParameterizedListReturnType<String>>() {});
 		expect(expected.getValue().get(0)).isEqualTo(expectedValue);
 		ParameterizedListReturnType<String> actual = new ParameterizedListReturnType<String>(expectedValue);
 		expectThat(actual).matches(expected);
@@ -303,7 +318,8 @@ public class ExpectamundoTest {
 	@Test(expected = AssertionError.class)
 	public void canFailParameterizedListProperty() {
 		final String expectedValue = aRandomString(5), otherValue = expectedValue + expectedValue;
-		ParameterizedListReturnType<String> expected = prototype(new TypeReference<ParameterizedListReturnType<String>>() {});
+		ParameterizedListReturnType<String> expected =
+		        prototype(new TypeReference<ParameterizedListReturnType<String>>() {});
 		expect(expected.getValue().get(0)).isEqualTo(expectedValue);
 		ParameterizedListReturnType<String> actual = new ParameterizedListReturnType<String>(otherValue);
 		expectThat(actual).matches(expected);
@@ -312,7 +328,8 @@ public class ExpectamundoTest {
 	@Test(expected = AssertionError.class)
 	public void canFailIfParameterizedListPropertySmaller() {
 		final String expectedValue = aRandomString(5), expectedValue2 = expectedValue + expectedValue;
-		ParameterizedListReturnType<String> expected = prototype(new TypeReference<ParameterizedListReturnType<String>>() {});
+		ParameterizedListReturnType<String> expected =
+		        prototype(new TypeReference<ParameterizedListReturnType<String>>() {});
 		expect(expected.getValue().get(0)).isEqualTo(expectedValue);
 		expect(expected.getValue().get(1)).isEqualTo(expectedValue2);
 		ParameterizedListReturnType<String> actual = new ParameterizedListReturnType<String>(expectedValue);
@@ -322,7 +339,8 @@ public class ExpectamundoTest {
 	@Test(expected = AssertionError.class)
 	public void canFailIfParameterizedListPropertyEmpty() {
 		final String expectedValue = aRandomString(5);
-		ParameterizedListReturnType<String> expected = prototype(new TypeReference<ParameterizedListReturnType<String>>() {});
+		ParameterizedListReturnType<String> expected =
+		        prototype(new TypeReference<ParameterizedListReturnType<String>>() {});
 		expect(expected.getValue().get(0)).isEqualTo(expectedValue);
 		ParameterizedListReturnType<String> actual = new ParameterizedListReturnType<String>();
 		expectThat(actual).matches(expected);
@@ -331,7 +349,8 @@ public class ExpectamundoTest {
 	@Test(expected = AssertionError.class)
 	public void canFailIfParameterizedListPropertyNull() {
 		final String expectedValue = aRandomString(5);
-		ParameterizedListReturnType<String> expected = prototype(new TypeReference<ParameterizedListReturnType<String>>() {});
+		ParameterizedListReturnType<String> expected =
+		        prototype(new TypeReference<ParameterizedListReturnType<String>>() {});
 		expect(expected.getValue().get(0)).isEqualTo(expectedValue);
 		ParameterizedListReturnType<String> actual = null;
 		expectThat(actual).matches(expected);

@@ -7,9 +7,11 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
 import java.util.Date;
-import net.sf.cglib.proxy.MethodProxy;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import net.sf.cglib.proxy.MethodProxy;
 
 /**
  * @author Stewart Bissett
@@ -36,7 +38,7 @@ public class PrototypeInterceptorImpl implements PrototypeInterceptor {
 		currentPrototype.setActiveProperty(activeProperty);
 		if (isProxiableMethod(method)) {
 			Class<?> returnType = getClassForPrototype(activeProperty, currentPrototype);
-			if (returnType.isPrimitive() || Modifier.isFinal(returnType.getModifiers()) || isJava8AndTypeNotProxiable(returnType)) {
+			if (isValueType(returnType)) {
 				return null;
 			} else {
 				Object child = factory.createPrototype(activeProperty, currentPrototype);
@@ -47,6 +49,14 @@ public class PrototypeInterceptorImpl implements PrototypeInterceptor {
 			LOG.debug("Discard Method [{}]", method);
 			return proxy.invokeSuper(obj, args);
 		}
+	}
+
+	private boolean isValueType(final Class<?> returnType) {
+		return returnType.isPrimitive() || Modifier.isFinal(returnType.getModifiers()) || isJava8AndTypeNotProxiable(returnType) || isNumber(returnType);
+	}
+
+	private boolean isNumber(final Class<?> returnType) {
+		return Number.class.isAssignableFrom(returnType);
 	}
 
 	private boolean isJava8AndTypeNotProxiable(final Class<?> returnType) {
